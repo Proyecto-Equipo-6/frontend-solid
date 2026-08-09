@@ -1,0 +1,12 @@
+export const MARCA = {
+  nombre: 'Nexbit',
+  logotipo: 'Nx',
+  descripcion:
+    'Tu tienda en línea con productos verificados, precios justos y entrega segura en todo el país.',
+}
+
+export const NAVEGACION_PRINCIPAL = [{ nombre: 'Catálogo', destino: '/#catalogo' }]
+
+export const PROVEEDORES_SOCIALES = ['Google', 'Facebook']
+
+export const TIPOS_DOCUMENTO = ['CC', 'Pasaporte', 'CE', 'Otro']

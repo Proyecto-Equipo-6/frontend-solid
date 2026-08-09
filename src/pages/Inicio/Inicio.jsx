@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import TarjetaArticulo from '../../components/articulo/TarjetaArticulo/TarjetaArticulo'
-import { getProductosPublicos, formatoPrecio } from '../../servicios/productos'
+import { getProductosPublicos } from '../../servicios/productos'
+import { formatoPrecio } from '../../servicios/formato'
 import './Inicio.css'
 
 function Hero({ destacado, cargando }) {

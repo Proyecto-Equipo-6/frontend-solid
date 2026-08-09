@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import Marca from '../../ui/Marca/Marca'
+import { MARCA, NAVEGACION_PRINCIPAL } from '../../../config/aplicacion'
 import './PiePagina.css'
 
 export default function PiePagina() {
@@ -9,19 +10,20 @@ export default function PiePagina() {
         <div className="pie__fila">
           <div className="pie__marca">
             <Marca />
-            <p className="pie__descripcion">
-              Tu tienda en línea con productos verificados, precios justos y
-              entrega segura en todo el país.
-            </p>
+            <p className="pie__descripcion">{MARCA.descripcion}</p>
           </div>
 
           <div className="pie__columna">
             <h3 className="pie__titulo">Navegación</h3>
-            <Link className="pie__enlace" to="/#catalogo">Catálogo</Link>
+            {NAVEGACION_PRINCIPAL.map((enlace) => (
+              <Link key={enlace.nombre} className="pie__enlace" to={enlace.destino}>
+                {enlace.nombre}
+              </Link>
+            ))}
           </div>
         </div>
         <p className="pie__copyright">
-          © {new Date().getFullYear()} Nexbit. Todos los derechos reservados.
+          © {new Date().getFullYear()} {MARCA.nombre}. Todos los derechos reservados.
         </p>
       </div>
     </footer>

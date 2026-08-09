@@ -1,11 +1,14 @@
 const BASE_URL = import.meta.env.VITE_API_URL || '/api'
 
-const ENDPOINTS = {
+export const ENDPOINTS = {
   registrarUsuario: '/v1/users',
   iniciarSesion: '/v1/auth/login',
+  productosPublicos: '/v1/productos/publico',
+  productoDetalle: (id) => `/v1/productos/${id}`,
+  carritoAgregar: '/v1/carrito',
 }
 
-async function request(path, { metodo = 'GET', datos, encabezados } = {}) {
+export async function request(path, { metodo = 'GET', datos, encabezados } = {}) {
   const opciones = {
     method: metodo,
     credentials: 'include',

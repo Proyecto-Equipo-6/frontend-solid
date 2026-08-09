@@ -5,9 +5,9 @@ import Alerta from '../../../components/ui/Alerta/Alerta'
 import Boton from '../../../components/ui/Boton/Boton'
 import Campo from '../../../components/ui/Campo/Campo'
 import { registrarUsuario } from '../../../servicios/api'
+import { MARCA, TIPOS_DOCUMENTO } from '../../../config/aplicacion'
 import {
   REGEX_SOLO_NUMEROS,
-  TIPOS_DOCUMENTO,
   esEmailValido,
   esPasswordValida,
   esTelefonoValido,
@@ -103,7 +103,7 @@ export default function Registro() {
   return (
     <AuthLayout
       titulo="Crear cuenta"
-      subtitulo="Únete a Nexbit y comienza a realizar pedidos"
+      subtitulo={`Únete a ${MARCA.nombre} y comienza a realizar pedidos`}
       ancho="grande"
       accionRedes="Registrarse con"
     >

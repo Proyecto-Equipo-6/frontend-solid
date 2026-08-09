@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Alerta from '../../components/ui/Alerta/Alerta'
 import Boton from '../../components/ui/Boton/Boton'
-import { getProductoPublico, formatoPrecio } from '../../servicios/productos'
+import { getProductoPublico } from '../../servicios/productos'
+import { formatoPrecio } from '../../servicios/formato'
+import { agregarAlCarrito } from '../../servicios/carrito'
 import NoEncontrado from '../NoEncontrado/NoEncontrado'
 import './ArticuloDetalle.css'
 
@@ -10,7 +12,8 @@ export default function ArticuloDetalle() {
   const { id } = useParams()
   const [articulo, setArticulo] = useState(null)
   const [cargando, setCargando] = useState(true)
-  const [aviso, setAviso] = useState('')
+  const [agregando, setAgregando] = useState(false)
+  const [aviso, setAviso] = useState(null)
 
   useEffect(() => {
     let activo = true
@@ -26,6 +29,22 @@ export default function ArticuloDetalle() {
       activo = false
     }
   }, [id])
+
+  async function handleAgregar() {
+    setAviso(null)
+    setAgregando(true)
+    try {
+      await agregarAlCarrito(articulo.id)
+      setAviso({ variante: 'exito', texto: 'Producto agregado al carrito.' })
+    } catch {
+      setAviso({
+        variante: 'error',
+        texto: 'No se pudo agregar el producto. Inténtalo de nuevo.',
+      })
+    } finally {
+      setAgregando(false)
+    }
+  }
 
   if (cargando) {
     return <div className="detalle detalle--cargando">Cargando producto…</div>
@@ -50,14 +69,10 @@ export default function ArticuloDetalle() {
           {articulo.stock > 0 ? `${articulo.stock} disponibles` : 'Agotado'} · Garantía:{' '}
           {articulo.garantia}
         </p>
-        <Boton
-          completo
-          disabled={articulo.stock <= 0}
-          onClick={() => setAviso('El carrito de compras estará disponible próximamente.')}
-        >
-          Agregar al carrito
+        <Boton completo disabled={articulo.stock <= 0} cargando={agregando} onClick={handleAgregar}>
+          {agregando ? 'Agregando…' : 'Agregar al carrito'}
         </Boton>
-        {aviso && <Alerta variante="exito">{aviso}</Alerta>}
+        {aviso && <Alerta variante={aviso.variante}>{aviso.texto}</Alerta>}
       </div>
     </div>
   )

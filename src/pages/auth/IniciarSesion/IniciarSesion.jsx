@@ -6,6 +6,7 @@ import Boton from '../../../components/ui/Boton/Boton'
 import Campo from '../../../components/ui/Campo/Campo'
 import { iniciarSesion } from '../../../servicios/api'
 import { esEmailValido, esPasswordValida } from '../../../servicios/validacion'
+import { MARCA } from '../../../config/aplicacion'
 import './IniciarSesion.css'
 
 export default function IniciarSesion() {
@@ -55,7 +56,7 @@ export default function IniciarSesion() {
   }
 
   return (
-    <AuthLayout titulo="Iniciar sesión" subtitulo="Bienvenido de nuevo a Nexbit">
+    <AuthLayout titulo="Iniciar sesión" subtitulo={`Bienvenido de nuevo a ${MARCA.nombre}`}>
       {errorServidor && <Alerta variante="error">{errorServidor}</Alerta>}
 
       <form className="login__form" onSubmit={handleSubmit} noValidate>

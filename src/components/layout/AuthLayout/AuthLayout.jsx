@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom'
 import Boton from '../../ui/Boton/Boton'
 import { GoogleIcon, FacebookIcon } from '../../ui/Iconos/Iconos'
+import { MARCA, PROVEEDORES_SOCIALES } from '../../../config/aplicacion'
 import './AuthLayout.css'
 
-const PROVEEDORES = [
-  { nombre: 'Google', icono: <GoogleIcon /> },
-  { nombre: 'Facebook', icono: <FacebookIcon /> },
-]
+const ICONOS_PROVEEDORES = {
+  Google: <GoogleIcon />,
+  Facebook: <FacebookIcon />,
+}
 
 export default function AuthLayout({
   titulo,
@@ -18,8 +19,8 @@ export default function AuthLayout({
   return (
     <div className="auth">
       <div className={`auth__tarjeta auth__tarjeta--${ancho}`}>
-        <Link to="/" className="auth__logo" aria-label="Nexbit — volver al inicio">
-          Nx
+        <Link to="/" className="auth__logo" aria-label={`${MARCA.nombre} — volver al inicio`}>
+          {MARCA.logotipo}
         </Link>
 
         <h1 className="auth__titulo">{titulo}</h1>
@@ -29,9 +30,9 @@ export default function AuthLayout({
 
         <div className="auth__divisor">o</div>
         <div className="auth__redes">
-          {PROVEEDORES.map((proveedor) => (
-            <Boton key={proveedor.nombre} variante="secundario" completo>
-              {proveedor.icono} {accionRedes} {proveedor.nombre}
+          {PROVEEDORES_SOCIALES.map((proveedor) => (
+            <Boton key={proveedor} variante="secundario" completo>
+              {ICONOS_PROVEEDORES[proveedor]} {accionRedes} {proveedor}
             </Boton>
           ))}
         </div>

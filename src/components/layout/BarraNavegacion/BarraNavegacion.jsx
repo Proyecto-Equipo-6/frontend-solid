@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Marca from '../../ui/Marca/Marca'
+import { NAVEGACION_PRINCIPAL } from '../../../config/aplicacion'
 import './BarraNavegacion.css'
-
-const ENLACES = [{ nombre: 'Catálogo', destino: '/#catalogo' }]
 
 export default function BarraNavegacion() {
   const [menuAbierto, setMenuAbierto] = useState(false)
@@ -14,7 +13,7 @@ export default function BarraNavegacion() {
         <nav className="barra__izquierda" aria-label="Navegación principal">
           <Marca />
           <ul className="barra__enlaces">
-            {ENLACES.map((enlace) => (
+            {NAVEGACION_PRINCIPAL.map((enlace) => (
               <li key={enlace.nombre}>
                 <Link to={enlace.destino} className="barra__enlace">
                   {enlace.nombre}
@@ -45,7 +44,7 @@ export default function BarraNavegacion() {
 
       {menuAbierto && (
         <div className="barra__panel">
-          {ENLACES.map((enlace) => (
+          {NAVEGACION_PRINCIPAL.map((enlace) => (
             <Link
               key={enlace.nombre}
               to={enlace.destino}
