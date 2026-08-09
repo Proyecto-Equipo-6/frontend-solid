@@ -1,0 +1,53 @@
+.login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.login__recordar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0 4px;
+  font-size: 14px;
+  color: var(--text-h);
+  cursor: pointer;
+}
+
+.login__recordar input {
+  accent-color: var(--accent);
+}
+
+.login__olvidada {
+  align-self: center;
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--text-h);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.login__nota {
+  margin: 0;
+  font-size: 13px;
+  text-align: center;
+  color: var(--text);
+}
+
+.login__registrate {
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.login__link {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login__link:hover {
+  text-decoration: underline;
+}

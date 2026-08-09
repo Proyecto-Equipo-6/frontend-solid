@@ -1,0 +1,40 @@
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-sizing: border-box;
+  padding: 10px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--sobre-accent);
+  background: var(--accent);
+  border: 1px solid transparent;
+  border-radius: var(--radio);
+  cursor: pointer;
+  transition: opacity 0.2s ease, background-color 0.15s ease;
+}
+
+.boton--completo {
+  width: 100%;
+}
+
+.boton--secundario {
+  color: var(--text-h);
+  background: var(--bg);
+  border-color: var(--border);
+  font-weight: 500;
+}
+
+.boton--secundario:hover {
+  background: var(--accent-bg);
+}
+
+.boton:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.boton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

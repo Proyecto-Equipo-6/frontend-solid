@@ -1,0 +1,54 @@
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.campo--completo {
+  grid-column: span 2;
+}
+
+.campo__etiqueta {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+.campo__obligatorio {
+  color: var(--error);
+  font-weight: 700;
+}
+
+.campo__control {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 15px;
+  color: var(--text-h);
+  background: var(--bg-suave);
+  border: 1px solid var(--border);
+  border-radius: var(--radio);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.campo__control:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.campo__control--error {
+  border-color: var(--error);
+}
+
+.campo__ayuda {
+  margin: 0;
+  font-size: 12px;
+  color: var(--error);
+}
+
+@media (max-width: 480px) {
+  .campo--completo {
+    grid-column: auto;
+  }
+}

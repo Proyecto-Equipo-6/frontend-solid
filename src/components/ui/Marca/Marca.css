@@ -1,0 +1,27 @@
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.marca__logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--sobre-accent);
+  background: var(--accent);
+  border-radius: 8px;
+}
+
+.marca__nombre {
+  font-size: 16px;
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--text-h);
+}

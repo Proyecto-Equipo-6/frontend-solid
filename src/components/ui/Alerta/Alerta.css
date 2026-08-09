@@ -1,0 +1,19 @@
+.alerta {
+  margin: 0 0 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  border: 1px solid;
+  border-radius: var(--radio);
+}
+
+.alerta--error {
+  color: var(--error);
+  background: var(--error-bg);
+  border-color: var(--error-border);
+}
+
+.alerta--exito {
+  color: var(--success);
+  background: var(--success-bg);
+  border-color: var(--success-border);
+}

@@ -1,0 +1,124 @@
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import AuthLayout from '../../../components/layout/AuthLayout/AuthLayout'
+import Alerta from '../../../components/ui/Alerta/Alerta'
+import Boton from '../../../components/ui/Boton/Boton'
+import Campo from '../../../components/ui/Campo/Campo'
+import { iniciarSesion } from '../../../servicios/api'
+import { esEmailValido, esPasswordValida } from '../../../servicios/validacion'
+import './IniciarSesion.css'
+
+export default function IniciarSesion() {
+  const navigate = useNavigate()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [errores, setErrores] = useState({})
+  const [errorServidor, setErrorServidor] = useState('')
+  const [olvidada, setOlvidada] = useState(false)
+  const [enviando, setEnviando] = useState(false)
+
+  function limpiarError(campo) {
+    setErrores((prev) => ({ ...prev, [campo]: undefined }))
+  }
+
+  function validar() {
+    const siguientes = {}
+
+    if (!esEmailValido(email)) {
+      siguientes.email = 'Ingresa un correo electrónico válido.'
+    }
+
+    if (!password) {
+      siguientes.password = 'La contraseña es obligatoria.'
+    } else if (!esPasswordValida(password)) {
+      siguientes.password = 'La contraseña debe tener al menos 8 caracteres.'
+    }
+
+    setErrores(siguientes)
+    return Object.keys(siguientes).length === 0
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault()
+    setErrorServidor('')
+    if (!validar()) return
+
+    setEnviando(true)
+    try {
+      await iniciarSesion({ email, password })
+      navigate('/')
+    } catch (error) {
+      setErrorServidor(error.message)
+    } finally {
+      setEnviando(false)
+    }
+  }
+
+  return (
+    <AuthLayout titulo="Iniciar sesión" subtitulo="Bienvenido de nuevo a Nexbit">
+      {errorServidor && <Alerta variante="error">{errorServidor}</Alerta>}
+
+      <form className="login__form" onSubmit={handleSubmit} noValidate>
+        <Campo
+          etiqueta="Correo electrónico"
+          type="email"
+          id="email"
+          name="email"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value)
+            limpiarError('email')
+          }}
+          placeholder="tu@correo.com"
+          autoComplete="email"
+          autoFocus
+          requerido
+          error={errores.email}
+        />
+
+        <Campo
+          etiqueta="Contraseña"
+          type="password"
+          id="password"
+          name="password"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value)
+            limpiarError('password')
+          }}
+          placeholder="Mínimo 8 caracteres"
+          autoComplete="current-password"
+          requerido
+          error={errores.password}
+        />
+
+        <label className="login__recordar">
+          <input type="checkbox" name="recordar" />
+          Recordarme
+        </label>
+
+        <Boton completo tipo="submit" cargando={enviando}>
+          {enviando ? 'Ingresando…' : 'Iniciar sesión'}
+        </Boton>
+
+        <button
+          className="login__olvidada"
+          type="button"
+          onClick={() => setOlvidada((prev) => !prev)}
+        >
+          ¿Olvidaste tu contraseña?
+        </button>
+        {olvidada && (
+          <p className="login__nota">
+            La recuperación de contraseña estará disponible próximamente.
+          </p>
+        )}
+      </form>
+
+      <p className="login__registrate">
+        ¿No tienes una cuenta?{' '}
+        <Link to="/register" className="login__link">Regístrate</Link>
+      </p>
+    </AuthLayout>
+  )
+}
