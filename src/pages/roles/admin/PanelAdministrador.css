@@ -1,0 +1,12 @@
+.panel--admin {
+  background: linear-gradient(180deg, #0f1b2d 0%, #1b2a41 100%);
+}
+
+.panel--admin .panel__etiqueta {
+  color: #ffd166;
+  background: rgba(255, 209, 102, 0.12);
+}
+
+.panel--admin .panel__titulo {
+  color: #ffd166;
+}

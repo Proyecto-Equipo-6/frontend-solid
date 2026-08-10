@@ -1,0 +1,26 @@
+.restablecer__form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.restablecer__volver,
+.restablecer__enlace {
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.restablecer__link,
+.restablecer__enlace {
+  display: inline-block;
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.restablecer__link:hover,
+.restablecer__enlace:hover {
+  text-decoration: underline;
+}

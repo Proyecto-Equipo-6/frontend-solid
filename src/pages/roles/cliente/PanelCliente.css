@@ -1,0 +1,12 @@
+.panel--cliente {
+  background: linear-gradient(180deg, #f7f9fc 0%, #eef2f8 100%);
+}
+
+.panel--cliente .panel__etiqueta {
+  color: #2d7ff9;
+  background: rgba(45, 127, 249, 0.1);
+}
+
+.panel--cliente .panel__titulo {
+  color: #2d7ff9;
+}

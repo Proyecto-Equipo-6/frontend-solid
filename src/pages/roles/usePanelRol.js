@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Boton from '../../components/ui/Boton/Boton'
 import { cerrarSesion } from '../../servicios/api'
 import { obtenerSesion, limpiarSesion } from '../../servicios/sesion'
 import { ROLES } from '../../config/aplicacion'
-import './PanelRol.css'
 
-export default function PanelRol({ rolEsperado }) {
+export default function usePanelRol(rolEsperado) {
   const navigate = useNavigate()
   const [sesion] = useState(obtenerSesion)
   const [cerrando, setCerrando] = useState(false)
@@ -37,18 +35,7 @@ export default function PanelRol({ rolEsperado }) {
     }
   }
 
-  if (!sesion || sesion.id_rol !== rolEsperado) return null
+  const autorizado = Boolean(sesion && sesion.id_rol === rolEsperado)
 
-  return (
-    <div className="panel">
-      <p className="panel__etiqueta">Panel temporal</p>
-      <h1 className="panel__titulo">Panel {rol?.nombre}</h1>
-      <p className="panel__texto">Bienvenido(a), {sesion.nombre_apellido}</p>
-      <p className="panel__texto">{sesion.email}</p>
-      {error && <p className="panel__error">{error}</p>}
-      <Boton cargando={cerrando} onClick={handleCerrarSesion}>
-        {cerrando ? 'Cerrando sesión…' : 'Cerrar sesión'}
-      </Boton>
-    </div>
-  )
+  return { sesion, rol, autorizado, cerrando, error, handleCerrarSesion }
 }

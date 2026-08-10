@@ -16,7 +16,6 @@ export default function IniciarSesion() {
   const [password, setPassword] = useState('')
   const [errores, setErrores] = useState({})
   const [errorServidor, setErrorServidor] = useState('')
-  const [olvidada, setOlvidada] = useState(false)
   const [enviando, setEnviando] = useState(false)
 
   function limpiarError(campo) {
@@ -105,18 +104,9 @@ export default function IniciarSesion() {
           {enviando ? 'Ingresando…' : 'Iniciar sesión'}
         </Boton>
 
-        <button
-          className="login__olvidada"
-          type="button"
-          onClick={() => setOlvidada((prev) => !prev)}
-        >
+        <Link to="/recuperar" className="login__olvidada">
           ¿Olvidaste tu contraseña?
-        </button>
-        {olvidada && (
-          <p className="login__nota">
-            La recuperación de contraseña estará disponible próximamente.
-          </p>
-        )}
+        </Link>
       </form>
 
       <p className="login__registrate">

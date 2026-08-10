@@ -1,0 +1,22 @@
+.recuperar__form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.recuperar__volver {
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.recuperar__link {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.recuperar__link:hover {
+  text-decoration: underline;
+}

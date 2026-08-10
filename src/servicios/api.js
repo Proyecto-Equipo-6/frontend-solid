@@ -4,6 +4,8 @@ export const ENDPOINTS = {
   registrarUsuario: '/v1/users',
   iniciarSesion: '/v1/auth/login',
   cerrarSesion: '/v1/auth/logout',
+  solicitarRecuperacion: '/v1/auth/recuperar',
+  restablecerContrasena: '/v1/auth/restablecer',
   productosPublicos: '/v1/productos/publico',
   productoDetalle: (id) => `/v1/productos/${id}`,
   carritoAgregar: '/v1/carrito',
@@ -54,4 +56,12 @@ export function iniciarSesion(credenciales) {
 
 export function cerrarSesion() {
   return request(ENDPOINTS.cerrarSesion, { metodo: 'POST' })
+}
+
+export function solicitarRecuperacion(email) {
+  return request(ENDPOINTS.solicitarRecuperacion, { metodo: 'POST', datos: { email } })
+}
+
+export function restablecerContrasena(datos) {
+  return request(ENDPOINTS.restablecerContrasena, { metodo: 'POST', datos })
 }
