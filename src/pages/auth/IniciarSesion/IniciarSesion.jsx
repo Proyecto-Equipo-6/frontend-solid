@@ -5,8 +5,9 @@ import Alerta from '../../../components/ui/Alerta/Alerta'
 import Boton from '../../../components/ui/Boton/Boton'
 import Campo from '../../../components/ui/Campo/Campo'
 import { iniciarSesion } from '../../../servicios/api'
+import { guardarSesion } from '../../../servicios/sesion'
 import { esEmailValido, esPasswordValida } from '../../../servicios/validacion'
-import { MARCA } from '../../../config/aplicacion'
+import { MARCA, ROLES } from '../../../config/aplicacion'
 import './IniciarSesion.css'
 
 export default function IniciarSesion() {
@@ -46,8 +47,10 @@ export default function IniciarSesion() {
 
     setEnviando(true)
     try {
-      await iniciarSesion({ email, password })
-      navigate('/')
+      const respuesta = await iniciarSesion({ email, password })
+      guardarSesion(respuesta.usuario)
+      const rol = ROLES[respuesta.usuario.id_rol]
+      navigate(rol?.panel ?? '/')
     } catch (error) {
       setErrorServidor(error.message)
     } finally {

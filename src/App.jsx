@@ -6,6 +6,7 @@ import ArticuloDetalle from './pages/ArticuloDetalle/ArticuloDetalle'
 import NoEncontrado from './pages/NoEncontrado/NoEncontrado'
 import IniciarSesion from './pages/auth/IniciarSesion/IniciarSesion'
 import Registro from './pages/auth/Registro/Registro'
+import PanelRol from './pages/PanelRol/PanelRol'
 import Loader from './components/ui/Loader/Loader'
 
 const TIEMPO_MINIMO_CARGA = 1600
@@ -51,6 +52,9 @@ function App() {
           </Route>
           <Route path="/login" element={<IniciarSesion />} />
           <Route path="/register" element={<Registro />} />
+          <Route path="/cliente" element={<PanelRol rolEsperado={2} />} />
+          <Route path="/admin" element={<PanelRol rolEsperado={1} />} />
+          <Route path="/repartidor" element={<PanelRol rolEsperado={3} />} />
         </Routes>
       </BrowserRouter>
     </>

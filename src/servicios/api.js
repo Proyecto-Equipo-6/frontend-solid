@@ -3,6 +3,7 @@ const BASE_URL = import.meta.env.VITE_API_URL || '/api'
 export const ENDPOINTS = {
   registrarUsuario: '/v1/users',
   iniciarSesion: '/v1/auth/login',
+  cerrarSesion: '/v1/auth/logout',
   productosPublicos: '/v1/productos/publico',
   productoDetalle: (id) => `/v1/productos/${id}`,
   carritoAgregar: '/v1/carrito',
@@ -49,4 +50,8 @@ export function registrarUsuario(datos) {
 
 export function iniciarSesion(credenciales) {
   return request(ENDPOINTS.iniciarSesion, { metodo: 'POST', datos: credenciales })
+}
+
+export function cerrarSesion() {
+  return request(ENDPOINTS.cerrarSesion, { metodo: 'POST' })
 }
