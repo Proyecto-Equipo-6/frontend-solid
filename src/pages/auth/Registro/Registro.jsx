@@ -46,7 +46,7 @@ function validar(form) {
   }
 
   if (!esPasswordValida(form.password)) {
-    errores.password = 'La contraseña debe tener al menos 8 caracteres.'
+    errores.password = 'La contraseña debe tener entre 4 y 8 caracteres.'
   }
 
   if (!form.telefono.trim()) {
@@ -198,7 +198,7 @@ export default function Registro() {
             name="password"
             value={form.password}
             onChange={handleChange}
-            placeholder="Mínimo 8 caracteres"
+            placeholder="Entre 4 y 8 caracteres"
             autoComplete="new-password"
             requerido
             error={errores.password}

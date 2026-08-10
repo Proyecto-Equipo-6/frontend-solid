@@ -32,7 +32,7 @@ export default function IniciarSesion() {
     if (!password) {
       siguientes.password = 'La contraseña es obligatoria.'
     } else if (!esPasswordValida(password)) {
-      siguientes.password = 'La contraseña debe tener al menos 8 caracteres.'
+      siguientes.password = 'La contraseña debe tener entre 4 y 8 caracteres.'
     }
 
     setErrores(siguientes)
@@ -87,7 +87,7 @@ export default function IniciarSesion() {
             setPassword(e.target.value)
             limpiarError('password')
           }}
-          placeholder="Mínimo 8 caracteres"
+          placeholder="Entre 4 y 8 caracteres"
           autoComplete="current-password"
           requerido
           error={errores.password}
