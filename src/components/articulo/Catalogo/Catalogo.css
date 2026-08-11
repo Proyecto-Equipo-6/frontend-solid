@@ -1,0 +1,138 @@
+.catalogo {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 20px;
+  box-sizing: border-box;
+}
+
+.catalogo__cabecera {
+  margin-bottom: 32px;
+}
+
+.catalogo__titulo {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.catalogo__sub {
+  margin: 8px 0 0;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.catalogo__filtros {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.catalogo__filtro {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.catalogo__filtro-etiqueta {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.catalogo__filtro-control {
+  padding: 10px 12px;
+  font-size: 14px;
+  color: var(--text-h);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radio);
+}
+
+.catalogo__cargando {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text-suave);
+}
+
+.catalogo__vacio {
+  margin: 0;
+  padding: 32px;
+  font-size: 15px;
+  text-align: center;
+  color: var(--text-suave);
+  background: var(--bg-suave);
+  border: 1px dashed var(--border);
+  border-radius: var(--radio-grande);
+}
+
+.catalogo__paginacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.catalogo__paginas {
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.catalogo__pagina,
+.catalogo__pagina-boton {
+  min-width: 38px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--text-h);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radio);
+  cursor: pointer;
+}
+
+.catalogo__pagina:hover:not(:disabled),
+.catalogo__pagina-boton:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.catalogo__pagina--activa {
+  color: var(--sobre-accent);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.catalogo__pagina-boton:disabled {
+  color: var(--text-suave);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.catalogo__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .catalogo__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .catalogo__filtros {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .catalogo__grid {
+    grid-template-columns: 1fr;
+  }
+}

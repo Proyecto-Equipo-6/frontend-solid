@@ -8,7 +8,9 @@ export const ENDPOINTS = {
   restablecerContrasena: '/v1/auth/restablecer',
   productosPublicos: '/v1/productos/publico',
   productoDetalle: (id) => `/v1/productos/${id}`,
+  categoriasPublicas: '/v1/categorias',
   carritoAgregar: '/v1/carrito',
+  perfil: '/v1/users/perfil',
 }
 
 export async function request(path, { metodo = 'GET', datos, encabezados } = {}) {
@@ -28,7 +30,9 @@ export async function request(path, { metodo = 'GET', datos, encabezados } = {})
   const cuerpo = await res.json().catch(() => null)
 
   if (!res.ok) {
-    throw new Error(mensajeError(cuerpo?.error, res.status))
+    const error = new Error(mensajeError(cuerpo?.error, res.status))
+    error.status = res.status
+    throw error
   }
 
   return cuerpo
@@ -64,4 +68,16 @@ export function solicitarRecuperacion(email) {
 
 export function restablecerContrasena(datos) {
   return request(ENDPOINTS.restablecerContrasena, { metodo: 'POST', datos })
+}
+
+export function getCategoriasPublicas() {
+  return request(ENDPOINTS.categoriasPublicas)
+}
+
+export function obtenerPerfil() {
+  return request(ENDPOINTS.perfil)
+}
+
+export function actualizarPerfil(datos) {
+  return request(ENDPOINTS.perfil, { metodo: 'PUT', datos })
 }

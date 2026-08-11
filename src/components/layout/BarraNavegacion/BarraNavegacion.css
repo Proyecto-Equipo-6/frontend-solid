@@ -94,6 +94,17 @@
   background: var(--bg);
 }
 
+.barra__boton--carrito {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.barra__carrito-icono {
+  font-size: 15px;
+  line-height: 1;
+}
+
 .barra__menu {
   display: none;
   width: 40px;

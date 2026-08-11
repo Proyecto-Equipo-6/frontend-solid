@@ -9,8 +9,11 @@ import Registro from './pages/auth/Registro/Registro'
 import RecuperarContrasena from './pages/auth/RecuperarContrasena/RecuperarContrasena'
 import RestablecerContrasena from './pages/auth/RestablecerContrasena/RestablecerContrasena'
 import PanelAdministrador from './pages/roles/admin/PanelAdministrador'
-import PanelCliente from './pages/roles/cliente/PanelCliente'
+import VistaCliente from './pages/roles/cliente/VistaCliente'
+import VistaCarrito from './pages/roles/cliente/VistaCarrito'
 import PanelRepartidor from './pages/roles/repartidor/PanelRepartidor'
+import Perfil from './pages/Perfil/Perfil'
+import EditarPerfil from './pages/Perfil/EditarPerfil'
 import Loader from './components/ui/Loader/Loader'
 
 const TIEMPO_MINIMO_CARGA = 1600
@@ -52,13 +55,16 @@ function App() {
           <Route element={<LayoutPublico />}>
             <Route path="/" element={<Inicio />} />
             <Route path="/articulo/:id" element={<ArticuloDetalle />} />
+            <Route path="/perfil" element={<Perfil />} />
+            <Route path="/perfil/editar" element={<EditarPerfil />} />
+            <Route path="/cliente" element={<VistaCliente />} />
+            <Route path="/carrito" element={<VistaCarrito />} />
             <Route path="*" element={<NoEncontrado />} />
           </Route>
           <Route path="/login" element={<IniciarSesion />} />
           <Route path="/register" element={<Registro />} />
           <Route path="/recuperar" element={<RecuperarContrasena />} />
           <Route path="/restablecer" element={<RestablecerContrasena />} />
-          <Route path="/cliente" element={<PanelCliente />} />
           <Route path="/admin" element={<PanelAdministrador />} />
           <Route path="/repartidor" element={<PanelRepartidor />} />
         </Routes>

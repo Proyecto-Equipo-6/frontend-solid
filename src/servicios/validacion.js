@@ -1,4 +1,4 @@
-export const REGEX_EMAIL = /\S+@\S+\.\S+/
+export const REGEX_EMAIL = /^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/
 export const REGEX_SOLO_NUMEROS = /^\d+$/
 export const REGEX_TELEFONO = /^\d{10}$/
 

@@ -3,10 +3,31 @@ import { useParams } from 'react-router-dom'
 import Alerta from '../../components/ui/Alerta/Alerta'
 import Boton from '../../components/ui/Boton/Boton'
 import { getProductoPublico } from '../../servicios/productos'
-import { formatoPrecio } from '../../servicios/formato'
+import { formatoPrecio, estadoStock, textoStock } from '../../servicios/formato'
 import { agregarAlCarrito } from '../../servicios/carrito'
 import NoEncontrado from '../NoEncontrado/NoEncontrado'
 import './ArticuloDetalle.css'
+
+function FichaTecnica({ articulo }) {
+  const filas = [
+    ['Código del producto', articulo.sku],
+    ['Categoría', articulo.categoria],
+    ['Proveedor', articulo.proveedor],
+    ['Disponibilidad', textoStock(articulo.stock)],
+    ['Garantía', articulo.garantia],
+  ]
+
+  return (
+    <dl className="detalle__ficha">
+      {filas.map(([etiqueta, valor]) => (
+        <div className="detalle__ficha-fila" key={etiqueta}>
+          <dt className="detalle__ficha-etiqueta">{etiqueta}</dt>
+          <dd className="detalle__ficha-valor">{valor}</dd>
+        </div>
+      ))}
+    </dl>
+  )
+}
 
 export default function ArticuloDetalle() {
   const { id } = useParams()
@@ -54,10 +75,22 @@ export default function ArticuloDetalle() {
     return <NoEncontrado />
   }
 
+  const agotado = estadoStock(articulo.stock) === 'agotado'
+
+  function etiquetaBoton() {
+    if (agregando) return 'Agregando…'
+    if (agotado) return 'No disponible'
+    return 'Agregar al carrito'
+  }
+
   return (
     <div className="detalle">
       <div className="detalle__imagen">
-        <img src={articulo.imagen} alt={articulo.titulo} />
+        {articulo.imagen ? (
+          <img src={articulo.imagen} alt={articulo.titulo} />
+        ) : (
+          <div className="detalle__imagen-vacia">Nexbit</div>
+        )}
       </div>
 
       <div className="detalle__cuerpo">
@@ -66,13 +99,17 @@ export default function ArticuloDetalle() {
         <p className="detalle__descripcion">{articulo.descripcion}</p>
         <p className="detalle__precio">{formatoPrecio(articulo.precio)}</p>
         <p className="detalle__detalles">
-          {articulo.stock > 0 ? `${articulo.stock} disponibles` : 'Agotado'} · Garantía:{' '}
-          {articulo.garantia}
+          {textoStock(articulo.stock)} · Garantía: {articulo.garantia}
         </p>
-        <Boton completo disabled={articulo.stock <= 0} cargando={agregando} onClick={handleAgregar}>
-          {agregando ? 'Agregando…' : 'Agregar al carrito'}
+        <Boton completo disabled={agotado} cargando={agregando} onClick={handleAgregar}>
+          {etiquetaBoton()}
         </Boton>
         {aviso && <Alerta variante={aviso.variante}>{aviso.texto}</Alerta>}
+
+        <div className="detalle__ficha-bloque">
+          <h2 className="detalle__ficha-titulo">Ficha técnica</h2>
+          <FichaTecnica articulo={articulo} />
+        </div>
       </div>
     </div>
   )

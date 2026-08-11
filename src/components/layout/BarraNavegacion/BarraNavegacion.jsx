@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Marca from '../../ui/Marca/Marca'
+import { obtenerSesion } from '../../../servicios/sesion'
 import { NAVEGACION_PRINCIPAL } from '../../../config/aplicacion'
 import './BarraNavegacion.css'
 
 export default function BarraNavegacion() {
   const [menuAbierto, setMenuAbierto] = useState(false)
+  const sesion = obtenerSesion()
 
   return (
     <header className="barra">
@@ -24,12 +26,29 @@ export default function BarraNavegacion() {
         </nav>
 
         <div className="barra__acciones">
-          <Link to="/login" className="barra__boton barra__boton--texto">
-            Iniciar sesión
-          </Link>
-          <Link to="/register" className="barra__boton barra__boton--relleno">
-            Registrarse
-          </Link>
+          {sesion ? (
+            <>
+              <Link
+                to="/carrito"
+                className="barra__boton barra__boton--borde barra__boton--carrito"
+              >
+                <span className="barra__carrito-icono" aria-hidden="true">🛒</span>
+                Carrito
+              </Link>
+              <Link to="/perfil" className="barra__boton barra__boton--relleno">
+                Mi perfil
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="barra__boton barra__boton--texto">
+                Iniciar sesión
+              </Link>
+              <Link to="/register" className="barra__boton barra__boton--relleno">
+                Registrarse
+              </Link>
+            </>
+          )}
         </div>
 
         <button
@@ -54,20 +73,42 @@ export default function BarraNavegacion() {
               {enlace.nombre}
             </Link>
           ))}
-          <Link
-            to="/login"
-            className="barra__boton barra__boton--borde"
-            onClick={() => setMenuAbierto(false)}
-          >
-            Iniciar sesión
-          </Link>
-          <Link
-            to="/register"
-            className="barra__boton barra__boton--relleno"
-            onClick={() => setMenuAbierto(false)}
-          >
-            Registrarse
-          </Link>
+          {sesion ? (
+            <>
+              <Link
+                to="/carrito"
+                className="barra__boton barra__boton--borde barra__boton--carrito"
+                onClick={() => setMenuAbierto(false)}
+              >
+                <span className="barra__carrito-icono" aria-hidden="true">🛒</span>
+                Carrito
+              </Link>
+              <Link
+                to="/perfil"
+                className="barra__boton barra__boton--relleno"
+                onClick={() => setMenuAbierto(false)}
+              >
+                Mi perfil
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="barra__boton barra__boton--borde"
+                onClick={() => setMenuAbierto(false)}
+              >
+                Iniciar sesión
+              </Link>
+              <Link
+                to="/register"
+                className="barra__boton barra__boton--relleno"
+                onClick={() => setMenuAbierto(false)}
+              >
+                Registrarse
+              </Link>
+            </>
+          )}
         </div>
       )}
     </header>

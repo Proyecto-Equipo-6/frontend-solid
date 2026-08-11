@@ -1,0 +1,88 @@
+.perfil {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 20px 80px;
+  box-sizing: border-box;
+}
+
+.perfil--cargando {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--text);
+}
+
+.perfil__tarjeta {
+  width: 100%;
+  max-width: 560px;
+  padding: 32px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radio-grande);
+  box-shadow: var(--shadow-card);
+}
+
+.perfil__etiqueta {
+  margin: 0;
+  padding: 4px 12px;
+  display: inline-block;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border-radius: 999px;
+}
+
+.perfil__titulo {
+  margin: 12px 0 24px;
+  font-size: 28px;
+  color: var(--text-h);
+}
+
+.perfil__lista {
+  margin: 0 0 24px;
+}
+
+.perfil__fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.perfil__fila:last-child {
+  border-bottom: none;
+}
+
+.perfil__fila-etiqueta {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-suave);
+}
+
+.perfil__fila-valor {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: right;
+  color: var(--text-h);
+}
+
+.perfil__acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.perfil__nota {
+  margin: 12px 0 0;
+  font-size: 13px;
+  text-align: center;
+  color: var(--text-suave);
+}

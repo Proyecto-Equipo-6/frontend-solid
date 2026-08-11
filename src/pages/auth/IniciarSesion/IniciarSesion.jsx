@@ -96,7 +96,7 @@ export default function IniciarSesion() {
         />
 
         <label className="login__recordar">
-          <input type="checkbox" name="recordar" />
+          <input type="checkbox" name="recordar" />{' '}
           Recordarme
         </label>
 

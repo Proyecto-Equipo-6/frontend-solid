@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import TarjetaArticulo from '../../components/articulo/TarjetaArticulo/TarjetaArticulo'
-import { getProductosPublicos } from '../../servicios/productos'
+import Catalogo from '../../components/articulo/Catalogo/Catalogo'
+import { getProductosPublicos, getCategoriasPublicas } from '../../servicios/productos'
 import { formatoPrecio } from '../../servicios/formato'
 import './Inicio.css'
 
@@ -69,37 +69,18 @@ function Hero({ destacado, cargando }) {
   )
 }
 
-function Catalogo({ articulos, cargando }) {
-  return (
-    <section id="catalogo" className="catalogo">
-      <div className="catalogo__cabecera">
-        <h2 className="catalogo__titulo">Nuestro catálogo</h2>
-        <p className="catalogo__sub">
-          Productos disponibles con stock real y garantía incluida.
-        </p>
-      </div>
-      {cargando ? (
-        <p className="catalogo__cargando">Cargando catálogo…</p>
-      ) : (
-        <div className="catalogo__grid">
-          {articulos.map((articulo) => (
-            <TarjetaArticulo key={articulo.id} articulo={articulo} />
-          ))}
-        </div>
-      )}
-    </section>
-  )
-}
-
 export default function Inicio() {
   const [articulos, setArticulos] = useState([])
+  const [categorias, setCategorias] = useState([])
   const [cargando, setCargando] = useState(true)
 
   useEffect(() => {
     let activo = true
-    getProductosPublicos()
-      .then((lista) => {
-        if (activo) setArticulos(lista)
+    Promise.all([getProductosPublicos(), getCategoriasPublicas()])
+      .then(([listaProductos, listaCategorias]) => {
+        if (!activo) return
+        setArticulos(listaProductos)
+        setCategorias(listaCategorias)
       })
       .finally(() => {
         if (activo) setCargando(false)
@@ -114,7 +95,7 @@ export default function Inicio() {
   return (
     <>
       <Hero destacado={destacado} cargando={cargando} />
-      <Catalogo articulos={articulos} cargando={cargando} />
+      <Catalogo articulos={articulos} categorias={categorias} cargando={cargando} />
     </>
   )
 }

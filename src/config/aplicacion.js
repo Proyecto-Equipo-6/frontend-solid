@@ -11,6 +11,12 @@ export const PROVEEDORES_SOCIALES = ['Google', 'Facebook']
 
 export const TIPOS_DOCUMENTO = ['CC', 'Pasaporte', 'CE', 'Otro']
 
+export const CATALOGO = {
+  productosPorPagina: 8,
+  stockBajo: 10,
+  minimoBusqueda: 2,
+}
+
 export const ROLES = {
   1: { nombre: 'Administrador', panel: '/admin' },
   2: { nombre: 'Cliente', panel: '/cliente' },
