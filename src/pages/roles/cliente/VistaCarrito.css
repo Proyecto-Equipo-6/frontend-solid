@@ -25,8 +25,8 @@
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #2d7ff9;
-  background: rgba(45, 127, 249, 0.1);
+  color: var(--accent);
+  background: var(--accent-bg);
   border-radius: 999px;
 }
 

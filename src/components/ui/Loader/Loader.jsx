@@ -44,7 +44,7 @@ const StyledOverlay = styled.div`
   z-index: 9999;
   display: grid;
   place-items: center;
-  background: var(--bg-suave, #faf9fb);
+  background: var(--bg-suave, #f6f8fc);
   opacity: ${({ oculto }) => (oculto ? 0 : 1)};
   visibility: ${({ oculto }) => (oculto ? 'hidden' : 'visible')};
   transition:

@@ -54,9 +54,9 @@
   align-self: flex-start;
   padding: 4px 10px;
   font-size: 12px;
-  font-weight: 500;
-  color: var(--text-h);
-  background: var(--accent-bg);
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
   border-radius: 999px;
 }
 

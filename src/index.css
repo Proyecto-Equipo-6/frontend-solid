@@ -1,12 +1,12 @@
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --text-suave: #9a94a3;
+  --text: #5b6472;
+  --text-h: #0b1120;
+  --text-suave: #8a94a6;
   --bg: #fff;
-  --bg-suave: #faf9fb;
-  --border: #e5e4e7;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
+  --bg-suave: #f6f8fc;
+  --border: #e2e8f0;
+  --accent: #275efe;
+  --accent-bg: rgba(39, 94, 254, 0.1);
   --sobre-accent: #fff;
   --error: #dc2626;
   --error-bg: #fee2e2;
@@ -18,8 +18,8 @@
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px,
     rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
   --shadow-card:
-    0 24px 48px -12px rgba(84, 44, 140, 0.28),
-    0 8px 16px -8px rgba(84, 44, 140, 0.14);
+    0 24px 48px -12px rgba(39, 94, 254, 0.28),
+    0 8px 16px -8px rgba(39, 94, 254, 0.14);
 
   --radio: 8px;
   --radio-grande: 12px;
@@ -45,8 +45,8 @@
     --bg: #16171d;
     --bg-suave: #1d1f27;
     --border: #2e303a;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
+    --accent: #2f71ff;
+    --accent-bg: rgba(47, 113, 255, 0.15);
     --error: #f87171;
     --error-bg: rgba(248, 113, 113, 0.12);
     --error-border: rgba(248, 113, 113, 0.35);
