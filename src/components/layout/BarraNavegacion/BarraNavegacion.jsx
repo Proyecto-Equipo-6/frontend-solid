@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import Marca from '../../ui/Marca/Marca'
-import { obtenerSesion } from '../../../servicios/sesion'
-import { NAVEGACION_PRINCIPAL } from '../../../config/aplicacion'
+import Marca from '@/components/ui/Marca/Marca'
+import { obtenerSesion } from '@/services/sesion'
+import { NAVEGACION_PRINCIPAL } from '@/config/aplicacion'
 import './BarraNavegacion.css'
 
 export default function BarraNavegacion() {

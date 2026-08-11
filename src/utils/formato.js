@@ -1,4 +1,4 @@
-import { CATALOGO } from '../config/aplicacion'
+import { CATALOGO } from '@/config/aplicacion'
 
 export function formatoPrecio(precio) {
   return new Intl.NumberFormat('es-CO', {

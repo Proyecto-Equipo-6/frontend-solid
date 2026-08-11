@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import Alerta from '../../components/ui/Alerta/Alerta'
-import Boton from '../../components/ui/Boton/Boton'
-import { getProductoPublico } from '../../servicios/productos'
-import { formatoPrecio, estadoStock, textoStock } from '../../servicios/formato'
-import { agregarAlCarrito } from '../../servicios/carrito'
-import NoEncontrado from '../NoEncontrado/NoEncontrado'
+import Alerta from '@/components/ui/Alerta/Alerta'
+import Boton from '@/components/ui/Boton/Boton'
+import { getProductoPublico } from '@/services/productos'
+import { formatoPrecio, estadoStock, textoStock } from '@/utils/formato'
+import { agregarAlCarrito } from '@/services/carrito'
+import NoEncontrado from '@/pages/NoEncontrado/NoEncontrado'
 import './ArticuloDetalle.css'
 
 function FichaTecnica({ articulo }) {

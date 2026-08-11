@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Catalogo from '../../components/articulo/Catalogo/Catalogo'
-import { getProductosPublicos, getCategoriasPublicas } from '../../servicios/productos'
-import { formatoPrecio } from '../../servicios/formato'
+import Catalogo from '@/components/producto/Catalogo/Catalogo'
+import { getProductosPublicos, getCategoriasPublicas } from '@/services/productos'
+import { formatoPrecio } from '@/utils/formato'
 import './Inicio.css'
 
 function Hero({ destacado, cargando }) {

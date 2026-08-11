@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Alerta from '../../components/ui/Alerta/Alerta'
-import Boton from '../../components/ui/Boton/Boton'
-import Campo from '../../components/ui/Campo/Campo'
-import { actualizarPerfil, obtenerPerfil } from '../../servicios/api'
-import { obtenerSesion, guardarSesion } from '../../servicios/sesion'
-import { esEmailValido, esTelefonoValido } from '../../servicios/validacion'
+import Alerta from '@/components/ui/Alerta/Alerta'
+import Boton from '@/components/ui/Boton/Boton'
+import Campo from '@/components/ui/Campo/Campo'
+import { actualizarPerfil, obtenerPerfil } from '@/services/api'
+import { obtenerSesion, guardarSesion } from '@/services/sesion'
+import { esEmailValido, esTelefonoValido } from '@/utils/validacion'
 import './EditarPerfil.css'
 
 const INICIAL = {

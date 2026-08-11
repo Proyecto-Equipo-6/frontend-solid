@@ -1,5 +1,5 @@
 import { ENDPOINTS, request } from './api'
-import { PRODUCTOS_MOCK } from './mocks/productos'
+import { PRODUCTOS_MOCK } from '@/mocks/productos'
 
 const USAR_MOCK = import.meta.env.VITE_USAR_MOCK !== 'false'
 

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { formatoPrecio, estadoStock, textoStock } from '../../../servicios/formato'
+import { formatoPrecio, estadoStock, textoStock } from '@/utils/formato'
 import './TarjetaArticulo.css'
 
 export default function TarjetaArticulo({ articulo }) {

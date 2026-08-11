@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import Marca from '../../ui/Marca/Marca'
-import { MARCA, NAVEGACION_PRINCIPAL } from '../../../config/aplicacion'
+import Marca from '@/components/ui/Marca/Marca'
+import { MARCA, NAVEGACION_PRINCIPAL } from '@/config/aplicacion'
 import './PiePagina.css'
 
 export default function PiePagina() {

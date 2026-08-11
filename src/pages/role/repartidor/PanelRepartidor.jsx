@@ -1,6 +1,6 @@
-import Boton from '../../../components/ui/Boton/Boton'
-import usePanelRol from '../usePanelRol'
-import '../roles.css'
+import Boton from '@/components/ui/Boton/Boton'
+import usePanelRol from '@/hooks/usePanelRol'
+import '@/pages/role/role.css'
 import './PanelRepartidor.css'
 
 export default function PanelRepartidor() {

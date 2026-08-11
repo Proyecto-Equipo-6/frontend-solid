@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
-import TarjetaArticulo from '../TarjetaArticulo/TarjetaArticulo'
-import { CATALOGO } from '../../../config/aplicacion'
+import TarjetaArticulo from '@/components/producto/TarjetaArticulo/TarjetaArticulo'
+import { CATALOGO } from '@/config/aplicacion'
 import './Catalogo.css'
 
 function Filtros({ categorias, categoriaActiva, busqueda, onChangeCategoria, onChangeBusqueda }) {

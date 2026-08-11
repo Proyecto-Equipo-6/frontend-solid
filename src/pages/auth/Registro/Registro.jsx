@@ -1,17 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import AuthLayout from '../../../components/layout/AuthLayout/AuthLayout'
-import Alerta from '../../../components/ui/Alerta/Alerta'
-import Boton from '../../../components/ui/Boton/Boton'
-import Campo from '../../../components/ui/Campo/Campo'
-import { registrarUsuario } from '../../../servicios/api'
-import { MARCA, TIPOS_DOCUMENTO } from '../../../config/aplicacion'
+import AuthLayout from '@/components/layout/AuthLayout/AuthLayout'
+import Alerta from '@/components/ui/Alerta/Alerta'
+import Boton from '@/components/ui/Boton/Boton'
+import Campo from '@/components/ui/Campo/Campo'
+import { registrarUsuario } from '@/services/api'
+import { MARCA, TIPOS_DOCUMENTO } from '@/config/aplicacion'
 import {
   REGEX_SOLO_NUMEROS,
   esEmailValido,
   esPasswordValida,
   esTelefonoValido,
-} from '../../../servicios/validacion'
+} from '@/utils/validacion'
 import './Registro.css'
 
 const INICIAL = {

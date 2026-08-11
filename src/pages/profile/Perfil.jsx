@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Alerta from '../../components/ui/Alerta/Alerta'
-import Boton from '../../components/ui/Boton/Boton'
-import { obtenerPerfil, cerrarSesion } from '../../servicios/api'
-import { obtenerSesion, guardarSesion, limpiarSesion } from '../../servicios/sesion'
-import { ROLES } from '../../config/aplicacion'
+import Alerta from '@/components/ui/Alerta/Alerta'
+import Boton from '@/components/ui/Boton/Boton'
+import { obtenerPerfil, cerrarSesion } from '@/services/api'
+import { obtenerSesion, guardarSesion, limpiarSesion } from '@/services/sesion'
+import { ROLES } from '@/config/aplicacion'
 import './Perfil.css'
 
 const CAMPOS_PERFIL = [

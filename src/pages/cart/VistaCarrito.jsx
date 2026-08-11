@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import Boton from '../../../components/ui/Boton/Boton'
-import { obtenerSesion } from '../../../servicios/sesion'
-import { formatoPrecio } from '../../../servicios/formato'
+import Boton from '@/components/ui/Boton/Boton'
+import { obtenerSesion } from '@/services/sesion'
+import { formatoPrecio } from '@/utils/formato'
 import './VistaCarrito.css'
 
 export default function VistaCarrito() {

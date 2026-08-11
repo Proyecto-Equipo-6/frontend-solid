@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { cerrarSesion } from '../../servicios/api'
-import { obtenerSesion, limpiarSesion } from '../../servicios/sesion'
-import { ROLES } from '../../config/aplicacion'
+import { cerrarSesion } from '@/services/api'
+import { obtenerSesion, limpiarSesion } from '@/services/sesion'
+import { ROLES } from '@/config/aplicacion'
 
 export default function usePanelRol(rolEsperado) {
   const navigate = useNavigate()

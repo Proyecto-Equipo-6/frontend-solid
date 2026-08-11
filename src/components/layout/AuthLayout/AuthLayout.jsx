@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
-import Boton from '../../ui/Boton/Boton'
-import { GoogleIcon, FacebookIcon } from '../../ui/Iconos/Iconos'
-import { MARCA, PROVEEDORES_SOCIALES } from '../../../config/aplicacion'
+import Boton from '@/components/ui/Boton/Boton'
+import { GoogleIcon, FacebookIcon } from '@/components/ui/Iconos/Iconos'
+import { MARCA, PROVEEDORES_SOCIALES } from '@/config/aplicacion'
 import './AuthLayout.css'
 
 const ICONOS_PROVEEDORES = {

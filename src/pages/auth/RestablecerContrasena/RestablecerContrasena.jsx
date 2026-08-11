@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
-import AuthLayout from '../../../components/layout/AuthLayout/AuthLayout'
-import Alerta from '../../../components/ui/Alerta/Alerta'
-import Boton from '../../../components/ui/Boton/Boton'
-import Campo from '../../../components/ui/Campo/Campo'
-import { restablecerContrasena } from '../../../servicios/api'
-import { esPasswordValida } from '../../../servicios/validacion'
+import AuthLayout from '@/components/layout/AuthLayout/AuthLayout'
+import Alerta from '@/components/ui/Alerta/Alerta'
+import Boton from '@/components/ui/Boton/Boton'
+import Campo from '@/components/ui/Campo/Campo'
+import { restablecerContrasena } from '@/services/api'
+import { esPasswordValida } from '@/utils/validacion'
 import './RestablecerContrasena.css'
 
 const INICIAL = { nueva_password: '', confirmar_password: '' }

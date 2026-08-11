@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import Catalogo from '../../../components/articulo/Catalogo/Catalogo'
-import usePanelRol from '../usePanelRol'
-import { getProductosPublicos, getCategoriasPublicas } from '../../../servicios/productos'
+import Catalogo from '@/components/producto/Catalogo/Catalogo'
+import usePanelRol from '@/hooks/usePanelRol'
+import { getProductosPublicos, getCategoriasPublicas } from '@/services/productos'
 import './VistaCliente.css'
 
 export default function VistaCliente() {

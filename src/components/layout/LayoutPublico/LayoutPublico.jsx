@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
-import BarraNavegacion from '../BarraNavegacion/BarraNavegacion'
-import PiePagina from '../PiePagina/PiePagina'
+import BarraNavegacion from '@/components/layout/BarraNavegacion/BarraNavegacion'
+import PiePagina from '@/components/layout/PiePagina/PiePagina'
 import './LayoutPublico.css'
 
 export default function LayoutPublico() {

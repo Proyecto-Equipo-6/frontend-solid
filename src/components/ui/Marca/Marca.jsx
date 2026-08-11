@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { MARCA } from '../../../config/aplicacion'
+import { MARCA } from '@/config/aplicacion'
 import './Marca.css'
 
 export default function Marca() {
