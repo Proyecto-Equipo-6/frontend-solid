@@ -1,0 +1,72 @@
+.grafico-estados {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  background: var(--dash-tarjeta);
+  border: 1px solid var(--dash-border);
+  border-radius: 14px;
+}
+
+.grafico-estados__titulo {
+  margin: 0 0 4px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--dash-texto);
+}
+
+.grafico-estados__subtitulo {
+  margin: 0;
+  font-size: 12px;
+  color: var(--dash-texto-tenue);
+}
+
+.grafico-estados__cuerpo {
+  height: 210px;
+  width: 100%;
+}
+
+.grafico-estados__leyenda {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.grafico-estados__leyenda-fila {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.grafico-estados__leyenda-punto {
+  width: 9px;
+  height: 9px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.grafico-estados__leyenda-nombre {
+  flex: 1;
+  color: var(--dash-texto-suave);
+}
+
+.grafico-estados__leyenda-valor {
+  font-weight: 600;
+  color: var(--dash-texto);
+  font-variant-numeric: tabular-nums;
+}
+
+.grafico-estados__leyenda-fila--total {
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px solid var(--dash-border);
+}
+
+.grafico-estados__leyenda-fila--total .grafico-estados__leyenda-nombre {
+  color: var(--dash-texto);
+  font-weight: 700;
+}

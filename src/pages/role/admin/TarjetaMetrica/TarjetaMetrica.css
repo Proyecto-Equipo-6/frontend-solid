@@ -1,0 +1,64 @@
+.tarjeta-metrica {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px;
+  background: var(--dash-tarjeta);
+  border: 1px solid var(--dash-border);
+  border-radius: 14px;
+}
+
+.tarjeta-metrica__cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tarjeta-metrica__titulo {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--dash-texto-suave);
+}
+
+.tarjeta-metrica__badge {
+  padding: 3px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 999px;
+}
+
+.tarjeta-metrica__badge--positivo {
+  color: var(--dash-verde);
+  background: var(--dash-verde-bg);
+}
+
+.tarjeta-metrica__badge--negativo {
+  color: var(--dash-rojo);
+  background: var(--dash-rojo-bg);
+}
+
+.tarjeta-metrica__badge--neutro {
+  color: var(--dash-texto-suave);
+  background: var(--dash-tarjeta-alta);
+}
+
+.tarjeta-metrica__valor {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--dash-texto);
+}
+
+.tarjeta-metrica__subtitulo {
+  margin: 0;
+  font-size: 12px;
+  color: var(--dash-texto-tenue);
+}
+
+.tarjeta-metrica__sparkline {
+  height: 44px;
+  margin-top: 4px;
+}

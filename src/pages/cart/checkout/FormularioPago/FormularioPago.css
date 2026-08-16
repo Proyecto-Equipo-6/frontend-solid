@@ -1,0 +1,112 @@
+.form-pago {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-pago__titulo {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.form-pago__panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.form-pago__metodo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 16px 16px 16px 40px;
+  text-align: left;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radio);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.form-pago__metodo:hover {
+  border-color: var(--accent);
+}
+
+.form-pago__metodo:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.form-pago__metodo--activo {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+}
+
+.form-pago__metodo-check {
+  position: absolute;
+  top: 16px;
+  left: 14px;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--sobre-accent);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.form-pago__metodo--activo .form-pago__metodo-check {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.form-pago__metodo-nombre {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.form-pago__metodo-descripcion {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-suave);
+}
+
+.form-pago__detalle {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+  background: var(--bg-suave);
+  border: 1px solid var(--border);
+  border-radius: var(--radio);
+}
+
+.form-pago__detalle-titulo {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.form-pago__detalle-texto {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+@media (max-width: 640px) {
+  .form-pago__panel {
+    grid-template-columns: 1fr;
+  }
+}

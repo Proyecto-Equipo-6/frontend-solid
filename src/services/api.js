@@ -9,6 +9,8 @@ export const ENDPOINTS = {
   productosPublicos: '/v1/productos/publico',
   productoDetalle: (id) => `/v1/productos/${id}`,
   categoriasPublicas: '/v1/categorias',
+  bancosPublicos: '/v1/bancos',
+  analiticaResumen: '/v1/analitica/resumen',
   carritoAgregar: '/v1/carrito',
   perfil: '/v1/users/perfil',
 }
@@ -72,6 +74,14 @@ export function restablecerContrasena(datos) {
 
 export function getCategoriasPublicas() {
   return request(ENDPOINTS.categoriasPublicas)
+}
+
+export function getBancosPublicos() {
+  return request(ENDPOINTS.bancosPublicos)
+}
+
+export function getResumenAnalitica() {
+  return request(ENDPOINTS.analiticaResumen)
 }
 
 export function obtenerPerfil() {

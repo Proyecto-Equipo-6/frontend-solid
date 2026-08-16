@@ -35,3 +35,222 @@ export function XIcon() {
     </svg>
   )
 }
+
+export function IconoCarrito({ tamano = 22 }) {
+  return (
+    <svg
+      width={tamano}
+      height={tamano}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="9" cy="20" r="1.4" fill="currentColor" stroke="none" />
+      <circle cx="17" cy="20" r="1.4" fill="currentColor" stroke="none" />
+      <path d="M3 4h2l2.3 11.2a1 1 0 0 0 1 .8h8.7a1 1 0 0 0 1-.76L20.4 8H6" />
+    </svg>
+  )
+}
+
+export function IconoImagen({ tamano = 26 }) {
+  return (
+    <svg
+      width={tamano}
+      height={tamano}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="3" y="3" width="18" height="18" rx="2.5" />
+      <circle cx="9" cy="9" r="1.6" />
+      <path d="M4 18.5l4-4a1.5 1.5 0 0 1 2.1 0l3.4 3.4" />
+      <path d="M14.5 16l1.4-1.4a1.5 1.5 0 0 1 2.1 0L21 17.5" />
+    </svg>
+  )
+}
+
+export function IconoPaquete({ tamano = 24 }) {
+  return (
+    <svg
+      width={tamano}
+      height={tamano}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M21 8.5v7a2 2 0 0 1-1 1.73l-7 4a2 2 0 0 1-2 0l-7-4a2 2 0 0 1-1-1.73v-7a2 2 0 0 1 1-1.73l7-4a2 2 0 0 1 2 0l7 4a2 2 0 0 1 1 1.73Z" />
+      <path d="M3.3 7.3 12 12l8.7-4.7" />
+      <path d="M12 22V12" />
+    </svg>
+  )
+}
+
+function IconoBase({ tamano = 18, children }) {
+  return (
+    <svg
+      width={tamano}
+      height={tamano}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {children}
+    </svg>
+  )
+}
+
+export function IconoInicio({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <path d="M3 10.5 12 3l9 7.5" />
+      <path d="M5 9.5V21h14V9.5" />
+      <path d="M10 21v-6h4v6" />
+    </IconoBase>
+  )
+}
+
+export function IconoAnalitica({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <path d="M3 3v18h18" />
+      <path d="M7 14l3.5-4 3 2.5 4-5.5" />
+      <path d="M17 7h3v3" />
+    </IconoBase>
+  )
+}
+
+export function IconoClientes({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <circle cx="9" cy="8" r="3.2" />
+      <path d="M3.5 20a5.5 5.5 0 0 1 11 0" />
+      <path d="M16 5.5a3 3 0 0 1 0 5.6" />
+      <path d="M17.5 14.5a5.5 5.5 0 0 1 3 5.5" />
+    </IconoBase>
+  )
+}
+
+export function IconoTareas({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <rect x="4" y="3" width="16" height="18" rx="2" />
+      <path d="m8.5 12 2.2 2.2 4.8-5" />
+    </IconoBase>
+  )
+}
+
+export function IconoAjustes({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <circle cx="12" cy="12" r="3.2" />
+      <path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5 5l2.1 2.1M16.9 16.9 19 19M19 5l-2.1 2.1M7.1 16.9 5 19" />
+    </IconoBase>
+  )
+}
+
+export function IconoAcerca({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 11v6" />
+      <path d="M12 7.5h.01" />
+    </IconoBase>
+  )
+}
+
+export function IconoFeedback({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5Z" />
+      <path d="M8 10h.01M12 10h.01M16 10h.01" />
+    </IconoBase>
+  )
+}
+
+export function IconoDestello({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8" />
+      <circle cx="12" cy="12" r="2.2" />
+    </IconoBase>
+  )
+}
+
+export function IconoBuscar({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <circle cx="11" cy="11" r="6.5" />
+      <path d="m20 20-3.6-3.6" />
+    </IconoBase>
+  )
+}
+
+export function IconoCalendario({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <rect x="3.5" y="5" width="17" height="16" rx="2" />
+      <path d="M8 3v4M16 3v4M3.5 10h17" />
+    </IconoBase>
+  )
+}
+
+export function IconoCampana({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <path d="M6 9.5a6 6 0 0 1 12 0c0 4 1.5 5.5 1.5 5.5h-15S6 13.5 6 9.5Z" />
+      <path d="M10 18.5a2 2 0 0 0 4 0" />
+    </IconoBase>
+  )
+}
+
+export function IconoPuntos({ tamano }) {
+  return (
+    <svg width={tamano} height={tamano} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <circle cx="5" cy="12" r="1.8" />
+      <circle cx="12" cy="12" r="1.8" />
+      <circle cx="19" cy="12" r="1.8" />
+    </svg>
+  )
+}
+
+export function IconoCerrarSesion({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+      <path d="m16 17 5-5-5-5" />
+      <path d="M21 12H9" />
+    </IconoBase>
+  )
+}
+
+export function IconoChevron({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <path d="m6 9 6 6 6-6" />
+    </IconoBase>
+  )
+}
+
+export function IconoFlecha({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <path d="M5 12h14M14 7l5 5-5 5" />
+    </IconoBase>
+  )
+}

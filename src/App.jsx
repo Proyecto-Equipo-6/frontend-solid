@@ -14,6 +14,7 @@ import VistaCarrito from '@/pages/cart/VistaCarrito'
 import PanelRepartidor from '@/pages/role/repartidor/PanelRepartidor'
 import Perfil from '@/pages/profile/Perfil'
 import EditarPerfil from '@/pages/profile/EditarPerfil'
+import Checkout from '@/pages/cart/checkout/Checkout'
 import Loader from '@/components/ui/Loader/Loader'
 
 const TIEMPO_MINIMO_CARGA = 1600
@@ -59,6 +60,7 @@ function App() {
             <Route path="/perfil/editar" element={<EditarPerfil />} />
             <Route path="/cliente" element={<VistaCliente />} />
             <Route path="/carrito" element={<VistaCarrito />} />
+            <Route path="/checkout" element={<Checkout />} />
             <Route path="*" element={<NoEncontrado />} />
           </Route>
           <Route path="/login" element={<IniciarSesion />} />

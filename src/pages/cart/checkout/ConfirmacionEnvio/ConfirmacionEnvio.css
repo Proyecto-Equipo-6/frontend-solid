@@ -1,0 +1,95 @@
+.conf-envio {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.conf-envio__titulo {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.conf-envio__tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 22px;
+  background: var(--bg-suave);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.conf-envio__texto {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.conf-envio__lista {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.conf-envio__fila {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.conf-envio__fila:last-child {
+  border-bottom: none;
+}
+
+.conf-envio__fila dt {
+  font-size: 14px;
+  color: var(--text-suave);
+}
+
+.conf-envio__fila dd {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-h);
+  text-align: right;
+}
+
+.conf-envio__edicion {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.conf-envio__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.conf-envio__acciones {
+  display: flex;
+  gap: 12px;
+}
+
+.conf-envio__nota {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-suave);
+}
+
+@media (max-width: 640px) {
+  .conf-envio__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .conf-envio__acciones {
+    flex-direction: column;
+  }
+}

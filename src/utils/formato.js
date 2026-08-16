@@ -8,6 +8,26 @@ export function formatoPrecio(precio) {
   }).format(precio)
 }
 
+export function formatoCompacto(valor) {
+  return new Intl.NumberFormat('es-CO', {
+    notation: 'compact',
+    maximumFractionDigits: 1,
+  }).format(valor)
+}
+
+export function formatoNumero(valor) {
+  return new Intl.NumberFormat('en-US').format(valor)
+}
+
+export function formatoMonedaCompacta(valor) {
+  return new Intl.NumberFormat('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    notation: 'compact',
+    maximumFractionDigits: 1,
+  }).format(valor)
+}
+
 export function estadoStock(stock) {
   if (stock <= 0) return 'agotado'
   if (stock <= CATALOGO.stockBajo) return 'pocas'

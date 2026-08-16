@@ -4,7 +4,7 @@ import { cerrarSesion } from '@/services/api'
 import { obtenerSesion, limpiarSesion } from '@/services/sesion'
 import { ROLES } from '@/config/aplicacion'
 
-export default function usePanelRol(rolEsperado) {
+export default function usePanelRol(rolEsperado, { accesoLibre = false } = {}) {
   const navigate = useNavigate()
   const [sesion] = useState(obtenerSesion)
   const [cerrando, setCerrando] = useState(false)
@@ -14,13 +14,13 @@ export default function usePanelRol(rolEsperado) {
 
   useEffect(() => {
     if (!sesion) {
-      navigate('/login', { replace: true })
+      if (!accesoLibre) navigate('/login', { replace: true })
       return
     }
     if (sesion.id_rol !== rolEsperado) {
       navigate(rol?.panel ?? '/', { replace: true })
     }
-  }, [sesion, rolEsperado, rol, navigate])
+  }, [sesion, rolEsperado, rol, navigate, accesoLibre])
 
   async function handleCerrarSesion() {
     setCerrando(true)
@@ -35,7 +35,9 @@ export default function usePanelRol(rolEsperado) {
     }
   }
 
-  const autorizado = Boolean(sesion && sesion.id_rol === rolEsperado)
+  const autorizado = accesoLibre
+    ? Boolean(!sesion || sesion.id_rol === rolEsperado)
+    : Boolean(sesion && sesion.id_rol === rolEsperado)
 
   return { sesion, rol, autorizado, cerrando, error, handleCerrarSesion }
 }

@@ -1,0 +1,102 @@
+.tabla-productos {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  background: var(--dash-tarjeta);
+  border: 1px solid var(--dash-border);
+  border-radius: 14px;
+}
+
+.tabla-productos__titulo {
+  margin: 0 0 4px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--dash-texto);
+}
+
+.tabla-productos__subtitulo {
+  margin: 0;
+  font-size: 12px;
+  color: var(--dash-texto-tenue);
+}
+
+.tabla-productos__volumen {
+  overflow-x: auto;
+}
+
+.tabla-productos__tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  color: var(--dash-texto-suave);
+}
+
+.tabla-productos__tabla th {
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--dash-texto-tenue);
+  border-bottom: 1px solid var(--dash-border);
+  white-space: nowrap;
+}
+
+.tabla-productos__tabla td {
+  padding: 12px;
+  border-bottom: 1px solid var(--dash-border);
+  white-space: nowrap;
+}
+
+.tabla-productos__tabla tbody tr:hover {
+  background: var(--dash-tarjeta-alta);
+}
+
+.tabla-productos__nombre {
+  display: block;
+  font-weight: 600;
+  color: var(--dash-texto);
+}
+
+.tabla-productos__sku {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--dash-texto-tenue);
+}
+
+.tabla-productos__barra-fondo {
+  display: block;
+  height: 4px;
+  margin-top: 8px;
+  background: var(--dash-tarjeta-alta);
+  border-radius: 999px;
+  overflow: hidden;
+  max-width: 160px;
+}
+
+.tabla-productos__barra {
+  display: block;
+  height: 100%;
+  background: var(--dash-azul);
+  border-radius: 999px;
+}
+
+.tabla-productos__categoria {
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--dash-texto-suave);
+  background: var(--dash-tarjeta-alta);
+  border-radius: 999px;
+}
+
+.tabla-productos__numero {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.tabla-productos__ventas {
+  font-weight: 700;
+  color: var(--dash-texto);
+}

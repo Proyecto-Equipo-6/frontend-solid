@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Marca from '@/components/ui/Marca/Marca'
+import { IconoCarrito } from '@/components/ui/Iconos/Iconos'
 import { obtenerSesion } from '@/services/sesion'
 import { NAVEGACION_PRINCIPAL } from '@/config/aplicacion'
 import './BarraNavegacion.css'
@@ -32,7 +33,9 @@ export default function BarraNavegacion() {
                 to="/carrito"
                 className="barra__boton barra__boton--borde barra__boton--carrito"
               >
-                <span className="barra__carrito-icono" aria-hidden="true">🛒</span>
+                <span className="barra__carrito-icono" aria-hidden="true">
+                  <IconoCarrito tamano={18} />
+                </span>
                 Carrito
               </Link>
               <Link to="/perfil" className="barra__boton barra__boton--relleno">
@@ -80,7 +83,9 @@ export default function BarraNavegacion() {
                 className="barra__boton barra__boton--borde barra__boton--carrito"
                 onClick={() => setMenuAbierto(false)}
               >
-                <span className="barra__carrito-icono" aria-hidden="true">🛒</span>
+                <span className="barra__carrito-icono" aria-hidden="true">
+                  <IconoCarrito tamano={18} />
+                </span>
                 Carrito
               </Link>
               <Link

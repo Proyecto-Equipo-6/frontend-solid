@@ -55,7 +55,7 @@ export default function ArticuloDetalle() {
     setAviso(null)
     setAgregando(true)
     try {
-      await agregarAlCarrito(articulo.id)
+      await agregarAlCarrito(articulo)
       setAviso({ variante: 'exito', texto: 'Producto agregado al carrito.' })
     } catch {
       setAviso({
