@@ -1,12 +1,12 @@
 .panel--repartidor {
-  background: linear-gradient(180deg, #14260f 0%, #1e3a16 100%);
+  background: linear-gradient(180deg, #0d0d0d 0%, #1a1a1a 100%);
 }
 
 .panel--repartidor .panel__etiqueta {
-  color: #7cdb6a;
-  background: rgba(124, 219, 106, 0.12);
+  color: #d4d4d4;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .panel--repartidor .panel__titulo {
-  color: #7cdb6a;
+  color: #e5e5e5;
 }

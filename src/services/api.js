@@ -1,4 +1,7 @@
+import { obtenerSesion, guardarSesion } from './sesion'
+
 const BASE_URL = import.meta.env.VITE_API_URL || '/api'
+const USAR_MOCK = import.meta.env.VITE_USAR_MOCK !== 'false'
 
 export const ENDPOINTS = {
   registrarUsuario: '/v1/users',
@@ -77,6 +80,14 @@ export function getCategoriasPublicas() {
 }
 
 export function getBancosPublicos() {
+  if (USAR_MOCK) {
+    return Promise.resolve([
+      { id_banco: 1, nombre: 'Nequi', descripcion: 'Monedero virtual', numero_cuenta: '300 123 4567' },
+      { id_banco: 2, nombre: 'Daviplata', descripcion: 'Monedero virtual', numero_cuenta: '300 123 4567' },
+      { id_banco: 3, nombre: 'Bancolombia', descripcion: 'Transferencia a cuenta de ahorros', numero_cuenta: '123-456789-01' },
+    ])
+  }
+
   return request(ENDPOINTS.bancosPublicos)
 }
 
@@ -85,9 +96,27 @@ export function getResumenAnalitica() {
 }
 
 export function obtenerPerfil() {
+  if (USAR_MOCK) {
+    const sesion = obtenerSesion()
+    if (!sesion) {
+      const error = new Error('No hay una sesión activa.')
+      error.status = 401
+      return Promise.reject(error)
+    }
+    return Promise.resolve(sesion)
+  }
+
   return request(ENDPOINTS.perfil)
 }
 
 export function actualizarPerfil(datos) {
+  if (USAR_MOCK) {
+    const sesion = obtenerSesion() || {}
+    const perfil = { ...sesion, ...datos }
+    delete perfil.password
+    guardarSesion(perfil)
+    return Promise.resolve({ perfil, mensaje: 'Perfil actualizado con éxito.' })
+  }
+
   return request(ENDPOINTS.perfil, { metodo: 'PUT', datos })
 }

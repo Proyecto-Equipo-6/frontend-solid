@@ -254,3 +254,55 @@ export function IconoFlecha({ tamano }) {
     </IconoBase>
   )
 }
+
+export function IconoCategorias({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <path d="m12 3 9 5-9 5-9-5 9-5Z" />
+      <path d="m3 12 9 5 9-5" />
+      <path d="m3 16.5 9 5 9-5" />
+    </IconoBase>
+  )
+}
+
+export function IconoTicket({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1.6a2.6 2.6 0 0 0 0 4.8V16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1.6a2.6 2.6 0 0 0 0-4.8Z" />
+      <path d="M13 6.5v.01M13 12v.01M13 17.5v.01" />
+    </IconoBase>
+  )
+}
+
+export function IconoProveedor({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <path d="M3 21h18" />
+      <path d="M5 21V7l7-4 7 4v14" />
+      <path d="M9 21v-4h6v4" />
+      <path d="M9 10h.01M15 10h.01" />
+    </IconoBase>
+  )
+}
+
+export function IconoRepartidor({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <path d="M2.5 7h11.5v9.5H2.5z" />
+      <path d="M14 10h3.8l3.7 3.2v3.3H14z" />
+      <circle cx="7" cy="16.5" r="1.7" />
+      <circle cx="16.5" cy="16.5" r="1.7" />
+      <path d="M8.7 16.5h5.8" />
+      <path d="M2.5 10h5" />
+    </IconoBase>
+  )
+}
+
+export function IconoRoles({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <path d="M12 3l7 2.8V12c0 4.6-2.9 7.7-7 9.2-4.1-1.5-7-4.6-7-9.2V5.8Z" />
+      <path d="m8.8 11.8 2.2 2.2 4.2-4.4" />
+    </IconoBase>
+  )
+}

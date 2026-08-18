@@ -22,7 +22,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--dash-azul);
+  color: var(--dash-accent);
 }
 
 .vista-perfil__titulo {
@@ -118,7 +118,7 @@
 }
 
 .vista-perfil__input:focus {
-  border-color: var(--dash-azul);
+  border-color: var(--dash-accent);
 }
 
 .vista-perfil__input::placeholder {

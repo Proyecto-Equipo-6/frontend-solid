@@ -16,7 +16,7 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--text);
-  background: var(--bg-suave, #f6f8fc);
+  background: var(--bg-suave, #f5f5f6);
   border-radius: 999px;
 }
 

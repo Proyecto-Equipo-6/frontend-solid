@@ -1,0 +1,56 @@
+.gestion {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.gestion__cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.gestion__titulo {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--dash-texto);
+}
+
+.gestion__descripcion {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--dash-texto-suave);
+}
+
+.gestion__tarjeta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 48px 24px;
+  text-align: center;
+  background: var(--dash-tarjeta);
+  border: 1px dashed var(--dash-border);
+  border-radius: 14px;
+}
+
+.gestion__tarjeta-icono {
+  display: inline-flex;
+  color: var(--dash-texto-tenue);
+}
+
+.gestion__tarjeta-titulo {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--dash-texto);
+}
+
+.gestion__tarjeta-texto {
+  margin: 0;
+  font-size: 13px;
+  color: var(--dash-texto-suave);
+  max-width: 440px;
+}

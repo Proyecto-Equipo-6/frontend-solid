@@ -1,5 +1,12 @@
 import {
   IconoInicio,
+  IconoClientes,
+  IconoPaquete,
+  IconoCategorias,
+  IconoTicket,
+  IconoProveedor,
+  IconoRepartidor,
+  IconoRoles,
   IconoCerrarSesion,
 } from '@/components/ui/Iconos/Iconos'
 import { NAVEGACION_PRINCIPAL_DASHBOARD } from '@/config/dashboard'
@@ -7,6 +14,13 @@ import './BarraLateral.css'
 
 const ICONOS = {
   inicio: IconoInicio,
+  clientes: IconoClientes,
+  paquete: IconoPaquete,
+  categorias: IconoCategorias,
+  ticket: IconoTicket,
+  proveedor: IconoProveedor,
+  repartidor: IconoRepartidor,
+  roles: IconoRoles,
 }
 
 function ItemNavegacion({ item, activo, onNavegar }) {

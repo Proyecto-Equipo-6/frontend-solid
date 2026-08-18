@@ -44,7 +44,7 @@ const StyledOverlay = styled.div`
   z-index: 9999;
   display: grid;
   place-items: center;
-  background: var(--bg-suave, #f6f8fc);
+  background: var(--bg-suave, #f5f5f6);
   opacity: ${({ oculto }) => (oculto ? 0 : 1)};
   visibility: ${({ oculto }) => (oculto ? 'hidden' : 'visible')};
   transition:
@@ -56,9 +56,9 @@ const StyledOverlay = styled.div`
 const StyledWrapper = styled.div`
   .loader {
     --duration: 3s;
-    --primary: rgba(39, 94, 254, 1);
-    --primary-light: #2f71ff;
-    --primary-rgba: rgba(39, 94, 254, 0);
+    --primary: var(--text-h);
+    --primary-light: var(--text);
+    --primary-rgba: transparent;
     width: 200px;
     height: 320px;
     position: relative;
@@ -80,7 +80,7 @@ const StyledWrapper = styled.div`
     right: 32%;
     bottom: -11px;
     /* change the back groung color on switching from light to dark mood */
-    background: #e8e8e8;
+    background: var(--border);
     transform: translateZ(200px) rotate(var(--r));
     -webkit-animation: mask var(--duration) linear forwards infinite;
     animation: mask var(--duration) linear forwards infinite;

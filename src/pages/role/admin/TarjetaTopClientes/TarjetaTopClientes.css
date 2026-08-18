@@ -51,8 +51,8 @@
   font-size: 14px;
   font-weight: 700;
   color: var(--dash-texto);
-  background: var(--dash-azul-bg);
-  border: 1px solid var(--dash-azul);
+  background: var(--dash-tarjeta-alta);
+  border: 1px solid var(--dash-border);
   border-radius: 50%;
 }
 

@@ -1,14 +1,17 @@
 export const NAVEGACION_PRINCIPAL_DASHBOARD = [
   { clave: 'inicio', nombre: 'Inicio', icono: 'inicio' },
+  { clave: 'usuarios', nombre: 'Usuarios', icono: 'clientes' },
+  { clave: 'productos', nombre: 'Productos', icono: 'paquete' },
+  { clave: 'categorias', nombre: 'Categorías', icono: 'categorias' },
+  { clave: 'tickets', nombre: 'Tickets', icono: 'ticket' },
+  { clave: 'proveedores', nombre: 'Proveedores', icono: 'proveedor' },
+  { clave: 'repartidores', nombre: 'Repartidores', icono: 'repartidor' },
+  { clave: 'roles', nombre: 'Roles', icono: 'roles' },
 ]
 
 export const RANGO_FECHAS_DASHBOARD = 'Últimos 6 meses'
 
 export const BREADCRUMB_DASHBOARD = ['Panel', 'Inicio']
-
-export const SECCIONES_DASHBOARD = [
-  { clave: 'inicio', destino: 'overview' },
-]
 
 export const ESTADOS_PEDIDO = {
   PENDIENTE: 'Pendiente',

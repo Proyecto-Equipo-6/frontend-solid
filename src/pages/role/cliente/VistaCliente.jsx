@@ -18,6 +18,12 @@ export default function VistaCliente() {
         setArticulos(listaProductos)
         setCategorias(listaCategorias)
       })
+      .catch(() => {
+        if (activo) {
+          setArticulos([])
+          setCategorias([])
+        }
+      })
       .finally(() => {
         if (activo) setCargando(false)
       })

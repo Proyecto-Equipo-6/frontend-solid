@@ -82,6 +82,12 @@ export default function Inicio() {
         setArticulos(listaProductos)
         setCategorias(listaCategorias)
       })
+      .catch(() => {
+        if (activo) {
+          setArticulos([])
+          setCategorias([])
+        }
+      })
       .finally(() => {
         if (activo) setCargando(false)
       })

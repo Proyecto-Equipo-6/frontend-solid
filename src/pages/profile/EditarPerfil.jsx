@@ -4,7 +4,7 @@ import Alerta from '@/components/ui/Alerta/Alerta'
 import Boton from '@/components/ui/Boton/Boton'
 import Campo from '@/components/ui/Campo/Campo'
 import { actualizarPerfil, obtenerPerfil } from '@/services/api'
-import { obtenerSesion, guardarSesion } from '@/services/sesion'
+import { obtenerSesion, guardarSesion, limpiarSesion } from '@/services/sesion'
 import { esEmailValido, esTelefonoValido } from '@/utils/validacion'
 import './EditarPerfil.css'
 
@@ -74,6 +74,15 @@ export default function EditarPerfil() {
           telefono: datos.telefono,
           direccion: datos.direccion,
         }))
+      })
+      .catch((err) => {
+        if (!activo) return
+        if (err.status === 401) {
+          limpiarSesion()
+          navigate('/login', { replace: true })
+        } else {
+          setErrorServidor(err.message)
+        }
       })
       .finally(() => {
         if (activo) setCargando(false)

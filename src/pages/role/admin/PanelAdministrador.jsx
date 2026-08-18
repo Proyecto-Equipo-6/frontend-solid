@@ -7,9 +7,25 @@ import GraficoEstados from '@/pages/role/admin/GraficoEstados/GraficoEstados'
 import TablaProductos from '@/pages/role/admin/TablaProductos/TablaProductos'
 import TarjetaTopClientes from '@/pages/role/admin/TarjetaTopClientes/TarjetaTopClientes'
 import VistaPerfil from '@/pages/role/admin/VistaPerfil/VistaPerfil'
-import { obtenerResumenAnalitica } from '@/services/analitica'
-import { SECCIONES_DASHBOARD } from '@/config/dashboard'
+import Usuarios from '@/pages/role/admin/Usuarios/Usuarios'
+import ProductosAdmin from '@/pages/role/admin/ProductosAdmin/ProductosAdmin'
+import Categorias from '@/pages/role/admin/Categorias/Categorias'
+import Tickets from '@/pages/role/admin/Tickets/Tickets'
+import Proveedores from '@/pages/role/admin/Proveedores/Proveedores'
+import RepartidoresAdmin from '@/pages/role/admin/RepartidoresAdmin/RepartidoresAdmin'
+import RolesAdmin from '@/pages/role/admin/RolesAdmin/RolesAdmin'
+import { getResumenAnalitica } from '@/services/api'
 import './PanelAdministrador.css'
+
+const VISTAS_GESTION = {
+  usuarios: Usuarios,
+  productos: ProductosAdmin,
+  categorias: Categorias,
+  tickets: Tickets,
+  proveedores: Proveedores,
+  repartidores: RepartidoresAdmin,
+  roles: RolesAdmin,
+}
 
 export default function PanelAdministrador() {
   const { sesion, autorizado, cerrando, handleCerrarSesion } = usePanelRol(1, { accesoLibre: true })
@@ -24,7 +40,7 @@ export default function PanelAdministrador() {
   function cargarResumen() {
     setCargando(true)
     setError('')
-    obtenerResumenAnalitica()
+    getResumenAnalitica()
       .then(setResumen)
       .catch(() => setError('No se pudieron cargar los reportes. Verifica que el servidor esté disponible.'))
       .finally(() => setCargando(false))
@@ -34,11 +50,7 @@ export default function PanelAdministrador() {
 
   function navegar(clave) {
     setSeccion(clave)
-    setVista('inicio')
-    const configuracion = SECCIONES_DASHBOARD.find((s) => s.clave === clave)
-    if (!configuracion) return
-    const destino = document.getElementById(`seccion-${configuracion.destino}`)
-    if (destino) destino.scrollIntoView({ behavior: 'smooth' })
+    setVista(clave)
   }
 
   if (!autorizado) return null
@@ -74,7 +86,7 @@ export default function PanelAdministrador() {
         <main className="dashboard__principal">
           {vista === 'perfil' ? (
             <VistaPerfil sesion={sesion} onVolver={() => setVista('inicio')} />
-          ) : (
+          ) : vista === 'inicio' ? (
             <>
               <section id="seccion-overview" className="dashboard__seccion">
             <h1 className="dashboard__bienvenida">Bienvenido(a), {sesion?.nombre_apellido || 'Administrador'}</h1>
@@ -109,7 +121,10 @@ export default function PanelAdministrador() {
             </div>
           </section>
             </>
-          )}
+          ) : (() => {
+            const Vista = VISTAS_GESTION[vista]
+            return Vista ? <Vista /> : null
+          })()}
         </main>
       </div>
     </div>

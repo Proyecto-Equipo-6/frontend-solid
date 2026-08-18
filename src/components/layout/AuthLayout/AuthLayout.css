@@ -8,8 +8,8 @@
   padding: 24px 16px;
   background: radial-gradient(
     ellipse at 50% 40%,
-    hsl(262, 50%, 96%),
-    hsl(262, 24%, 88%)
+    hsl(0, 0%, 97%),
+    hsl(0, 0%, 88%)
   );
 }
 
@@ -94,8 +94,8 @@
   .auth {
     background: radial-gradient(
       at 50% 50%,
-      hsla(210, 100%, 16%, 0.5),
-      hsl(220, 30%, 5%)
+      rgba(255, 255, 255, 0.07),
+      hsl(0, 0%, 6%)
     );
   }
 }

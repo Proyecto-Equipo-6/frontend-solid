@@ -43,6 +43,9 @@ export default function ArticuloDetalle() {
       .then((producto) => {
         if (activo) setArticulo(producto)
       })
+      .catch(() => {
+        if (activo) setArticulo(null)
+      })
       .finally(() => {
         if (activo) setCargando(false)
       })
