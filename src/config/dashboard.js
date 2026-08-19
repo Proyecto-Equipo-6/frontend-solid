@@ -3,7 +3,7 @@ export const NAVEGACION_PRINCIPAL_DASHBOARD = [
   { clave: 'usuarios', nombre: 'Usuarios', icono: 'clientes' },
   { clave: 'productos', nombre: 'Productos', icono: 'paquete' },
   { clave: 'categorias', nombre: 'Categorías', icono: 'categorias' },
-  { clave: 'tickets', nombre: 'Tickets', icono: 'ticket' },
+  { clave: 'pedidos', nombre: 'Pedidos', icono: 'pedido' },
   { clave: 'proveedores', nombre: 'Proveedores', icono: 'proveedor' },
   { clave: 'repartidores', nombre: 'Repartidores', icono: 'repartidor' },
   { clave: 'roles', nombre: 'Roles', icono: 'roles' },
@@ -15,9 +15,9 @@ export const BREADCRUMB_DASHBOARD = ['Panel', 'Inicio']
 
 export const ESTADOS_PEDIDO = {
   PENDIENTE: 'Pendiente',
-  PENDIENTE_VERIFICACION: 'Pendiente de verificación',
-  PAGO_APROBADO: 'Pago aprobado',
-  EN_RUTA: 'En ruta',
+  CONFIRMADO: 'Confirmado',
+  ASIGNADO: 'Asignado',
+  EN_CAMINO: 'En camino',
   ENTREGADO: 'Entregado',
   NO_ENTREGADO: 'No entregado',
   CANCELADO: 'Cancelado',
@@ -25,9 +25,9 @@ export const ESTADOS_PEDIDO = {
 
 export const COLORES_ESTADOS = {
   PENDIENTE: '#f59e0b',
-  PENDIENTE_VERIFICACION: '#f97316',
-  PAGO_APROBADO: '#38bdf8',
-  EN_RUTA: '#60a5fa',
+  CONFIRMADO: '#38bdf8',
+  ASIGNADO: '#a78bfa',
+  EN_CAMINO: '#22d3ee',
   ENTREGADO: '#22c55e',
   NO_ENTREGADO: '#ef4444',
   CANCELADO: '#6b7280',

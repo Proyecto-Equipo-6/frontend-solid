@@ -88,11 +88,22 @@
   border: 1px solid transparent;
   border-radius: 999px;
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  text-decoration: none;
+  transition: opacity 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
 }
 
 .checkout__accion:hover {
   opacity: 0.9;
+  box-shadow: var(--shadow);
+}
+
+.checkout__accion:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.checkout__accion:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .checkout__accion:focus-visible {
@@ -122,13 +133,14 @@
 .checkout__vacio {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 12px;
-  padding: 24px;
+  padding: 56px 24px;
   text-align: center;
-  color: var(--text-suave);
+  color: var(--text);
   background: var(--bg-suave);
   border: 1px dashed var(--border);
-  border-radius: var(--radio);
+  border-radius: var(--radio-grande);
 }
 
 .checkout__vacio p {
@@ -136,13 +148,18 @@
 }
 
 .checkout__vacio-enlace {
-  color: var(--accent);
-  font-weight: 600;
+  margin-top: 6px;
+  padding: 12px 24px;
+  font-weight: 700;
+  color: var(--sobre-accent);
+  background: var(--accent);
+  border-radius: 999px;
   text-decoration: none;
+  transition: opacity 0.2s ease;
 }
 
 .checkout__vacio-enlace:hover {
-  text-decoration: underline;
+  opacity: 0.9;
 }
 
 /* --- Pantalla de gracias --- */
@@ -153,17 +170,17 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 32px;
+  padding: 36px 32px;
   text-align: center;
-  background: var(--bg-suave);
+  background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
+  border-radius: 20px;
+  box-shadow: var(--shadow-card);
 }
 
 .checkout__gracias-icono {
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   margin: 0 auto;
   display: inline-flex;
   align-items: center;
@@ -171,6 +188,7 @@
   color: var(--accent);
   background: var(--accent-bg);
   border-radius: 50%;
+  box-shadow: var(--shadow);
 }
 
 .checkout__gracias-titulo {
@@ -185,6 +203,11 @@
   font-size: 15px;
   line-height: 1.6;
   color: var(--text);
+}
+
+.checkout__gracias .checkout__accion {
+  align-self: center;
+  margin-top: 6px;
 }
 
 /* --- Responsive --- */

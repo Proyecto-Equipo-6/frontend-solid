@@ -16,8 +16,22 @@ function guardarCarrito(items) {
   localStorage.setItem(CLAVE_CARRITO, JSON.stringify(items))
 }
 
+function normalizarItems(items) {
+  return items.map((item) => ({
+    id: item.idProducto,
+    titulo: item.titulo,
+    imagen: item.imagen,
+    precio: Number(item.precio),
+    cantidad: Number(item.cantidad),
+    stock: item.stock,
+    sku: item.sku,
+  }))
+}
+
 export function obtenerCarrito() {
-  return leerCarrito()
+  if (USAR_MOCK) return Promise.resolve(leerCarrito())
+
+  return request('/v1/carrito').then((resultado) => normalizarItems(resultado.items))
 }
 
 export function agregarAlCarrito(producto, cantidad = 1) {
@@ -50,26 +64,43 @@ export function agregarAlCarrito(producto, cantidad = 1) {
   })
 }
 
-export function actualizarCantidad(productoId, cantidad) {
-  const items = leerCarrito()
-  const indice = items.findIndex((item) => String(item.id) === String(productoId))
+export async function actualizarCantidad(productoId, cantidad) {
+  if (USAR_MOCK) {
+    const items = leerCarrito()
+    const indice = items.findIndex((item) => String(item.id) === String(productoId))
 
-  if (indice >= 0) {
-    if (cantidad <= 0) {
-      items.splice(indice, 1)
-    } else {
-      items[indice].cantidad = cantidad
+    if (indice >= 0) {
+      if (cantidad <= 0) {
+        items.splice(indice, 1)
+      } else {
+        items[indice].cantidad = cantidad
+      }
+      guardarCarrito(items)
     }
-    guardarCarrito(items)
+
+    return leerCarrito()
   }
 
-  return leerCarrito()
+  if (cantidad <= 0) {
+    return eliminarDelCarrito(productoId)
+  }
+
+  const resultado = await request(`/v1/carrito/${productoId}`, {
+    metodo: 'PUT',
+    datos: { cantidad },
+  })
+  return normalizarItems(resultado.carrito.items)
 }
 
-export function eliminarDelCarrito(productoId) {
-  const items = leerCarrito().filter((item) => String(item.id) !== String(productoId))
-  guardarCarrito(items)
-  return leerCarrito()
+export async function eliminarDelCarrito(productoId) {
+  if (USAR_MOCK) {
+    const items = leerCarrito().filter((item) => String(item.id) !== String(productoId))
+    guardarCarrito(items)
+    return leerCarrito()
+  }
+
+  const resultado = await request(`/v1/carrito/${productoId}`, { metodo: 'DELETE' })
+  return normalizarItems(resultado.carrito.items)
 }
 
 export function limpiarCarrito() {

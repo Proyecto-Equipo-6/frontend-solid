@@ -306,3 +306,14 @@ export function IconoRoles({ tamano }) {
     </IconoBase>
   )
 }
+
+export function IconoPedido({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <rect x="3" y="4" width="18" height="16" rx="2.5" />
+      <path d="M3 9.5h18" />
+      <path d="M7 14h5" />
+      <path d="m14.5 14 2 2 3.5-4" />
+    </IconoBase>
+  )
+}

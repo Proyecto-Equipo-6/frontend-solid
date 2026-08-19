@@ -9,7 +9,10 @@ import ResumenPedido from './ResumenPedido/ResumenPedido'
 import Revision from './Revision/Revision'
 import { OPCIONES_ENVIO } from '@/config/aplicacion'
 import { obtenerCarrito, limpiarCarrito } from '@/services/carrito'
+import { crearPedido } from '@/services/pedidos'
 import './Checkout.css'
+
+const ID_METODO_PAGO = { contraentrega: 1 }
 
 export default function Checkout() {
   const navigate = useNavigate()
@@ -23,9 +26,13 @@ export default function Checkout() {
   const [datosPago, setDatosPago] = useState(null)
   const [aviso, setAviso] = useState('')
   const [mostrarResumen, setMostrarResumen] = useState(false)
+  const [generando, setGenerando] = useState(false)
+  const [pedidoCreado, setPedidoCreado] = useState(null)
 
   useEffect(() => {
-    setItems(obtenerCarrito())
+    obtenerCarrito()
+      .then(setItems)
+      .catch(() => setItems([]))
   }, [])
 
   function avanzar() {
@@ -57,9 +64,23 @@ export default function Checkout() {
     setPaso((prev) => prev - 1)
   }
 
-  function realizarPedido() {
-    limpiarCarrito()
-    setPaso(3)
+  async function realizarPedido() {
+    setAviso('')
+    setGenerando(true)
+    try {
+      const resultado = await crearPedido({
+        direccionEntrega: datosEnvio?.direccion,
+        observaciones: '',
+        idMetodoPago: ID_METODO_PAGO[datosPago?.tipo] ?? 1,
+      })
+      limpiarCarrito()
+      setPedidoCreado(resultado.pedido)
+      setPaso(3)
+    } catch (error) {
+      setAviso(error.message || 'No se pudo generar el pedido. Inténtalo de nuevo.')
+    } finally {
+      setGenerando(false)
+    }
   }
 
   const opcionEnvio = OPCIONES_ENVIO.find((opcion) => opcion.id === envio)
@@ -67,7 +88,9 @@ export default function Checkout() {
   const total = subtotal + opcionEnvio.costo
 
   if (paso === 3) {
-    const numeroPedido = `#NEX-${Date.now().toString().slice(-6)}`
+    const numeroPedido = pedidoCreado?.id_pedido
+      ? `#${pedidoCreado.id_pedido}`
+      : `#NEX-${Date.now().toString().slice(-6)}`
     return (
       <section className="checkout">
         <div className="checkout__gracias">
@@ -79,9 +102,9 @@ export default function Checkout() {
             Tu número de pedido es <strong>{numeroPedido}</strong>. Te hemos enviado la
             confirmación por correo y te avisaremos cuando esté en camino.
           </p>
-          <button type="button" className="checkout__accion" onClick={() => navigate('/')}>
+          <Link to="/mis-pedidos" className="checkout__accion">
             Ver mis pedidos
-          </button>
+          </Link>
         </div>
       </section>
     )
@@ -161,9 +184,10 @@ export default function Checkout() {
                 <button
                   type="button"
                   className="checkout__accion checkout__accion--completo"
+                  disabled={generando}
                   onClick={paso === 2 ? realizarPedido : avanzar}
                 >
-                  {paso === 2 ? 'Confirmar pedido' : 'Siguiente'}
+                  {paso === 2 ? (generando ? 'Generando pedido…' : 'Confirmar pedido') : 'Siguiente'}
                 </button>
               </div>
             </>

@@ -10,7 +10,7 @@ import VistaPerfil from '@/pages/role/admin/VistaPerfil/VistaPerfil'
 import Usuarios from '@/pages/role/admin/Usuarios/Usuarios'
 import ProductosAdmin from '@/pages/role/admin/ProductosAdmin/ProductosAdmin'
 import Categorias from '@/pages/role/admin/Categorias/Categorias'
-import Tickets from '@/pages/role/admin/Tickets/Tickets'
+import PedidosAdmin from '@/pages/role/admin/PedidosAdmin/PedidosAdmin'
 import Proveedores from '@/pages/role/admin/Proveedores/Proveedores'
 import RepartidoresAdmin from '@/pages/role/admin/RepartidoresAdmin/RepartidoresAdmin'
 import RolesAdmin from '@/pages/role/admin/RolesAdmin/RolesAdmin'
@@ -21,7 +21,7 @@ const VISTAS_GESTION = {
   usuarios: Usuarios,
   productos: ProductosAdmin,
   categorias: Categorias,
-  tickets: Tickets,
+  pedidos: PedidosAdmin,
   proveedores: Proveedores,
   repartidores: RepartidoresAdmin,
   roles: RolesAdmin,

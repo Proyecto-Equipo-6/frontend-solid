@@ -30,24 +30,6 @@ export const ROLES = {
 
 export const METODOS_PAGO = [
   {
-    id: 'nequi',
-    nombre: 'Nequi',
-    descripcion: 'Monedero virtual. Paga al número 300 123 4567 (Nexbit).',
-    requiereComprobante: true,
-  },
-  {
-    id: 'daviplata',
-    nombre: 'Daviplata',
-    descripcion: 'Monedero virtual. Paga a la llave 300 123 4567.',
-    requiereComprobante: true,
-  },
-  {
-    id: 'bancolombia',
-    nombre: 'Bancolombia',
-    descripcion: 'Transferencia a la cuenta de ahorros 123-456789-01.',
-    requiereComprobante: true,
-  },
-  {
     id: 'contraentrega',
     nombre: 'Contra entrega',
     descripcion: 'Pagas en efectivo cuando recibes tu pedido.',

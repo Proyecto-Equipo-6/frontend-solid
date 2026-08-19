@@ -9,6 +9,7 @@ import './BarraNavegacion.css'
 export default function BarraNavegacion() {
   const [menuAbierto, setMenuAbierto] = useState(false)
   const sesion = obtenerSesion()
+  const esCliente = Boolean(sesion && Number(sesion.id_rol) === 2)
 
   return (
     <header className="barra">
@@ -23,6 +24,13 @@ export default function BarraNavegacion() {
                 </Link>
               </li>
             ))}
+            {esCliente && (
+              <li>
+                <Link to="/mis-pedidos" className="barra__enlace">
+                  Mis pedidos
+                </Link>
+              </li>
+            )}
           </ul>
         </nav>
 
@@ -76,6 +84,15 @@ export default function BarraNavegacion() {
               {enlace.nombre}
             </Link>
           ))}
+          {esCliente && (
+            <Link
+              to="/mis-pedidos"
+              className="barra__enlace--panel"
+              onClick={() => setMenuAbierto(false)}
+            >
+              Mis pedidos
+            </Link>
+          )}
           {sesion ? (
             <>
               <Link

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import PasosCompra from '@/components/ui/PasosCompra/PasosCompra'
-import { IconoImagen } from '@/components/ui/Iconos/Iconos'
+import { IconoCarrito, IconoImagen } from '@/components/ui/Iconos/Iconos'
 import { OPCIONES_ENVIO } from '@/config/aplicacion'
-import { obtenerCarrito, actualizarCantidad } from '@/services/carrito'
+import { obtenerCarrito, actualizarCantidad, eliminarDelCarrito } from '@/services/carrito'
 import { formatoPrecio } from '@/utils/formato'
 import './VistaCarrito.css'
 
@@ -21,11 +21,19 @@ export default function VistaCarrito() {
   const [envio, setEnvio] = useState('estandar')
 
   useEffect(() => {
-    setItems(obtenerCarrito())
+    obtenerCarrito()
+      .then(setItems)
+      .catch(() => setItems([]))
   }, [])
 
-  function cambiarCantidad(item, cantidad) {
-    setItems(actualizarCantidad(item.id, cantidad))
+  async function cambiarCantidad(item, cantidad) {
+    const items = await actualizarCantidad(item.id, cantidad)
+    setItems(items)
+  }
+
+  async function quitarProducto(item) {
+    const items = await eliminarDelCarrito(item.id)
+    setItems(items)
   }
 
   function irAlCheckout() {
@@ -49,7 +57,13 @@ export default function VistaCarrito() {
 
           {carritoVacio ? (
             <div className="carrito__vacio">
-              <p>Tu carrito está vacío.</p>
+              <span className="carrito__vacio-icono" aria-hidden="true">
+                <IconoCarrito tamano={40} />
+              </span>
+              <p className="carrito__vacio-titulo">Tu carrito está vacío</p>
+              <p className="carrito__vacio-texto">
+                Aún no has agregado productos. Explora el catálogo y encuentra lo que buscas.
+              </p>
               <Link to="/#catalogo" className="carrito__enlace">
                 Explorar catálogo
               </Link>
@@ -81,6 +95,14 @@ export default function VistaCarrito() {
                             <span key={linea}>{linea}</span>
                           ))}
                         </span>
+                        <button
+                          type="button"
+                          className="carrito__quitar"
+                          aria-label={`Eliminar ${item.titulo} del carrito`}
+                          onClick={() => quitarProducto(item)}
+                        >
+                          Eliminar
+                        </button>
                       </div>
                     </div>
 
