@@ -230,6 +230,10 @@
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
+.crud__modal::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+}
+
 .crud__modal--confirmar {
   max-width: 420px;
   padding: 20px;

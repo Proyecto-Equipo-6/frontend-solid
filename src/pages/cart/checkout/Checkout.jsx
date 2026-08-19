@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Alerta from '@/components/ui/Alerta/Alerta'
 import PasosCompra from '@/components/ui/PasosCompra/PasosCompra'
-import { IconoPaquete } from '@/components/ui/Iconos/Iconos'
 import ConfirmacionEnvio from './ConfirmacionEnvio/ConfirmacionEnvio'
+import ConfirmacionPedido from './ConfirmacionPedido/ConfirmacionPedido'
 import FormularioPago from './FormularioPago/FormularioPago'
 import ResumenPedido from './ResumenPedido/ResumenPedido'
 import Revision from './Revision/Revision'
@@ -13,6 +13,12 @@ import { crearPedido } from '@/services/pedidos'
 import './Checkout.css'
 
 const ID_METODO_PAGO = { contraentrega: 1 }
+const ETAPA_POR_PASO = { 0: 'envio', 1: 'pago', 2: 'revision' }
+
+function etiquetaAccion(paso, generando) {
+  if (paso !== 2) return 'Siguiente'
+  return generando ? 'Generando pedido…' : 'Confirmar pedido'
+}
 
 export default function Checkout() {
   const navigate = useNavigate()
@@ -88,33 +94,14 @@ export default function Checkout() {
   const total = subtotal + opcionEnvio.costo
 
   if (paso === 3) {
-    const numeroPedido = pedidoCreado?.id_pedido
-      ? `#${pedidoCreado.id_pedido}`
-      : `#NEX-${Date.now().toString().slice(-6)}`
-    return (
-      <section className="checkout">
-        <div className="checkout__gracias">
-          <span className="checkout__gracias-icono" aria-hidden="true">
-            <IconoPaquete tamano={26} />
-          </span>
-          <h1 className="checkout__gracias-titulo">¡Gracias por tu pedido!</h1>
-          <p className="checkout__gracias-texto">
-            Tu número de pedido es <strong>{numeroPedido}</strong>. Te hemos enviado la
-            confirmación por correo y te avisaremos cuando esté en camino.
-          </p>
-          <Link to="/mis-pedidos" className="checkout__accion">
-            Ver mis pedidos
-          </Link>
-        </div>
-      </section>
-    )
+    return <ConfirmacionPedido pedido={pedidoCreado} />
   }
 
   return (
     <section className="checkout">
       <header className="checkout__cabecera">
         <PasosCompra
-          actual={paso === 0 ? 'envio' : paso === 1 ? 'pago' : 'revision'}
+          actual={ETAPA_POR_PASO[paso]}
           onNavegar={(clave) => {
             if (clave === 'carrito') {
               navigate('/carrito')
@@ -187,7 +174,7 @@ export default function Checkout() {
                   disabled={generando}
                   onClick={paso === 2 ? realizarPedido : avanzar}
                 >
-                  {paso === 2 ? (generando ? 'Generando pedido…' : 'Confirmar pedido') : 'Siguiente'}
+                  {etiquetaAccion(paso, generando)}
                 </button>
               </div>
             </>
