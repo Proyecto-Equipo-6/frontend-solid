@@ -122,7 +122,7 @@
 
 .crud__badge--pendiente {
   color: #f59e0b;
-  background: rgba(245, 158, 11, 0.12);
+  background: #3b2404;
 }
 
 .crud__badge--confirmado {
@@ -132,12 +132,12 @@
 
 .crud__badge--asignado {
   color: #a78bfa;
-  background: rgba(167, 139, 250, 0.14);
+  background: #251a44;
 }
 
 .crud__badge--en-camino {
   color: #22d3ee;
-  background: rgba(34, 211, 238, 0.12);
+  background: #0b2a30;
 }
 
 .crud__badge--cancelado {
