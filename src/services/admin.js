@@ -100,6 +100,18 @@ export function actualizarEstadoUsuario(id, activo) {
   })
 }
 
+export function crearUsuarioAdmin(datos) {
+  return request('/v1/admin/usuarios', { metodo: 'POST', datos })
+}
+
+export function actualizarUsuarioAdmin(id, datos) {
+  return request(`/v1/admin/usuarios/${id}`, { metodo: 'PUT', datos })
+}
+
+export function eliminarUsuarioAdmin(id) {
+  return request(`/v1/admin/usuarios/${id}`, { metodo: 'DELETE' })
+}
+
 // ---- Roles ----
 export function getRoles() {
   return request('/v1/roles')
@@ -107,6 +119,14 @@ export function getRoles() {
 
 export function actualizarRol(datos) {
   return request('/v1/roles', { metodo: 'PUT', datos })
+}
+
+export function crearRol(datos) {
+  return request('/v1/roles', { metodo: 'POST', datos })
+}
+
+export function eliminarRol(id) {
+  return request(`/v1/roles/${id}`, { metodo: 'DELETE' })
 }
 
 // ---- Repartidores ----
@@ -124,6 +144,18 @@ export function cambiarEstadoRepartidor(id, estado) {
     metodo: 'PUT',
     datos: { estado },
   })
+}
+
+export function crearRepartidor(datos) {
+  return request('/v1/admin/repartidores', { metodo: 'POST', datos })
+}
+
+export function actualizarRepartidor(id, datos) {
+  return request(`/v1/admin/repartidores/${id}`, { metodo: 'PUT', datos })
+}
+
+export function eliminarRepartidor(id) {
+  return request(`/v1/admin/repartidores/${id}`, { metodo: 'DELETE' })
 }
 
 // ---- Pedidos ----

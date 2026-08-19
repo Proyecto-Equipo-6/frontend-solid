@@ -9,6 +9,7 @@ import {
   editarCategoria,
   eliminarCategoria,
 } from '@/services/admin'
+import { IconoEditar, IconoEliminar, IconoAgregar } from '@/components/ui/Iconos/Iconos'
 
 const FORM_VACIO = { nombre: '', descripcion: '', estado: 1 }
 
@@ -119,11 +120,23 @@ export default function Categorias() {
 
   const acciones = (categoria) => (
     <>
-      <button type="button" className="crud__boton--editar" onClick={() => abrirEdicion(categoria)}>
-        Editar
+      <button
+        type="button"
+        className="crud__icono crud__icono--editar"
+        aria-label={`Editar ${categoria.nombre}`}
+        title="Editar"
+        onClick={() => abrirEdicion(categoria)}
+      >
+        <IconoEditar tamano={18} />
       </button>
-      <button type="button" className="crud__boton--eliminar" onClick={() => setAEliminar(categoria)}>
-        Eliminar
+      <button
+        type="button"
+        className="crud__icono crud__icono--eliminar"
+        aria-label={`Eliminar ${categoria.nombre}`}
+        title="Eliminar"
+        onClick={() => setAEliminar(categoria)}
+      >
+        <IconoEliminar tamano={18} />
       </button>
     </>
   )
@@ -136,6 +149,7 @@ export default function Categorias() {
       <div className="gestion__cabecera">
         <div />
         <button type="button" className="crud__boton crud__boton--nuevo" onClick={abrirNuevo}>
+          <IconoAgregar tamano={16} />
           Nueva categoría
         </button>
       </div>

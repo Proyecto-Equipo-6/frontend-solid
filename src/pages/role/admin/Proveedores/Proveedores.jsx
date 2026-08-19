@@ -9,6 +9,7 @@ import {
   editarProveedor,
   eliminarProveedor,
 } from '@/services/admin'
+import { IconoEditar, IconoEliminar, IconoAgregar } from '@/components/ui/Iconos/Iconos'
 
 const FORM_VACIO = {
   nit_proveedor: '',
@@ -135,11 +136,23 @@ export default function Proveedores() {
 
   const acciones = (proveedor) => (
     <>
-      <button type="button" className="crud__boton--editar" onClick={() => abrirEdicion(proveedor)}>
-        Editar
+      <button
+        type="button"
+        className="crud__icono crud__icono--editar"
+        aria-label={`Editar ${proveedor.razon_social}`}
+        title="Editar"
+        onClick={() => abrirEdicion(proveedor)}
+      >
+        <IconoEditar tamano={18} />
       </button>
-      <button type="button" className="crud__boton--eliminar" onClick={() => setAEliminar(proveedor)}>
-        Eliminar
+      <button
+        type="button"
+        className="crud__icono crud__icono--eliminar"
+        aria-label={`Eliminar ${proveedor.razon_social}`}
+        title="Eliminar"
+        onClick={() => setAEliminar(proveedor)}
+      >
+        <IconoEliminar tamano={18} />
       </button>
     </>
   )
@@ -152,6 +165,7 @@ export default function Proveedores() {
       <div className="gestion__cabecera">
         <div />
         <button type="button" className="crud__boton crud__boton--nuevo" onClick={abrirNuevo}>
+          <IconoAgregar tamano={16} />
           Nuevo proveedor
         </button>
       </div>

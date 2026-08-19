@@ -1,7 +1,26 @@
 import { useEffect, useState } from 'react'
 import VistaGestion from '@/pages/role/admin/VistaGestion/VistaGestion'
 import TablaCrud from '@/components/crud/TablaCrud'
-import { getRepartidores, cambiarEstadoRepartidor } from '@/services/admin'
+import ModalCrud from '@/components/crud/ModalCrud'
+import Confirmar from '@/components/crud/Confirmar'
+import {
+  getRepartidores,
+  cambiarEstadoRepartidor,
+  crearRepartidor,
+  actualizarRepartidor,
+  eliminarRepartidor,
+} from '@/services/admin'
+import { IconoPower, IconoEditar, IconoEliminar, IconoAgregar } from '@/components/ui/Iconos/Iconos'
+
+const FORM_VACIO = {
+  nombre_apellido: '',
+  email: '',
+  password: '',
+  telefono: '',
+  direccion: '',
+  vehiculo: '',
+  placa: '',
+}
 
 export default function RepartidoresAdmin() {
   const [repartidores, setRepartidores] = useState([])
@@ -9,6 +28,14 @@ export default function RepartidoresAdmin() {
   const [error, setError] = useState('')
   const [alerta, setAlerta] = useState('')
   const [cambiandoId, setCambiandoId] = useState(null)
+
+  const [modal, setModal] = useState(false)
+  const [editandoId, setEditandoId] = useState(null)
+  const [form, setForm] = useState(FORM_VACIO)
+  const [guardando, setGuardando] = useState(false)
+
+  const [aEliminar, setAEliminar] = useState(null)
+  const [eliminando, setEliminando] = useState(false)
 
   function cargarTodo() {
     setCargando(true)
@@ -20,6 +47,75 @@ export default function RepartidoresAdmin() {
   }
 
   useEffect(cargarTodo, [])
+
+  function abrirNuevo() {
+    setForm(FORM_VACIO)
+    setEditandoId(null)
+    setModal(true)
+  }
+
+  function abrirEdicion(repartidor) {
+    setForm({
+      nombre_apellido: repartidor.nombre_apellido || repartidor.nombre || '',
+      email: repartidor.email || '',
+      password: '',
+      telefono: repartidor.telefono || '',
+      direccion: repartidor.direccion || '',
+      vehiculo: repartidor.vehiculo || '',
+      placa: repartidor.placa || '',
+    })
+    setEditandoId(repartidor.id_repartidor)
+    setModal(true)
+  }
+
+  function cambiarCampo(campo, valor) {
+    setForm((prev) => ({ ...prev, [campo]: valor }))
+  }
+
+  async function guardarRepartidor(evento) {
+    evento.preventDefault()
+    setGuardando(true)
+    setAlerta('')
+    try {
+      const datos = {
+        nombre_apellido: form.nombre_apellido,
+        email: form.email,
+        telefono: form.telefono,
+        direccion: form.direccion,
+        vehiculo: form.vehiculo,
+        placa: form.placa,
+      }
+      if (editandoId) {
+        await actualizarRepartidor(editandoId, datos)
+        setAlerta('Repartidor actualizado correctamente.')
+      } else {
+        await crearRepartidor({ ...datos, password: form.password })
+        setAlerta('Repartidor creado correctamente.')
+      }
+      setModal(false)
+      setEditandoId(null)
+      cargarTodo()
+    } catch (e) {
+      setAlerta(e.message)
+    } finally {
+      setGuardando(false)
+    }
+  }
+
+  async function confirmarEliminar() {
+    setEliminando(true)
+    setAlerta('')
+    try {
+      await eliminarRepartidor(aEliminar.id_repartidor)
+      setAlerta('Repartidor eliminado correctamente.')
+      setAEliminar(null)
+      cargarTodo()
+    } catch (e) {
+      setAlerta(e.message)
+    } finally {
+      setEliminando(false)
+    }
+  }
 
   async function alternarEstado(repartidor) {
     const nuevo = repartidor.estado === 'DISPONIBLE' ? 'INACTIVO' : 'DISPONIBLE'
@@ -76,25 +172,54 @@ export default function RepartidoresAdmin() {
   ]
 
   const acciones = (repartidor) => (
-    <button
-      type="button"
-      className={repartidor.estado === 'DISPONIBLE' ? 'crud__boton--eliminar' : 'crud__boton--editar'}
-      onClick={() => alternarEstado(repartidor)}
-      disabled={cambiandoId === repartidor.id_repartidor}
-    >
-      {cambiandoId === repartidor.id_repartidor
-        ? 'Procesando…'
-        : repartidor.estado === 'DISPONIBLE'
-          ? 'Poner inactivo'
-          : 'Poner disponible'}
-    </button>
+    <>
+      <button
+        type="button"
+        className={repartidor.estado === 'DISPONIBLE' ? 'crud__boton' : 'crud__boton crud__boton--nuevo'}
+        onClick={() => alternarEstado(repartidor)}
+        disabled={cambiandoId === repartidor.id_repartidor}
+      >
+        <IconoPower tamano={18} />
+        {cambiandoId === repartidor.id_repartidor
+          ? 'Procesando…'
+          : repartidor.estado === 'DISPONIBLE'
+            ? 'Poner inactivo'
+            : 'Poner disponible'}
+      </button>
+      <button
+        type="button"
+        className="crud__icono crud__icono--editar"
+        aria-label={`Editar ${repartidor.nombre}`}
+        title="Editar"
+        onClick={() => abrirEdicion(repartidor)}
+      >
+        <IconoEditar tamano={18} />
+      </button>
+      <button
+        type="button"
+        className="crud__icono crud__icono--eliminar"
+        aria-label={`Eliminar ${repartidor.nombre}`}
+        title="Eliminar"
+        onClick={() => setAEliminar(repartidor)}
+      >
+        <IconoEliminar tamano={18} />
+      </button>
+    </>
   )
 
   return (
     <VistaGestion
       titulo="Repartidores"
-      descripcion="Consulta el estado operativo de los repartidores y cámbialo cuando lo necesites."
+      descripcion="Administra los repartidores: crea, edita, elimina y controla su estado operativo."
     >
+      <div className="gestion__cabecera">
+        <div />
+        <button type="button" className="crud__boton crud__boton--nuevo" onClick={abrirNuevo}>
+          <IconoAgregar tamano={16} />
+          Nuevo repartidor
+        </button>
+      </div>
+
       {alerta && <p className="crud__alerta">{alerta}</p>}
 
       <TablaCrud
@@ -106,6 +231,111 @@ export default function RepartidoresAdmin() {
         mensajeVacio="No hay repartidores registrados."
         acciones={acciones}
       />
+
+      <ModalCrud
+        abierto={modal}
+        titulo={editandoId ? 'Editar repartidor' : 'Nuevo repartidor'}
+        onCerrar={() => setModal(false)}
+      >
+        <form className="crud__form" onSubmit={guardarRepartidor}>
+          <div className="crud__fila">
+            <div className="crud__campo">
+              <label className="crud__campo-label">Nombre completo</label>
+              <input
+                className="crud__campo-input"
+                value={form.nombre_apellido}
+                onChange={(e) => cambiarCampo('nombre_apellido', e.target.value)}
+                required
+              />
+            </div>
+            <div className="crud__campo">
+              <label className="crud__campo-label">Email</label>
+              <input
+                className="crud__campo-input"
+                type="email"
+                value={form.email}
+                onChange={(e) => cambiarCampo('email', e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="crud__fila">
+            <div className="crud__campo">
+              <label className="crud__campo-label">Teléfono</label>
+              <input
+                className="crud__campo-input"
+                value={form.telefono}
+                onChange={(e) => cambiarCampo('telefono', e.target.value)}
+                placeholder="6012345678"
+                required
+              />
+            </div>
+            <div className="crud__campo">
+              <label className="crud__campo-label">Dirección</label>
+              <input
+                className="crud__campo-input"
+                value={form.direccion}
+                onChange={(e) => cambiarCampo('direccion', e.target.value)}
+              />
+            </div>
+          </div>
+
+          {!editandoId && (
+            <div className="crud__campo">
+              <label className="crud__campo-label">Contraseña</label>
+              <input
+                className="crud__campo-input"
+                type="password"
+                value={form.password}
+                onChange={(e) => cambiarCampo('password', e.target.value)}
+                placeholder="Mínimo 4 caracteres"
+                required
+              />
+            </div>
+          )}
+
+          <div className="crud__fila">
+            <div className="crud__campo">
+              <label className="crud__campo-label">Vehículo</label>
+              <input
+                className="crud__campo-input"
+                value={form.vehiculo}
+                onChange={(e) => cambiarCampo('vehiculo', e.target.value)}
+                placeholder="Ej: Moto"
+              />
+            </div>
+            <div className="crud__campo">
+              <label className="crud__campo-label">Placa</label>
+              <input
+                className="crud__campo-input"
+                value={form.placa}
+                onChange={(e) => cambiarCampo('placa', e.target.value)}
+                placeholder="Ej: ABC-123"
+              />
+            </div>
+          </div>
+
+          <div className="crud__form-acciones">
+            <button type="button" className="crud__boton" onClick={() => setModal(false)}>
+              Cancelar
+            </button>
+            <button type="submit" className="crud__boton" disabled={guardando}>
+              {guardando ? 'Guardando…' : 'Guardar'}
+            </button>
+          </div>
+        </form>
+      </ModalCrud>
+
+      {aEliminar && (
+        <Confirmar
+          titulo="Eliminar repartidor"
+          mensaje={`¿Eliminar al repartidor "${aEliminar.nombre}"?`}
+          onConfirmar={confirmarEliminar}
+          onCancelar={() => setAEliminar(null)}
+          cargando={eliminando}
+        />
+      )}
     </VistaGestion>
   )
 }

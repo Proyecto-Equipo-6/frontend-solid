@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Catalogo from '@/components/producto/Catalogo/Catalogo'
 import { getProductosPublicos, getCategoriasPublicas } from '@/services/productos'
+import { obtenerSesion } from '@/services/sesion'
 import { formatoPrecio } from '@/utils/formato'
 import './Inicio.css'
 
 function Hero({ destacado, cargando }) {
+  const sesion = obtenerSesion()
   return (
     <section className="hero">
       <div className="hero__grid">
@@ -54,17 +56,19 @@ function Hero({ destacado, cargando }) {
         </div>
       </div>
 
-      <div className="hero__registro">
-        <div className="hero__registro-invitacion">
-          <h2 className="hero__registro-titulo">¿Nuevo por aquí?</h2>
-          <p className="hero__registro-texto">
-            Regístrate gratis y haz tu primer pedido. Sin sorpresas.
-          </p>
+      {!sesion && (
+        <div className="hero__registro">
+          <div className="hero__registro-invitacion">
+            <h2 className="hero__registro-titulo">¿Nuevo por aquí?</h2>
+            <p className="hero__registro-texto">
+              Regístrate gratis y haz tu primer pedido. Sin sorpresas.
+            </p>
+          </div>
+          <Link to="/register" className="hero__boton hero__boton--relleno">
+            Crear cuenta gratis
+          </Link>
         </div>
-        <Link to="/register" className="hero__boton hero__boton--relleno">
-          Crear cuenta gratis
-        </Link>
-      </div>
+      )}
     </section>
   )
 }

@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react'
 import VistaGestion from '@/pages/role/admin/VistaGestion/VistaGestion'
 import TablaCrud from '@/components/crud/TablaCrud'
 import ModalCrud from '@/components/crud/ModalCrud'
-import { getRoles, actualizarRol } from '@/services/admin'
+import Confirmar from '@/components/crud/Confirmar'
+import { getRoles, crearRol, actualizarRol, eliminarRol } from '@/services/admin'
+import { IconoEditar, IconoEliminar, IconoAgregar } from '@/components/ui/Iconos/Iconos'
+
+const FORM_VACIO = { name: '', description: '' }
 
 export default function RolesAdmin() {
   const [roles, setRoles] = useState([])
@@ -10,9 +14,13 @@ export default function RolesAdmin() {
   const [error, setError] = useState('')
   const [alerta, setAlerta] = useState('')
 
-  const [editando, setEditando] = useState(null)
-  const [form, setForm] = useState({ name: '', description: '' })
+  const [modal, setModal] = useState(false)
+  const [editandoId, setEditandoId] = useState(null)
+  const [form, setForm] = useState(FORM_VACIO)
   const [guardando, setGuardando] = useState(false)
+
+  const [aEliminar, setAEliminar] = useState(null)
+  const [eliminando, setEliminando] = useState(false)
 
   function cargarTodo() {
     setCargando(true)
@@ -25,9 +33,16 @@ export default function RolesAdmin() {
 
   useEffect(cargarTodo, [])
 
+  function abrirNuevo() {
+    setForm(FORM_VACIO)
+    setEditandoId(null)
+    setModal(true)
+  }
+
   function abrirEdicion(rol) {
     setForm({ name: rol.name, description: rol.description || '' })
-    setEditando(rol)
+    setEditandoId(rol.id)
+    setModal(true)
   }
 
   async function guardarRol(evento) {
@@ -35,14 +50,36 @@ export default function RolesAdmin() {
     setGuardando(true)
     setAlerta('')
     try {
-      await actualizarRol({ id: editando.id, ...form })
-      setAlerta(`Rol "${form.name}" actualizado correctamente.`)
-      setEditando(null)
+      const datos = { name: form.name, description: form.description }
+      if (editandoId) {
+        await actualizarRol({ id: editandoId, ...datos })
+        setAlerta('Rol actualizado correctamente.')
+      } else {
+        await crearRol(datos)
+        setAlerta('Rol creado correctamente.')
+      }
+      setModal(false)
+      setEditandoId(null)
       cargarTodo()
     } catch (e) {
       setAlerta(e.message)
     } finally {
       setGuardando(false)
+    }
+  }
+
+  async function confirmarEliminar() {
+    setEliminando(true)
+    setAlerta('')
+    try {
+      await eliminarRol(aEliminar.id)
+      setAlerta('Rol eliminado correctamente.')
+      setAEliminar(null)
+      cargarTodo()
+    } catch (e) {
+      setAlerta(e.message)
+    } finally {
+      setEliminando(false)
     }
   }
 
@@ -61,16 +98,41 @@ export default function RolesAdmin() {
   ]
 
   const acciones = (rol) => (
-    <button type="button" className="crud__boton--editar" onClick={() => abrirEdicion(rol)}>
-      Editar
-    </button>
+    <>
+      <button
+        type="button"
+        className="crud__icono crud__icono--editar"
+        aria-label={`Editar ${rol.name}`}
+        title="Editar"
+        onClick={() => abrirEdicion(rol)}
+      >
+        <IconoEditar tamano={18} />
+      </button>
+      <button
+        type="button"
+        className="crud__icono crud__icono--eliminar"
+        aria-label={`Eliminar ${rol.name}`}
+        title="Eliminar"
+        onClick={() => setAEliminar(rol)}
+      >
+        <IconoEliminar tamano={18} />
+      </button>
+    </>
   )
 
   return (
     <VistaGestion
       titulo="Roles"
-      descripcion="Consulta y actualiza la descripción de los roles del sistema."
+      descripcion="Crea, edita y elimina los roles del sistema."
     >
+      <div className="gestion__cabecera">
+        <div />
+        <button type="button" className="crud__boton crud__boton--nuevo" onClick={abrirNuevo}>
+          <IconoAgregar tamano={16} />
+          Nuevo rol
+        </button>
+      </div>
+
       {alerta && <p className="crud__alerta">{alerta}</p>}
 
       <TablaCrud
@@ -83,7 +145,7 @@ export default function RolesAdmin() {
         acciones={acciones}
       />
 
-      <ModalCrud abierto={Boolean(editando)} titulo="Editar rol" onCerrar={() => setEditando(null)}>
+      <ModalCrud abierto={modal} titulo={editandoId ? 'Editar rol' : 'Nuevo rol'} onCerrar={() => setModal(false)}>
         <form className="crud__form" onSubmit={guardarRol}>
           <div className="crud__campo">
             <label className="crud__campo-label">Nombre</label>
@@ -103,7 +165,7 @@ export default function RolesAdmin() {
             />
           </div>
           <div className="crud__form-acciones">
-            <button type="button" className="crud__boton" onClick={() => setEditando(null)}>
+            <button type="button" className="crud__boton" onClick={() => setModal(false)}>
               Cancelar
             </button>
             <button type="submit" className="crud__boton" disabled={guardando}>
@@ -112,6 +174,16 @@ export default function RolesAdmin() {
           </div>
         </form>
       </ModalCrud>
+
+      {aEliminar && (
+        <Confirmar
+          titulo="Eliminar rol"
+          mensaje={`¿Eliminar el rol "${aEliminar.name}"?`}
+          onConfirmar={confirmarEliminar}
+          onCancelar={() => setAEliminar(null)}
+          cargando={eliminando}
+        />
+      )}
     </VistaGestion>
   )
 }

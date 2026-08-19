@@ -3,7 +3,7 @@ import VistaGestion from '@/pages/role/admin/VistaGestion/VistaGestion'
 import TablaCrud from '@/components/crud/TablaCrud'
 import ModalCrud from '@/components/crud/ModalCrud'
 import Confirmar from '@/components/crud/Confirmar'
-import { IconoPaquete } from '@/components/ui/Iconos/Iconos'
+import { IconoPaquete, IconoRefrescar, IconoEditar, IconoEliminar, IconoAgregar } from '@/components/ui/Iconos/Iconos'
 import {
   getProductosAdmin,
   crearProducto,
@@ -204,20 +204,34 @@ export default function ProductosAdmin() {
 
   const acciones = (producto) => (
     <>
-      <button type="button" className="crud__boton--editar" onClick={() => abrirEdicion(producto)}>
-        Editar
-      </button>
       <button
         type="button"
+        className="crud__boton"
         onClick={() => {
           setAjuste({ cantidad_nueva: String(producto.stock), motivo: '' })
           setAAjustar(producto)
         }}
       >
+        <IconoRefrescar tamano={18} />
         Ajustar stock
       </button>
-      <button type="button" className="crud__boton--eliminar" onClick={() => setAEliminar(producto)}>
-        Eliminar
+      <button
+        type="button"
+        className="crud__icono crud__icono--editar"
+        aria-label={`Editar ${producto.nombre}`}
+        title="Editar"
+        onClick={() => abrirEdicion(producto)}
+      >
+        <IconoEditar tamano={18} />
+      </button>
+      <button
+        type="button"
+        className="crud__icono crud__icono--eliminar"
+        aria-label={`Eliminar ${producto.nombre}`}
+        title="Eliminar"
+        onClick={() => setAEliminar(producto)}
+      >
+        <IconoEliminar tamano={18} />
       </button>
     </>
   )
@@ -230,6 +244,7 @@ export default function ProductosAdmin() {
       <div className="gestion__cabecera">
         <div />
         <button type="button" className="crud__boton crud__boton--nuevo" onClick={abrirNuevo}>
+          <IconoAgregar tamano={16} />
           Nuevo producto
         </button>
       </div>

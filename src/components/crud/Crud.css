@@ -208,6 +208,24 @@
   background: rgba(34, 197, 94, 0.2);
 }
 
+.crud__icono {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dash-texto-suave);
+}
+
+.crud__icono--editar {
+  color: var(--dash-azul);
+}
+
+.crud__icono--eliminar {
+  color: var(--dash-rojo);
+}
+
 .crud__velo {
   position: fixed;
   inset: 0;

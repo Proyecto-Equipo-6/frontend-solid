@@ -247,6 +247,51 @@ export function IconoChevron({ tamano }) {
   )
 }
 
+export function IconoEditar({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3Z" />
+    </IconoBase>
+  )
+}
+
+export function IconoEliminar({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <path d="M3 6h18" />
+      <path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2" />
+      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+      <path d="M10 11v6M14 11v6" />
+    </IconoBase>
+  )
+}
+
+export function IconoAgregar({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <path d="M12 5v14M5 12h14" />
+    </IconoBase>
+  )
+}
+
+export function IconoRefrescar({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <path d="M3 12a9 9 0 1 0 2.6-6.4" />
+      <path d="M3 3v5h5" />
+    </IconoBase>
+  )
+}
+
+export function IconoPower({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <path d="M12 3v9" />
+      <path d="M6.3 6.5a8 8 0 1 0 11.4 0" />
+    </IconoBase>
+  )
+}
+
 export function IconoFlecha({ tamano }) {
   return (
     <IconoBase tamano={tamano}>
