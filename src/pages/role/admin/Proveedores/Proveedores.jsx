@@ -3,13 +3,14 @@ import VistaGestion from '@/pages/role/admin/VistaGestion/VistaGestion'
 import TablaCrud from '@/components/crud/TablaCrud'
 import ModalCrud from '@/components/crud/ModalCrud'
 import Confirmar from '@/components/crud/Confirmar'
+import FiltroEstado from '@/components/crud/FiltroEstado'
 import {
   getProveedores,
   crearProveedor,
   editarProveedor,
   eliminarProveedor,
 } from '@/services/admin'
-import { IconoEditar, IconoEliminar, IconoAgregar } from '@/components/ui/Iconos/Iconos'
+import { IconoEditar, IconoEliminar, IconoReactivar, IconoAgregar } from '@/components/ui/Iconos/Iconos'
 
 const FORM_VACIO = {
   nit_proveedor: '',
@@ -32,6 +33,8 @@ export default function Proveedores() {
 
   const [aEliminar, setAEliminar] = useState(null)
   const [eliminando, setEliminando] = useState(false)
+
+  const [filtro, setFiltro] = useState('activos')
 
   function cargarTodo() {
     setCargando(true)
@@ -126,6 +129,7 @@ export default function Proveedores() {
     {
       clave: 'estado',
       etiqueta: 'Estado',
+      alineacion: 'centro',
       render: (p) => (
         <span className={`crud__badge crud__badge--${Number(p.estado) === 1 ? 'activo' : 'inactivo'}`}>
           {Number(p.estado) === 1 ? 'Activo' : 'Inactivo'}
@@ -136,26 +140,62 @@ export default function Proveedores() {
 
   const acciones = (proveedor) => (
     <>
-      <button
-        type="button"
-        className="crud__icono crud__icono--editar"
-        aria-label={`Editar ${proveedor.razon_social}`}
-        title="Editar"
-        onClick={() => abrirEdicion(proveedor)}
-      >
-        <IconoEditar tamano={18} />
-      </button>
-      <button
-        type="button"
-        className="crud__icono crud__icono--eliminar"
-        aria-label={`Eliminar ${proveedor.razon_social}`}
-        title="Eliminar"
-        onClick={() => setAEliminar(proveedor)}
-      >
-        <IconoEliminar tamano={18} />
-      </button>
+      {filtro === 'inactivos' ? (
+        <button
+          type="button"
+          className="crud__icono crud__icono--reactivar"
+          aria-label={`Activar ${proveedor.razon_social}`}
+          title="Activar"
+          onClick={() => reactivarProveedor(proveedor)}
+        >
+          <IconoReactivar tamano={18} />
+        </button>
+      ) : (
+        <>
+          <button
+            type="button"
+            className="crud__icono crud__icono--editar"
+            aria-label={`Editar ${proveedor.razon_social}`}
+            title="Editar"
+            onClick={() => abrirEdicion(proveedor)}
+          >
+            <IconoEditar tamano={18} />
+          </button>
+          <button
+            type="button"
+            className="crud__icono crud__icono--eliminar"
+            aria-label={`Eliminar ${proveedor.razon_social}`}
+            title="Eliminar"
+            onClick={() => setAEliminar(proveedor)}
+          >
+            <IconoEliminar tamano={18} />
+          </button>
+        </>
+      )}
     </>
   )
+
+  async function reactivarProveedor(proveedor) {
+    setAlerta('')
+    try {
+      await editarProveedor(proveedor.id_proveedor, {
+        nit_proveedor: proveedor.nit_proveedor,
+        razon_social: proveedor.razon_social,
+        telefono: proveedor.telefono,
+        email: proveedor.email || '',
+        estado: 1,
+      })
+      setAlerta(`Proveedor "${proveedor.razon_social}" activado correctamente.`)
+      cargarTodo()
+    } catch (e) {
+      setAlerta(e.message)
+    }
+  }
+
+  const esActivo = (p) => Number(p.estado) === 1
+  const activos = proveedores.filter(esActivo)
+  const inactivos = proveedores.filter((p) => !esActivo(p))
+  const filas = filtro === 'activos' ? activos : inactivos
 
   return (
     <VistaGestion
@@ -163,7 +203,11 @@ export default function Proveedores() {
       descripcion="Administra los proveedores y las condiciones de abastecimiento."
     >
       <div className="gestion__cabecera">
-        <div />
+        <FiltroEstado
+          valor={filtro}
+          onCambiar={setFiltro}
+          conteos={{ activos: activos.length, inactivos: inactivos.length }}
+        />
         <button type="button" className="crud__boton crud__boton--nuevo" onClick={abrirNuevo}>
           <IconoAgregar tamano={16} />
           Nuevo proveedor
@@ -174,7 +218,7 @@ export default function Proveedores() {
 
       <TablaCrud
         columnas={columnas}
-        filas={proveedores}
+        filas={filas}
         claveFila={(p) => p.id_proveedor}
         cargando={cargando}
         error={error}

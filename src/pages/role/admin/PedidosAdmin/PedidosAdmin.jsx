@@ -195,6 +195,7 @@ export default function PedidosAdmin() {
     {
       clave: 'id_pedido',
       etiqueta: 'N°',
+      alineacion: 'centro',
       render: (p) => <span className="crud__texto-principal">#{p.id_pedido}</span>,
     },
     {
@@ -233,6 +234,7 @@ export default function PedidosAdmin() {
     {
       clave: 'estado',
       etiqueta: 'Estado',
+      alineacion: 'centro',
       render: (p) => (
         <span className={`crud__badge crud__badge--${obtenerBadge(p.estado)}`}>
           {ETIQUETAS_ESTADO[p.estado] || p.estado}

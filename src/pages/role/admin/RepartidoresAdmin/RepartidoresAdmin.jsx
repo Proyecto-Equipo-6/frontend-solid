@@ -3,6 +3,7 @@ import VistaGestion from '@/pages/role/admin/VistaGestion/VistaGestion'
 import TablaCrud from '@/components/crud/TablaCrud'
 import ModalCrud from '@/components/crud/ModalCrud'
 import Confirmar from '@/components/crud/Confirmar'
+import FiltroEstado from '@/components/crud/FiltroEstado'
 import {
   getRepartidores,
   cambiarEstadoRepartidor,
@@ -10,7 +11,12 @@ import {
   actualizarRepartidor,
   eliminarRepartidor,
 } from '@/services/admin'
-import { IconoPower, IconoEditar, IconoEliminar, IconoAgregar } from '@/components/ui/Iconos/Iconos'
+import {
+  IconoEditar,
+  IconoEliminar,
+  IconoReactivar,
+  IconoAgregar,
+} from '@/components/ui/Iconos/Iconos'
 
 const FORM_VACIO = {
   nombre_apellido: '',
@@ -27,7 +33,6 @@ export default function RepartidoresAdmin() {
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState('')
   const [alerta, setAlerta] = useState('')
-  const [cambiandoId, setCambiandoId] = useState(null)
 
   const [modal, setModal] = useState(false)
   const [editandoId, setEditandoId] = useState(null)
@@ -36,6 +41,8 @@ export default function RepartidoresAdmin() {
 
   const [aEliminar, setAEliminar] = useState(null)
   const [eliminando, setEliminando] = useState(false)
+
+  const [filtro, setFiltro] = useState('activos')
 
   function cargarTodo() {
     setCargando(true)
@@ -117,25 +124,11 @@ export default function RepartidoresAdmin() {
     }
   }
 
-  async function alternarEstado(repartidor) {
-    const nuevo = repartidor.estado === 'DISPONIBLE' ? 'INACTIVO' : 'DISPONIBLE'
-    setCambiandoId(repartidor.id_repartidor)
-    setAlerta('')
-    try {
-      await cambiarEstadoRepartidor(repartidor.id_repartidor, nuevo)
-      setAlerta(`Repartidor "${repartidor.nombre}" actualizado a ${nuevo === 'DISPONIBLE' ? 'disponible' : 'inactivo'}.`)
-      cargarTodo()
-    } catch (e) {
-      setAlerta(e.message)
-    } finally {
-      setCambiandoId(null)
-    }
-  }
-
   const columnas = [
     {
       clave: 'id_repartidor',
       etiqueta: 'ID',
+      alineacion: 'centro',
       render: (r) => <span className="crud__texto-secundario">{r.id_repartidor}</span>,
     },
     {
@@ -163,6 +156,7 @@ export default function RepartidoresAdmin() {
     {
       clave: 'estado',
       etiqueta: 'Estado',
+      alineacion: 'centro',
       render: (r) => (
         <span className={`crud__badge crud__badge--${r.estado === 'DISPONIBLE' ? 'activo' : 'inactivo'}`}>
           {r.estado === 'DISPONIBLE' ? 'Disponible' : 'Inactivo'}
@@ -173,39 +167,56 @@ export default function RepartidoresAdmin() {
 
   const acciones = (repartidor) => (
     <>
-      <button
-        type="button"
-        className={repartidor.estado === 'DISPONIBLE' ? 'crud__boton' : 'crud__boton crud__boton--nuevo'}
-        onClick={() => alternarEstado(repartidor)}
-        disabled={cambiandoId === repartidor.id_repartidor}
-      >
-        <IconoPower tamano={18} />
-        {cambiandoId === repartidor.id_repartidor
-          ? 'Procesando…'
-          : repartidor.estado === 'DISPONIBLE'
-            ? 'Poner inactivo'
-            : 'Poner disponible'}
-      </button>
-      <button
-        type="button"
-        className="crud__icono crud__icono--editar"
-        aria-label={`Editar ${repartidor.nombre}`}
-        title="Editar"
-        onClick={() => abrirEdicion(repartidor)}
-      >
-        <IconoEditar tamano={18} />
-      </button>
-      <button
-        type="button"
-        className="crud__icono crud__icono--eliminar"
-        aria-label={`Eliminar ${repartidor.nombre}`}
-        title="Eliminar"
-        onClick={() => setAEliminar(repartidor)}
-      >
-        <IconoEliminar tamano={18} />
-      </button>
+      {filtro === 'inactivos' ? (
+        <button
+          type="button"
+          className="crud__icono crud__icono--reactivar"
+          aria-label={`Activar ${repartidor.nombre}`}
+          title="Activar"
+          onClick={() => reactivarRepartidor(repartidor)}
+        >
+          <IconoReactivar tamano={18} />
+        </button>
+      ) : (
+        <>
+          <button
+            type="button"
+            className="crud__icono crud__icono--editar"
+            aria-label={`Editar ${repartidor.nombre}`}
+            title="Editar"
+            onClick={() => abrirEdicion(repartidor)}
+          >
+            <IconoEditar tamano={18} />
+          </button>
+          <button
+            type="button"
+            className="crud__icono crud__icono--eliminar"
+            aria-label={`Eliminar ${repartidor.nombre}`}
+            title="Eliminar"
+            onClick={() => setAEliminar(repartidor)}
+          >
+            <IconoEliminar tamano={18} />
+          </button>
+        </>
+      )}
     </>
   )
+
+  async function reactivarRepartidor(repartidor) {
+    setAlerta('')
+    try {
+      await cambiarEstadoRepartidor(repartidor.id_repartidor, 'DISPONIBLE')
+      setAlerta(`Repartidor "${repartidor.nombre}" puesto en disponible.`)
+      cargarTodo()
+    } catch (e) {
+      setAlerta(e.message)
+    }
+  }
+
+  const esActivo = (r) => r.estado === 'DISPONIBLE'
+  const activos = repartidores.filter(esActivo)
+  const inactivos = repartidores.filter((r) => !esActivo(r))
+  const filas = filtro === 'activos' ? activos : inactivos
 
   return (
     <VistaGestion
@@ -213,7 +224,11 @@ export default function RepartidoresAdmin() {
       descripcion="Administra los repartidores: crea, edita, elimina y controla su estado operativo."
     >
       <div className="gestion__cabecera">
-        <div />
+        <FiltroEstado
+          valor={filtro}
+          onCambiar={setFiltro}
+          conteos={{ activos: activos.length, inactivos: inactivos.length }}
+        />
         <button type="button" className="crud__boton crud__boton--nuevo" onClick={abrirNuevo}>
           <IconoAgregar tamano={16} />
           Nuevo repartidor
@@ -224,7 +239,7 @@ export default function RepartidoresAdmin() {
 
       <TablaCrud
         columnas={columnas}
-        filas={repartidores}
+        filas={filas}
         claveFila={(r) => r.id_repartidor}
         cargando={cargando}
         error={error}

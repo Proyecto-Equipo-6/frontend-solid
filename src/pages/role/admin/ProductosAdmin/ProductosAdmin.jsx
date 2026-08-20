@@ -3,7 +3,8 @@ import VistaGestion from '@/pages/role/admin/VistaGestion/VistaGestion'
 import TablaCrud from '@/components/crud/TablaCrud'
 import ModalCrud from '@/components/crud/ModalCrud'
 import Confirmar from '@/components/crud/Confirmar'
-import { IconoPaquete, IconoRefrescar, IconoEditar, IconoEliminar, IconoAgregar } from '@/components/ui/Iconos/Iconos'
+import FiltroEstado from '@/components/crud/FiltroEstado'
+import { IconoPaquete, IconoRefrescar, IconoEditar, IconoEliminar, IconoReactivar, IconoAgregar } from '@/components/ui/Iconos/Iconos'
 import {
   getProductosAdmin,
   crearProducto,
@@ -45,6 +46,8 @@ export default function ProductosAdmin() {
 
   const [aAjustar, setAAjustar] = useState(null)
   const [ajuste, setAjuste] = useState({ cantidad_nueva: '', motivo: '' })
+
+  const [filtro, setFiltro] = useState('activos')
 
   function cargarTodo() {
     setCargando(true)
@@ -194,6 +197,7 @@ export default function ProductosAdmin() {
     {
       clave: 'estado',
       etiqueta: 'Estado',
+      alineacion: 'centro',
       render: (p) => (
         <span className={`crud__badge crud__badge--${Number(p.estado) === 1 ? 'activo' : 'inactivo'}`}>
           {Number(p.estado) === 1 ? 'Activo' : 'Inactivo'}
@@ -204,37 +208,77 @@ export default function ProductosAdmin() {
 
   const acciones = (producto) => (
     <>
-      <button
-        type="button"
-        className="crud__boton"
-        onClick={() => {
-          setAjuste({ cantidad_nueva: String(producto.stock), motivo: '' })
-          setAAjustar(producto)
-        }}
-      >
-        <IconoRefrescar tamano={18} />
-        Ajustar stock
-      </button>
-      <button
-        type="button"
-        className="crud__icono crud__icono--editar"
-        aria-label={`Editar ${producto.nombre}`}
-        title="Editar"
-        onClick={() => abrirEdicion(producto)}
-      >
-        <IconoEditar tamano={18} />
-      </button>
-      <button
-        type="button"
-        className="crud__icono crud__icono--eliminar"
-        aria-label={`Eliminar ${producto.nombre}`}
-        title="Eliminar"
-        onClick={() => setAEliminar(producto)}
-      >
-        <IconoEliminar tamano={18} />
-      </button>
+      {filtro === 'inactivos' ? (
+        <button
+          type="button"
+          className="crud__icono crud__icono--reactivar"
+          aria-label={`Activar ${producto.nombre}`}
+          title="Activar"
+          onClick={() => reactivarProducto(producto)}
+        >
+          <IconoReactivar tamano={18} />
+        </button>
+      ) : (
+        <>
+          <button
+            type="button"
+            className="crud__boton"
+            onClick={() => {
+              setAjuste({ cantidad_nueva: String(producto.stock), motivo: '' })
+              setAAjustar(producto)
+            }}
+          >
+            <IconoRefrescar tamano={18} />
+            Ajustar stock
+          </button>
+          <button
+            type="button"
+            className="crud__icono crud__icono--editar"
+            aria-label={`Editar ${producto.nombre}`}
+            title="Editar"
+            onClick={() => abrirEdicion(producto)}
+          >
+            <IconoEditar tamano={18} />
+          </button>
+          <button
+            type="button"
+            className="crud__icono crud__icono--eliminar"
+            aria-label={`Eliminar ${producto.nombre}`}
+            title="Eliminar"
+            onClick={() => setAEliminar(producto)}
+          >
+            <IconoEliminar tamano={18} />
+          </button>
+        </>
+      )}
     </>
   )
+
+  async function reactivarProducto(producto) {
+    setAlerta('')
+    try {
+      await editarProducto(producto.id_producto, {
+        sku: producto.sku,
+        id_categoria: Number(producto.id_categoria),
+        id_proveedor: Number(producto.id_proveedor),
+        nombre: producto.nombre,
+        descripcion: producto.descripcion || '',
+        precio: Number(producto.precio),
+        stock: Number(producto.stock),
+        imagen_url: producto.imagen_url || null,
+        estado: 1,
+      })
+      setAlerta(`Producto "${producto.nombre}" activado correctamente.`)
+      cargarTodo()
+    } catch (e) {
+      setAlerta(e.message)
+    }
+  }
+
+  const esActivo = (p) => Number(p.estado) === 1
+  const activos = productos.filter(esActivo)
+  const inactivos = productos.filter((p) => !esActivo(p))
+  const filas = filtro === 'activos' ? activos : inactivos
 
   return (
     <VistaGestion
@@ -242,7 +286,11 @@ export default function ProductosAdmin() {
       descripcion="Administra el catálogo: crea, edita y controla el stock de los productos."
     >
       <div className="gestion__cabecera">
-        <div />
+        <FiltroEstado
+          valor={filtro}
+          onCambiar={setFiltro}
+          conteos={{ activos: activos.length, inactivos: inactivos.length }}
+        />
         <button type="button" className="crud__boton crud__boton--nuevo" onClick={abrirNuevo}>
           <IconoAgregar tamano={16} />
           Nuevo producto
@@ -253,7 +301,7 @@ export default function ProductosAdmin() {
 
       <TablaCrud
         columnas={columnas}
-        filas={productos}
+        filas={filas}
         claveFila={(p) => p.id_producto}
         cargando={cargando}
         error={error}

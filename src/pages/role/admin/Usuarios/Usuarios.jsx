@@ -3,6 +3,7 @@ import VistaGestion from '@/pages/role/admin/VistaGestion/VistaGestion'
 import TablaCrud from '@/components/crud/TablaCrud'
 import ModalCrud from '@/components/crud/ModalCrud'
 import Confirmar from '@/components/crud/Confirmar'
+import FiltroEstado from '@/components/crud/FiltroEstado'
 import {
   getUsuarios,
   actualizarEstadoUsuario,
@@ -11,7 +12,12 @@ import {
   eliminarUsuarioAdmin,
   getRoles,
 } from '@/services/admin'
-import { IconoPower, IconoEditar, IconoEliminar, IconoAgregar } from '@/components/ui/Iconos/Iconos'
+import {
+  IconoEditar,
+  IconoEliminar,
+  IconoReactivar,
+  IconoAgregar,
+} from '@/components/ui/Iconos/Iconos'
 
 const TIPOS_DOCUMENTO = ['CC', 'CE', 'Pasaporte', 'Otro']
 
@@ -32,7 +38,6 @@ export default function Usuarios() {
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState('')
   const [alerta, setAlerta] = useState('')
-  const [cambiandoId, setCambiandoId] = useState(null)
 
   const [modal, setModal] = useState(false)
   const [editandoId, setEditandoId] = useState(null)
@@ -41,6 +46,8 @@ export default function Usuarios() {
 
   const [aEliminar, setAEliminar] = useState(null)
   const [eliminando, setEliminando] = useState(false)
+
+  const [filtro, setFiltro] = useState('activos')
 
   function cargarTodo() {
     setCargando(true)
@@ -131,29 +138,11 @@ export default function Usuarios() {
     }
   }
 
-  async function alternarEstado(usuario) {
-    setCambiandoId(usuario.id_usuario)
-    setAlerta('')
-    try {
-      const activo = Number(usuario.activo) !== 1
-      await actualizarEstadoUsuario(usuario.id_usuario, activo)
-      setAlerta(
-        activo
-          ? `Usuario "${usuario.nombre_apellido}" activado correctamente.`
-          : `Usuario "${usuario.nombre_apellido}" desactivado correctamente.`
-      )
-      cargarTodo()
-    } catch (e) {
-      setAlerta(e.message)
-    } finally {
-      setCambiandoId(null)
-    }
-  }
-
   const columnas = [
     {
       clave: 'id_usuario',
       etiqueta: 'ID',
+      alineacion: 'centro',
       render: (u) => <span className="crud__texto-secundario">{u.id_usuario}</span>,
     },
     {
@@ -171,6 +160,7 @@ export default function Usuarios() {
     {
       clave: 'activo',
       etiqueta: 'Estado',
+      alineacion: 'centro',
       render: (u) => (
         <span className={`crud__badge crud__badge--${Number(u.activo) === 1 ? 'activo' : 'inactivo'}`}>
           {Number(u.activo) === 1 ? 'Activo' : 'Inactivo'}
@@ -181,39 +171,56 @@ export default function Usuarios() {
 
   const acciones = (usuario) => (
     <>
-      <button
-        type="button"
-        className={Number(usuario.activo) === 1 ? 'crud__boton' : 'crud__boton crud__boton--nuevo'}
-        onClick={() => alternarEstado(usuario)}
-        disabled={cambiandoId === usuario.id_usuario}
-      >
-        <IconoPower tamano={18} />
-        {cambiandoId === usuario.id_usuario
-          ? 'Procesando…'
-          : Number(usuario.activo) === 1
-            ? 'Desactivar'
-            : 'Activar'}
-      </button>
-      <button
-        type="button"
-        className="crud__icono crud__icono--editar"
-        aria-label={`Editar ${usuario.nombre_apellido}`}
-        title="Editar"
-        onClick={() => abrirEdicion(usuario)}
-      >
-        <IconoEditar tamano={18} />
-      </button>
-      <button
-        type="button"
-        className="crud__icono crud__icono--eliminar"
-        aria-label={`Eliminar ${usuario.nombre_apellido}`}
-        title="Eliminar"
-        onClick={() => setAEliminar(usuario)}
-      >
-        <IconoEliminar tamano={18} />
-      </button>
+      {filtro === 'inactivos' ? (
+        <button
+          type="button"
+          className="crud__icono crud__icono--reactivar"
+          aria-label={`Activar ${usuario.nombre_apellido}`}
+          title="Activar"
+          onClick={() => reactivarUsuario(usuario)}
+        >
+          <IconoReactivar tamano={18} />
+        </button>
+      ) : (
+        <>
+          <button
+            type="button"
+            className="crud__icono crud__icono--editar"
+            aria-label={`Editar ${usuario.nombre_apellido}`}
+            title="Editar"
+            onClick={() => abrirEdicion(usuario)}
+          >
+            <IconoEditar tamano={18} />
+          </button>
+          <button
+            type="button"
+            className="crud__icono crud__icono--eliminar"
+            aria-label={`Eliminar ${usuario.nombre_apellido}`}
+            title="Eliminar"
+            onClick={() => setAEliminar(usuario)}
+          >
+            <IconoEliminar tamano={18} />
+          </button>
+        </>
+      )}
     </>
   )
+
+  async function reactivarUsuario(usuario) {
+    setAlerta('')
+    try {
+      await actualizarEstadoUsuario(usuario.id_usuario, true)
+      setAlerta(`Usuario "${usuario.nombre_apellido}" activado correctamente.`)
+      cargarTodo()
+    } catch (e) {
+      setAlerta(e.message)
+    }
+  }
+
+  const esActivo = (u) => Number(u.activo) === 1
+  const activos = usuarios.filter(esActivo)
+  const inactivos = usuarios.filter((u) => !esActivo(u))
+  const filas = filtro === 'activos' ? activos : inactivos
 
   return (
     <VistaGestion
@@ -221,7 +228,11 @@ export default function Usuarios() {
       descripcion="Administra los usuarios del sistema: crea, edita, elimina y controla su acceso."
     >
       <div className="gestion__cabecera">
-        <div />
+        <FiltroEstado
+          valor={filtro}
+          onCambiar={setFiltro}
+          conteos={{ activos: activos.length, inactivos: inactivos.length }}
+        />
         <button type="button" className="crud__boton crud__boton--nuevo" onClick={abrirNuevo}>
           <IconoAgregar tamano={16} />
           Nuevo usuario
@@ -232,7 +243,7 @@ export default function Usuarios() {
 
       <TablaCrud
         columnas={columnas}
-        filas={usuarios}
+        filas={filas}
         claveFila={(u) => u.id_usuario}
         cargando={cargando}
         error={error}

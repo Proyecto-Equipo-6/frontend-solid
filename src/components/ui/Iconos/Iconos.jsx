@@ -371,3 +371,30 @@ export function IconoOjo({ tamano }) {
     </IconoBase>
   )
 }
+
+export function IconoActivo({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="m8.5 12 2.5 2.5 4.5-5.5" />
+    </IconoBase>
+  )
+}
+
+export function IconoInactivo({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="m9 9 6 6M15 9l-6 6" />
+    </IconoBase>
+  )
+}
+
+export function IconoReactivar({ tamano }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <path d="M20 12a8 8 0 1 1-2.3-5.7" />
+      <path d="M20 3v5h-5" />
+    </IconoBase>
+  )
+}

@@ -16,7 +16,12 @@ export default function TablaCrud({
         <thead>
           <tr>
             {columnas.map((columna) => (
-              <th key={columna.clave}>{columna.etiqueta}</th>
+              <th
+                key={columna.clave}
+                className={columna.alineacion ? `crud__celda--${columna.alineacion}` : undefined}
+              >
+                {columna.etiqueta}
+              </th>
             ))}
             {acciones && <th className="crud__acciones-cabecera">Acciones</th>}
           </tr>
@@ -28,7 +33,7 @@ export default function TablaCrud({
               className={claseFila ? claseFila(fila, indice) : undefined}
             >
               {columnas.map((columna) => (
-                <td key={columna.clave}>
+                <td key={columna.clave} className={columna.alineacion ? `crud__celda--${columna.alineacion}` : undefined}>
                   {columna.render ? columna.render(fila) : fila[columna.clave]}
                 </td>
               ))}

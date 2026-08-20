@@ -36,13 +36,25 @@
   background: rgba(255, 255, 255, 0.02);
 }
 
+.crud__celda--centro {
+  text-align: center;
+}
+
+.crud__celda--centro > * {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .crud__acciones-cabecera {
   width: 1%;
   white-space: nowrap;
+  text-align: center;
 }
 
 .crud__acciones {
   white-space: nowrap;
+  text-align: center;
 }
 
 .crud__mensaje {
@@ -226,6 +238,10 @@
   color: var(--dash-rojo);
 }
 
+.crud__icono--reactivar {
+  color: var(--dash-verde);
+}
+
 .crud__velo {
   position: fixed;
   inset: 0;
@@ -373,6 +389,74 @@
 .crud__alerta {
   margin: 0 0 4px;
   font-size: 13px;
+}
+
+.crud__filtro {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background: var(--dash-tarjeta-alta);
+  border: 1px solid var(--dash-border);
+  border-radius: 10px;
+}
+
+.crud__filtro-boton {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dash-texto-suave);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.crud__filtro-boton:hover {
+  color: var(--dash-texto);
+}
+
+.crud__filtro-boton--activo {
+  color: var(--dash-texto);
+  background: var(--dash-tarjeta);
+  border-color: var(--dash-border);
+}
+
+.crud__filtro-icono {
+  width: 15px;
+  height: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.crud__filtro-icono--activo {
+  color: var(--dash-verde);
+}
+
+.crud__filtro-icono--inactivo {
+  color: var(--dash-rojo);
+}
+
+.crud__filtro-icono--marcado {
+  filter: drop-shadow(0 0 2px currentColor);
+}
+
+.crud__filtro-conteo {
+  min-width: 18px;
+  padding: 1px 5px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--dash-texto-tenue);
+  background: var(--dash-tarjeta-alta);
+  border: 1px solid var(--dash-border);
+  border-radius: 999px;
 }
 
 .crud__resumen {

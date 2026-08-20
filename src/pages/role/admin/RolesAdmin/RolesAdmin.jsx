@@ -87,6 +87,7 @@ export default function RolesAdmin() {
     {
       clave: 'id',
       etiqueta: 'ID',
+      alineacion: 'centro',
       render: (r) => <span className="crud__texto-secundario">{r.id}</span>,
     },
     {

@@ -3,13 +3,14 @@ import VistaGestion from '@/pages/role/admin/VistaGestion/VistaGestion'
 import TablaCrud from '@/components/crud/TablaCrud'
 import ModalCrud from '@/components/crud/ModalCrud'
 import Confirmar from '@/components/crud/Confirmar'
+import FiltroEstado from '@/components/crud/FiltroEstado'
 import {
   getCategoriasAdmin,
   crearCategoria,
   editarCategoria,
   eliminarCategoria,
 } from '@/services/admin'
-import { IconoEditar, IconoEliminar, IconoAgregar } from '@/components/ui/Iconos/Iconos'
+import { IconoEditar, IconoEliminar, IconoReactivar, IconoAgregar } from '@/components/ui/Iconos/Iconos'
 
 const FORM_VACIO = { nombre: '', descripcion: '', estado: 1 }
 
@@ -26,6 +27,8 @@ export default function Categorias() {
 
   const [aEliminar, setAEliminar] = useState(null)
   const [eliminando, setEliminando] = useState(false)
+
+  const [filtro, setFiltro] = useState('activos')
 
   function cargarTodo() {
     setCargando(true)
@@ -110,6 +113,7 @@ export default function Categorias() {
     {
       clave: 'estado',
       etiqueta: 'Estado',
+      alineacion: 'centro',
       render: (c) => (
         <span className={`crud__badge crud__badge--${Number(c.estado) === 1 ? 'activo' : 'inactivo'}`}>
           {Number(c.estado) === 1 ? 'Activo' : 'Inactivo'}
@@ -120,26 +124,60 @@ export default function Categorias() {
 
   const acciones = (categoria) => (
     <>
-      <button
-        type="button"
-        className="crud__icono crud__icono--editar"
-        aria-label={`Editar ${categoria.nombre}`}
-        title="Editar"
-        onClick={() => abrirEdicion(categoria)}
-      >
-        <IconoEditar tamano={18} />
-      </button>
-      <button
-        type="button"
-        className="crud__icono crud__icono--eliminar"
-        aria-label={`Eliminar ${categoria.nombre}`}
-        title="Eliminar"
-        onClick={() => setAEliminar(categoria)}
-      >
-        <IconoEliminar tamano={18} />
-      </button>
+      {filtro === 'inactivos' ? (
+        <button
+          type="button"
+          className="crud__icono crud__icono--reactivar"
+          aria-label={`Activar ${categoria.nombre}`}
+          title="Activar"
+          onClick={() => reactivarCategoria(categoria)}
+        >
+          <IconoReactivar tamano={18} />
+        </button>
+      ) : (
+        <>
+          <button
+            type="button"
+            className="crud__icono crud__icono--editar"
+            aria-label={`Editar ${categoria.nombre}`}
+            title="Editar"
+            onClick={() => abrirEdicion(categoria)}
+          >
+            <IconoEditar tamano={18} />
+          </button>
+          <button
+            type="button"
+            className="crud__icono crud__icono--eliminar"
+            aria-label={`Eliminar ${categoria.nombre}`}
+            title="Eliminar"
+            onClick={() => setAEliminar(categoria)}
+          >
+            <IconoEliminar tamano={18} />
+          </button>
+        </>
+      )}
     </>
   )
+
+  async function reactivarCategoria(categoria) {
+    setAlerta('')
+    try {
+      await editarCategoria(categoria.id_categoria, {
+        nombre: categoria.nombre,
+        descripcion: categoria.descripcion || '',
+        estado: 1,
+      })
+      setAlerta(`Categoría "${categoria.nombre}" activada correctamente.`)
+      cargarTodo()
+    } catch (e) {
+      setAlerta(e.message)
+    }
+  }
+
+  const esActivo = (c) => Number(c.estado) === 1
+  const activos = categorias.filter(esActivo)
+  const inactivos = categorias.filter((c) => !esActivo(c))
+  const filas = filtro === 'activos' ? activos : inactivos
 
   return (
     <VistaGestion
@@ -147,7 +185,11 @@ export default function Categorias() {
       descripcion="Crea y organiza las categorías del catálogo de productos."
     >
       <div className="gestion__cabecera">
-        <div />
+        <FiltroEstado
+          valor={filtro}
+          onCambiar={setFiltro}
+          conteos={{ activos: activos.length, inactivos: inactivos.length }}
+        />
         <button type="button" className="crud__boton crud__boton--nuevo" onClick={abrirNuevo}>
           <IconoAgregar tamano={16} />
           Nueva categoría
@@ -158,7 +200,7 @@ export default function Categorias() {
 
       <TablaCrud
         columnas={columnas}
-        filas={categorias}
+        filas={filas}
         claveFila={(c) => c.id_categoria}
         cargando={cargando}
         error={error}
