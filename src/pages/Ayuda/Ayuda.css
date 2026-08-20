@@ -1,0 +1,56 @@
+.ayuda {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 20px 80px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.ayuda__etiqueta {
+  margin: 0;
+  padding: 4px 12px;
+  display: inline-block;
+  width: fit-content;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border-radius: 999px;
+}
+
+.ayuda__titulo {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.ayuda__texto {
+  margin: 0;
+  max-width: 460px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.ayuda__boton {
+  margin-top: 10px;
+  padding: 12px 24px;
+  font-weight: 700;
+  color: var(--sobre-accent);
+  background: var(--accent);
+  border-radius: 999px;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.ayuda__boton:hover {
+  opacity: 0.9;
+}

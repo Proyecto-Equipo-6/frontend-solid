@@ -1,9 +1,23 @@
 .mis-pedidos {
+  --dash-tarjeta: var(--bg);
+  --dash-tarjeta-alta: var(--bg-suave);
+  --dash-border: var(--border);
+  --dash-texto: var(--text-h);
+  --dash-texto-suave: var(--text);
+  --dash-texto-tenue: var(--text-suave);
+  --dash-verde: var(--success);
+  --dash-verde-bg: var(--success-bg);
+  --dash-rojo: var(--error);
+  --dash-rojo-bg: var(--error-bg);
+  --dash-azul: var(--accent);
+  --dash-azul-bg: var(--accent-bg);
+
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 32px 16px;
-  max-width: 860px;
+  box-sizing: border-box;
+  padding: 32px 12px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -131,59 +145,43 @@
   opacity: 0.9;
 }
 
-.mis-pedidos__lista {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+.mis-pedidos__fila td:first-child {
+  box-shadow: inset 4px 0 0 var(--linea-estado, var(--border));
 }
 
-.mis-pedidos__item {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 18px 20px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--estado-color, var(--border));
-  border-radius: var(--radio-grande);
-  box-shadow: var(--shadow);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+.mis-pedidos__fila--pendiente {
+  --linea-estado: #f59e0b;
 }
 
-.mis-pedidos__item:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-card);
+.mis-pedidos__fila--confirmado {
+  --linea-estado: #0284c7;
 }
 
-.mis-pedidos__item-cabecera {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
+.mis-pedidos__fila--asignado {
+  --linea-estado: #7c3aed;
 }
 
-.mis-pedidos__item-numero {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+.mis-pedidos__fila--en-camino {
+  --linea-estado: #0e7490;
 }
 
-.mis-pedidos__item-id {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text-h);
+.mis-pedidos__fila--entregado {
+  --linea-estado: #16a34a;
 }
 
-.mis-pedidos__item-fecha {
-  font-size: 13px;
-  color: var(--text-suave);
+.mis-pedidos__fila--no-entregado {
+  --linea-estado: #dc2626;
 }
 
-.mis-pedidos__estado {
+.mis-pedidos__fila--cancelado {
+  --linea-estado: #6b7280;
+}
+
+.mis-pedidos .crud__table tbody tr:hover td {
+  background: var(--accent-bg);
+}
+
+.mis-pedidos__badge {
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -191,69 +189,23 @@
   border-radius: 999px;
   font-size: 12px;
   font-weight: 600;
+  line-height: 1.4;
   white-space: nowrap;
 }
 
-.mis-pedidos__estado-dot {
+.mis-pedidos__badge-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background: currentColor;
 }
 
-.mis-pedidos__item-datos {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.mis-pedidos__item-campo {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.mis-pedidos__item-etiqueta {
-  font-size: 12px;
-  color: var(--text-suave);
-}
-
-.mis-pedidos__item-valor {
-  font-size: 14px;
+.mis-pedidos__ojo {
   color: var(--text-h);
 }
 
-.mis-pedidos__item-total {
-  font-size: 18px;
-  color: var(--text-h);
-}
-
-.mis-pedidos__item-motivo {
-  margin: 0;
-  padding: 10px 12px;
-  font-size: 13px;
-  color: var(--text);
-  background: var(--bg-suave);
-  border-radius: var(--radio);
-}
-
-.mis-pedidos__cancelar {
-  align-self: flex-start;
-  padding: 9px 16px;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--error);
-  background: var(--error-bg);
-  border: 1px solid var(--error-border);
-  border-radius: 999px;
-  cursor: pointer;
-  transition: opacity 0.15s ease;
-}
-
-.mis-pedidos__cancelar:hover {
-  opacity: 0.85;
+.mis-pedidos__ojo:hover {
+  color: var(--accent);
 }
 
 .mis-pedidos__velo {

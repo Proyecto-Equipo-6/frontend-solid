@@ -4,6 +4,7 @@ export default function TablaCrud({
   columnas,
   filas = [],
   claveFila = (fila, indice) => indice,
+  claseFila,
   cargando = false,
   error = '',
   mensajeVacio = 'No hay registros para mostrar.',
@@ -22,7 +23,10 @@ export default function TablaCrud({
         </thead>
         <tbody>
           {filas.map((fila, indice) => (
-            <tr key={claveFila(fila, indice)}>
+            <tr
+              key={claveFila(fila, indice)}
+              className={claseFila ? claseFila(fila, indice) : undefined}
+            >
               {columnas.map((columna) => (
                 <td key={columna.clave}>
                   {columna.render ? columna.render(fila) : fila[columna.clave]}

@@ -15,7 +15,7 @@ export default function BarraNavegacion() {
     <header className="barra">
       <div className="barra__toolbar">
         <nav className="barra__izquierda" aria-label="Navegación principal">
-          <Marca />
+          <Marca cubo={false} />
           <ul className="barra__enlaces">
             {NAVEGACION_PRINCIPAL.map((enlace) => (
               <li key={enlace.nombre}>

@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Alerta from '@/components/ui/Alerta/Alerta'
-import { IconoPaquete } from '@/components/ui/Iconos/Iconos'
+import TablaCrud from '@/components/crud/TablaCrud'
+import ModalCrud from '@/components/crud/ModalCrud'
+import { IconoOjo, IconoPaquete } from '@/components/ui/Iconos/Iconos'
 import { getMisPedidos, cancelarPedidoCliente } from '@/services/pedidos'
 import { formatoPrecio } from '@/utils/formato'
 import './MisPedidos.css'
@@ -26,6 +28,16 @@ const COLORES_ESTADO = {
   CANCELADO: '#6b7280',
 }
 
+const MAPA_CLASE_ESTADO = {
+  PENDIENTE: 'mis-pedidos__fila--pendiente',
+  CONFIRMADO: 'mis-pedidos__fila--confirmado',
+  ASIGNADO: 'mis-pedidos__fila--asignado',
+  EN_CAMINO: 'mis-pedidos__fila--en-camino',
+  ENTREGADO: 'mis-pedidos__fila--entregado',
+  NO_ENTREGADO: 'mis-pedidos__fila--no-entregado',
+  CANCELADO: 'mis-pedidos__fila--cancelado',
+}
+
 function normalizarPedidos(pedidos) {
   return (pedidos || []).map((pedido) => ({
     id_pedido: pedido.id_pedido,
@@ -33,8 +45,19 @@ function normalizarPedidos(pedidos) {
     direccion: pedido.direccion_entrega,
     total: Number(pedido.total),
     estado: pedido.estado,
+    observaciones: pedido.observaciones,
     motivo_cancelacion: pedido.motivo_cancelacion,
   }))
+}
+
+function BadgeEstado({ estado }) {
+  const color = COLORES_ESTADO[estado] || '#6b7280'
+  return (
+    <span className="mis-pedidos__badge" style={{ color, background: `${color}1a` }}>
+      <span className="mis-pedidos__badge-dot" aria-hidden="true" />
+      {ETIQUETAS_ESTADO[estado] || estado}
+    </span>
+  )
 }
 
 export default function MisPedidos() {
@@ -45,6 +68,7 @@ export default function MisPedidos() {
   const [aCancelar, setACancelar] = useState(null)
   const [motivo, setMotivo] = useState('')
   const [cancelando, setCancelando] = useState(false)
+  const [detalle, setDetalle] = useState(null)
 
   function cargar(estado = filtro) {
     setCargando(true)
@@ -84,6 +108,60 @@ export default function MisPedidos() {
       setCancelando(false)
     }
   }
+
+  const columnas = [
+    {
+      clave: 'id_pedido',
+      etiqueta: 'N°',
+      render: (p) => <span className="crud__texto-principal">#{p.id_pedido}</span>,
+    },
+    {
+      clave: 'fecha',
+      etiqueta: 'Fecha',
+      render: (p) =>
+        p.fecha.toLocaleString('es-CO', {
+          dateStyle: 'short',
+          timeStyle: 'short',
+        }),
+    },
+    { clave: 'direccion', etiqueta: 'Dirección' },
+    {
+      clave: 'total',
+      etiqueta: 'Total',
+      render: (p) => <span className="crud__texto-principal">{formatoPrecio(p.total)}</span>,
+    },
+    {
+      clave: 'estado',
+      etiqueta: 'Estado',
+      render: (p) => <BadgeEstado estado={p.estado} />,
+    },
+  ]
+
+  const acciones = (pedido) => (
+    <>
+      <button
+        type="button"
+        className="crud__icono mis-pedidos__ojo"
+        aria-label={`Ver detalle del pedido ${pedido.id_pedido}`}
+        title="Ver detalle"
+        onClick={() => setDetalle(pedido)}
+      >
+        <IconoOjo tamano={18} />
+      </button>
+      {pedido.estado === 'PENDIENTE' && (
+        <button
+          type="button"
+          className="crud__boton crud__boton--eliminar"
+          onClick={() => {
+            setMotivo('')
+            setACancelar(pedido)
+          }}
+        >
+          Cancelar
+        </button>
+      )}
+    </>
+  )
 
   return (
     <section className="mis-pedidos">
@@ -135,65 +213,60 @@ export default function MisPedidos() {
           </Link>
         </div>
       ) : (
-        <ul className="mis-pedidos__lista">
-          {pedidos.map((pedido) => (
-            <li
-              className="mis-pedidos__item"
-              key={pedido.id_pedido}
-              style={{ '--estado-color': COLORES_ESTADO[pedido.estado] || '#6b7280' }}
-            >
-              <div className="mis-pedidos__item-cabecera">
-                <div className="mis-pedidos__item-numero">
-                  <span className="mis-pedidos__item-id">Pedido #{pedido.id_pedido}</span>
-                  <span className="mis-pedidos__item-fecha">
-                    {pedido.fecha.toLocaleString('es-CO', {
-                      dateStyle: 'long',
-                      timeStyle: 'short',
-                    })}
-                  </span>
-                </div>
-                <span
-                  className="mis-pedidos__estado"
-                  style={{ color: COLORES_ESTADO[pedido.estado], background: `${COLORES_ESTADO[pedido.estado]}1a` }}
-                >
-                  <span className="mis-pedidos__estado-dot" aria-hidden="true" />
-                  {ETIQUETAS_ESTADO[pedido.estado] || pedido.estado}
-                </span>
-              </div>
-
-              <div className="mis-pedidos__item-datos">
-                <div className="mis-pedidos__item-campo">
-                  <span className="mis-pedidos__item-etiqueta">Dirección</span>
-                  <span className="mis-pedidos__item-valor">{pedido.direccion}</span>
-                </div>
-                <div className="mis-pedidos__item-campo">
-                  <span className="mis-pedidos__item-etiqueta">Total</span>
-                  <strong className="mis-pedidos__item-total">{formatoPrecio(pedido.total)}</strong>
-                </div>
-              </div>
-
-              {pedido.motivo_cancelacion && (
-                <p className="mis-pedidos__item-motivo">
-                  Motivo de cancelación: {pedido.motivo_cancelacion}
-                </p>
-              )}
-
-              {pedido.estado === 'PENDIENTE' && (
-                <button
-                  type="button"
-                  className="mis-pedidos__cancelar"
-                  onClick={() => {
-                    setMotivo('')
-                    setACancelar(pedido)
-                  }}
-                >
-                  Cancelar pedido
-                </button>
-              )}
-            </li>
-          ))}
-        </ul>
+        <TablaCrud
+          columnas={columnas}
+          filas={pedidos}
+          claveFila={(p) => p.id_pedido}
+          claseFila={(p) => `mis-pedidos__fila ${MAPA_CLASE_ESTADO[p.estado] || ''}`}
+          acciones={acciones}
+        />
       )}
+
+      <ModalCrud abierto={Boolean(detalle)} titulo="Detalle del pedido" onCerrar={() => setDetalle(null)}>
+        {detalle && (
+          <div className="crud__resumen">
+            <div className="crud__resumen-fila">
+              <span>Pedido</span>
+              <strong>#{detalle.id_pedido}</strong>
+            </div>
+            <div className="crud__resumen-fila">
+              <span>Estado</span>
+              <strong>
+                <BadgeEstado estado={detalle.estado} />
+              </strong>
+            </div>
+            <div className="crud__resumen-fila">
+              <span>Fecha</span>
+              <strong>
+                {detalle.fecha.toLocaleString('es-CO', {
+                  dateStyle: 'long',
+                  timeStyle: 'short',
+                })}
+              </strong>
+            </div>
+            <div className="crud__resumen-fila">
+              <span>Dirección</span>
+              <strong>{detalle.direccion}</strong>
+            </div>
+            {detalle.observaciones && (
+              <div className="crud__resumen-fila">
+                <span>Observaciones</span>
+                <strong>{detalle.observaciones}</strong>
+              </div>
+            )}
+            {detalle.motivo_cancelacion && (
+              <div className="crud__resumen-fila">
+                <span>Motivo de cancelación</span>
+                <strong>{detalle.motivo_cancelacion}</strong>
+              </div>
+            )}
+            <div className="crud__resumen-fila">
+              <span>Total</span>
+              <strong>{formatoPrecio(detalle.total)}</strong>
+            </div>
+          </div>
+        )}
+      </ModalCrud>
 
       {aCancelar && (
         <div className="mis-pedidos__velo" onClick={() => setACancelar(null)}>

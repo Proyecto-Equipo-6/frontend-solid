@@ -18,6 +18,7 @@ const Perfil = lazy(() => import('@/pages/profile/Perfil'))
 const EditarPerfil = lazy(() => import('@/pages/profile/EditarPerfil'))
 const Checkout = lazy(() => import('@/pages/cart/checkout/Checkout'))
 const MisPedidos = lazy(() => import('@/pages/role/cliente/MisPedidos/MisPedidos'))
+const Ayuda = lazy(() => import('@/pages/Ayuda/Ayuda'))
 
 const TIEMPO_MINIMO_CARGA = 1600
 const DURACION_SALIDA = 450
@@ -69,6 +70,7 @@ function App() {
               <Route path="/carrito" element={<VistaCarrito />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/mis-pedidos" element={<MisPedidos />} />
+              <Route path="/ayuda" element={<Ayuda />} />
               <Route path="*" element={<NoEncontrado />} />
             </Route>
             <Route path="/login" element={<IniciarSesion />} />

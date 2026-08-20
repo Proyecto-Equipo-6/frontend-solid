@@ -9,7 +9,7 @@ export default function PiePagina() {
       <div className="pie__contenido">
         <div className="pie__fila">
           <div className="pie__marca">
-            <Marca />
+            <Marca cubo={false} />
             <p className="pie__descripcion">{MARCA.descripcion}</p>
           </div>
 
@@ -20,6 +20,16 @@ export default function PiePagina() {
                 {enlace.nombre}
               </Link>
             ))}
+          </div>
+
+          <div className="pie__columna">
+            <h3 className="pie__titulo">¿Necesitas ayuda?</h3>
+            <p className="pie__texto">
+              Cuéntanos tus dudas, quejas o reclamos y te responderemos lo antes posible.
+            </p>
+            <Link to="/ayuda" className="pie__boton">
+              Ayuda / PQRS
+            </Link>
           </div>
         </div>
         <p className="pie__copyright">
