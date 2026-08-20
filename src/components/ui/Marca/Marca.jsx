@@ -3,15 +3,20 @@ import { Link } from 'react-router-dom'
 import { MARCA } from '@/config/aplicacion'
 import './Marca.css'
 
-export default function Marca({ cubo = true }) {
+export default function Marca({ cubo = true, alInicio = false }) {
   const [girada, setGirada] = useState(false)
+
+  function manejarClic() {
+    setGirada((v) => !v)
+    if (alInicio) window.scrollTo(0, 0)
+  }
 
   return (
     <Link
       to="/"
       className={`marca${girada ? ' marca--girada' : ''}${cubo ? '' : ' marca--simple'}`}
       aria-label={MARCA.nombre}
-      onClick={() => setGirada((v) => !v)}
+      onClick={manejarClic}
     >
       {cubo && (
         <span className="marca__logo" aria-hidden="true">

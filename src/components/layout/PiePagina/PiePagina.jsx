@@ -9,7 +9,7 @@ export default function PiePagina() {
       <div className="pie__contenido">
         <div className="pie__fila">
           <div className="pie__marca">
-            <Marca cubo={false} />
+            <Marca cubo={false} alInicio />
             <p className="pie__descripcion">{MARCA.descripcion}</p>
           </div>
 
