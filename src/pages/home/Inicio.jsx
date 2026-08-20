@@ -36,7 +36,7 @@ function Hero({ destacado, cargando }) {
                 <span className="hero__panel-estado">NUEVO</span>
               </div>
               <div className="hero__panel-imagen">
-                <img src={destacado.imagen} alt={destacado.titulo} />
+                <img key={destacado.id} src={destacado.imagen} alt={destacado.titulo} />
               </div>
               <div className="hero__panel-cuerpo">
                 <div className="hero__panel-nombre">{destacado.titulo}</div>
@@ -77,6 +77,7 @@ export default function Inicio() {
   const [articulos, setArticulos] = useState([])
   const [categorias, setCategorias] = useState([])
   const [cargando, setCargando] = useState(true)
+  const [indiceDestacado, setIndiceDestacado] = useState(0)
 
   useEffect(() => {
     let activo = true
@@ -100,7 +101,22 @@ export default function Inicio() {
     }
   }, [])
 
-  const destacado = articulos.find((articulo) => articulo.destacado) ?? articulos[0]
+  const destacados = articulos.filter(
+    (articulo) =>
+      articulo.estado === undefined ||
+      articulo.estado === 1 ||
+      articulo.estado === '1',
+  )
+
+  useEffect(() => {
+    if (destacados.length === 0) return undefined
+    const temporizador = setInterval(() => {
+      setIndiceDestacado((indice) => (indice + 1) % destacados.length)
+    }, 5000)
+    return () => clearInterval(temporizador)
+  }, [destacados])
+
+  const destacado = destacados[indiceDestacado % destacados.length]
 
   return (
     <>

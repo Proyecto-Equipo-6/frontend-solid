@@ -17,6 +17,7 @@ export function normalizarProducto(producto) {
     imagen: producto.imagen_url,
     sku: producto.sku,
     proveedor: producto.proveedor,
+    estado: producto.estado,
   }
 }
 

@@ -52,6 +52,7 @@ export const PRODUCTOS_MOCK = [
     precio: 210000,
     stock: 80,
     garantia: 'Sin garantía',
+    estado: 0,
     imagen:
       'https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=640&q=80',
   },
