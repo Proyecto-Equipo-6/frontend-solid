@@ -1,0 +1,305 @@
+.rep-det {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.rep-det__cabecera {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rep-det__volver {
+  align-self: flex-start;
+  padding: 8px 12px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dash-texto-suave);
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.rep-det__volver:hover {
+  color: var(--dash-texto);
+}
+
+.rep-det__titulo-bloque {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.rep-det__titulo {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--dash-texto);
+}
+
+.rep-det__subtitulo {
+  margin: 0;
+  font-size: 13px;
+  color: var(--dash-texto-suave);
+}
+
+.rep-det__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.rep-det__badge--ASIGNADO {
+  color: #a78bfa;
+  background: #251a44;
+}
+
+.rep-det__badge--EN_CAMINO {
+  color: #22d3ee;
+  background: #0b2a30;
+}
+
+.rep-det__badge--ENTREGADO {
+  color: var(--dash-verde);
+  background: var(--dash-verde-bg);
+}
+
+.rep-det__badge--NO_ENTREGADO {
+  color: var(--dash-rojo);
+  background: var(--dash-rojo-bg);
+}
+
+.rep-det__cargando {
+  margin: 0;
+  font-size: 14px;
+  color: var(--dash-texto-suave);
+}
+
+.rep-det__tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--dash-tarjeta);
+  border: 1px solid var(--dash-border);
+  border-radius: 14px;
+}
+
+.rep-det__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+}
+
+.rep-det__fila {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.rep-det__fila dt {
+  color: var(--dash-texto-suave);
+}
+
+.rep-det__fila dd {
+  margin: 0;
+  color: var(--dash-texto);
+  text-align: right;
+}
+
+.rep-det__seccion-titulo {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--dash-texto);
+}
+
+.rep-det__diagrama {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rep-det__diagrama-paso {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  position: relative;
+}
+
+.rep-det__diagrama-paso:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: var(--dash-border);
+}
+
+.rep-det__diagrama-paso--completado:not(:last-child)::after {
+  background: var(--dash-accent);
+}
+
+.rep-det__diagrama-nodo {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--dash-texto-tenue);
+  background: var(--dash-tarjeta-alta);
+  border: 2px solid var(--dash-border);
+  border-radius: 50%;
+  position: relative;
+  z-index: 1;
+}
+
+.rep-det__diagrama-paso--completado .rep-det__diagrama-nodo {
+  color: var(--dash-bg);
+  background: var(--dash-accent);
+  border-color: var(--dash-accent);
+}
+
+.rep-det__diagrama-paso--actual .rep-det__diagrama-nodo {
+  box-shadow: 0 0 0 3px var(--dash-accent);
+}
+
+.rep-det__diagrama-etiqueta {
+  font-size: 11px;
+  color: var(--dash-texto-tenue);
+}
+
+.rep-det__diagrama-paso--completado .rep-det__diagrama-etiqueta {
+  color: var(--dash-texto);
+}
+
+.rep-det__avance {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.rep-det__boton {
+  padding: 8px 14px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dash-texto);
+  background: var(--dash-tarjeta-alta);
+  border: 1px solid var(--dash-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.rep-det__boton:hover:not(:disabled) {
+  background: var(--dash-tarjeta);
+}
+
+.rep-det__boton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.rep-det__boton--avanzar {
+  color: var(--dash-verde);
+  border-color: var(--dash-verde);
+  background: var(--dash-verde-bg);
+}
+
+.rep-det__boton--avanzar:hover:not(:disabled) {
+  background: rgba(34, 197, 94, 0.2);
+}
+
+.rep-det__boton--peligro {
+  color: var(--dash-rojo);
+  border-color: var(--dash-rojo);
+  background: var(--dash-rojo-bg);
+}
+
+.rep-det__boton--peligro:hover:not(:disabled) {
+  background: rgba(244, 63, 94, 0.22);
+}
+
+.rep-det__formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rep-det__formulario-texto {
+  margin: 0;
+  font-size: 13px;
+  color: var(--dash-texto-suave);
+}
+
+.rep-det__foto {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dash-texto);
+  background: var(--dash-tarjeta-alta);
+  border: 1px dashed var(--dash-border);
+  border-radius: 10px;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.rep-det__foto input {
+  display: none;
+}
+
+.rep-det__label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dash-texto);
+}
+
+.rep-det__textarea {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 80px;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--dash-texto);
+  background: var(--dash-tarjeta-alta);
+  border: 1px solid var(--dash-border);
+  border-radius: 8px;
+  outline: none;
+  resize: vertical;
+}
+
+.rep-det__textarea:focus {
+  border-color: var(--dash-accent);
+}
+
+.rep-det__acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}

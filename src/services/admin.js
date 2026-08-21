@@ -195,6 +195,12 @@ export function asignarRepartidorPedido(id, idRepartidor) {
   })
 }
 
+export function desasignarRepartidorPedido(id) {
+  return request(`/v1/admin/pedidos/${id}/desasignar`, {
+    metodo: 'PUT',
+  })
+}
+
 export function getTicketPedido(id) {
   return request(`/v1/admin/pedidos/${id}/ticket`)
 }
