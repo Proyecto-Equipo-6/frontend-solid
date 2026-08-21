@@ -77,6 +77,164 @@ function tamanoLegible(bytes) {
   return `${Math.round(bytes / 1024)} KB`
 }
 
+function ComprobanteEntrega({ comprobante_url }) {
+  const comprobante = interpretarComprobante(comprobante_url)
+
+  if (!comprobante) {
+    return <p className="det-pedido__nota">Aún no se registró un comprobante de entrega.</p>
+  }
+
+  if (comprobante.tipo === 'imagen') {
+    return (
+      <figure className="det-pedido__comprobante">
+        <img className="det-pedido__comprobante-imagen" src={comprobante.url} alt="Comprobante de entrega" />
+        <figcaption className="det-pedido__comprobante-caption">Evidencia de entrega</figcaption>
+      </figure>
+    )
+  }
+
+  if (comprobante.tipo === 'foto') {
+    return (
+      <div className="det-pedido__comprobante-info">
+        <span className="det-pedido__comprobante-etiqueta">Foto de evidencia</span>
+        <span className="det-pedido__comprobante-valor">Formato: {comprobante.formato.toUpperCase()}</span>
+        <span className="det-pedido__comprobante-valor">Tamaño: {tamanoLegible(comprobante.tamano)}</span>
+      </div>
+    )
+  }
+
+  return (
+    <div className="det-pedido__comprobante-info">
+      <span className="det-pedido__comprobante-etiqueta">Comprobante</span>
+      <span className="det-pedido__comprobante-valor">{comprobante.texto}</span>
+    </div>
+  )
+}
+
+function AccionesPedido({ estado, aTicket, abrirTicket, onConfirmar, onCancelar }) {
+  return (
+    <div className="det-pedido__acciones-estado">
+      {estado === 'PENDIENTE' && (
+        <button
+          type="button"
+          className="det-pedido__boton det-pedido__boton--avanzar"
+          onClick={() => onConfirmar('CONFIRMADO')}
+        >
+          Confirmar pedido
+        </button>
+      )}
+      {estado === 'ASIGNADO' && (
+        <button
+          type="button"
+          className="det-pedido__boton det-pedido__boton--avanzar"
+          onClick={() => onConfirmar('EN_CAMINO')}
+        >
+          Marcar en camino
+        </button>
+      )}
+      {estado === 'EN_CAMINO' && (
+        <>
+          <button
+            type="button"
+            className="det-pedido__boton det-pedido__boton--avanzar"
+            onClick={() => onConfirmar('ENTREGADO')}
+          >
+            Marcar entregado
+          </button>
+          <button
+            type="button"
+            className="det-pedido__boton det-pedido__boton--peligro"
+            onClick={() => onConfirmar('NO_ENTREGADO')}
+          >
+            Marcar no entregado
+          </button>
+        </>
+      )}
+      {!['ENTREGADO', 'CANCELADO', 'EN_CAMINO'].includes(estado) && (
+        <button type="button" className="det-pedido__boton det-pedido__boton--peligro" onClick={onCancelar}>
+          Cancelar pedido
+        </button>
+      )}
+      <button type="button" className="det-pedido__boton" onClick={abrirTicket} disabled={aTicket}>
+        {aTicket ? 'Generando…' : 'Ver ticket'}
+      </button>
+    </div>
+  )
+}
+
+function GestionRepartidor({
+  detalle,
+  repartidorAsignado,
+  repartidoresDisponibles,
+  puedeGestionar,
+  repartidorSel,
+  onSeleccionarRepartidor,
+  asignando,
+  desasignando,
+  onAsignar,
+  onDesasignar,
+}) {
+  if (!puedeGestionar) {
+    return (
+      <p className="det-pedido__nota">
+        {detalle.id_repartidor
+          ? `Asignado a ${repartidorAsignado?.nombre || `#${detalle.id_repartidor}`}. No se puede modificar en el estado actual.`
+          : 'Este pedido no tiene repartidor asignado y no se puede modificar en el estado actual.'}
+      </p>
+    )
+  }
+
+  if (detalle.id_repartidor) {
+    return (
+      <div className="det-pedido__asignacion">
+        <p className="det-pedido__asignacion-actual">
+          Asignado a <strong>{repartidorAsignado?.nombre || `#${detalle.id_repartidor}`}</strong>
+        </p>
+        <button
+          type="button"
+          className="det-pedido__boton det-pedido__boton--peligro"
+          onClick={onDesasignar}
+          disabled={desasignando}
+        >
+          {desasignando ? 'Desasignando…' : 'Desasignar repartidor'}
+        </button>
+      </div>
+    )
+  }
+
+  return (
+    <form className="det-pedido__asignacion" onSubmit={onAsignar}>
+      <label className="det-pedido__label" htmlFor="det-pedido-repartidor">
+        Repartidor disponible
+      </label>
+      <select
+        id="det-pedido-repartidor"
+        className="det-pedido__select"
+        value={repartidorSel}
+        onChange={onSeleccionarRepartidor}
+        required
+      >
+        <option value="">Selecciona…</option>
+        {repartidoresDisponibles.map((r) => (
+          <option key={r.id_repartidor} value={r.id_repartidor}>
+            {r.nombre}
+          </option>
+        ))}
+      </select>
+      {repartidoresDisponibles.length === 0 && (
+        <p className="det-pedido__nota">No hay repartidores disponibles en este momento.</p>
+      )}
+      <button
+        type="submit"
+        className="det-pedido__boton det-pedido__boton--avanzar"
+        disabled={asignando || repartidoresDisponibles.length === 0}
+      >
+        {asignando ? 'Asignando…' : 'Asignar repartidor'}
+      </button>
+    </form>
+  )
+}
+
 export default function DetallePedidoAdmin({ pedidoId, onVolver, onActualizado }) {
   const [detalle, setDetalle] = useState(null)
   const [cargando, setCargando] = useState(true)
@@ -270,35 +428,7 @@ export default function DetallePedidoAdmin({ pedidoId, onVolver, onActualizado }
         <div className="det-pedido__columna det-pedido__columna--comprobante">
           <div className="det-pedido__tarjeta">
             <h2 className="det-pedido__seccion-titulo">Comprobante de entrega</h2>
-            {(() => {
-              const comprobante = interpretarComprobante(detalle.comprobante_url)
-              if (!comprobante) {
-                return <p className="det-pedido__nota">Aún no se registró un comprobante de entrega.</p>
-              }
-              if (comprobante.tipo === 'imagen') {
-                return (
-                  <figure className="det-pedido__comprobante">
-                    <img className="det-pedido__comprobante-imagen" src={comprobante.url} alt="Comprobante de entrega" />
-                    <figcaption className="det-pedido__comprobante-caption">Evidencia de entrega</figcaption>
-                  </figure>
-                )
-              }
-              if (comprobante.tipo === 'foto') {
-                return (
-                  <div className="det-pedido__comprobante-info">
-                    <span className="det-pedido__comprobante-etiqueta">Foto de evidencia</span>
-                    <span className="det-pedido__comprobante-valor">Formato: {comprobante.formato.toUpperCase()}</span>
-                    <span className="det-pedido__comprobante-valor">Tamaño: {tamanoLegible(comprobante.tamano)}</span>
-                  </div>
-                )
-              }
-              return (
-                <div className="det-pedido__comprobante-info">
-                  <span className="det-pedido__comprobante-etiqueta">Comprobante</span>
-                  <span className="det-pedido__comprobante-valor">{comprobante.texto}</span>
-                </div>
-              )
-            })()}
+            <ComprobanteEntrega comprobante_url={detalle.comprobante_url} />
           </div>
         </div>
 
@@ -356,121 +486,34 @@ export default function DetallePedidoAdmin({ pedidoId, onVolver, onActualizado }
 
           <div className="det-pedido__tarjeta">
             <h2 className="det-pedido__seccion-titulo">Acciones</h2>
-            <div className="det-pedido__acciones-estado">
-              {detalle.estado === 'PENDIENTE' && (
-                <button
-                  type="button"
-                  className="det-pedido__boton det-pedido__boton--avanzar"
-                  onClick={() => setAConfirmar('CONFIRMADO')}
-                >
-                  Confirmar pedido
-                </button>
-              )}
-              {detalle.estado === 'ASIGNADO' && (
-                <button
-                  type="button"
-                  className="det-pedido__boton det-pedido__boton--avanzar"
-                  onClick={() => setAConfirmar('EN_CAMINO')}
-                >
-                  Marcar en camino
-                </button>
-              )}
-              {detalle.estado === 'EN_CAMINO' && (
-                <>
-                  <button
-                    type="button"
-                    className="det-pedido__boton det-pedido__boton--avanzar"
-                    onClick={() => setAConfirmar('ENTREGADO')}
-                  >
-                    Marcar entregado
-                  </button>
-                  <button
-                    type="button"
-                    className="det-pedido__boton det-pedido__boton--peligro"
-                    onClick={() => setAConfirmar('NO_ENTREGADO')}
-                  >
-                    Marcar no entregado
-                  </button>
-                </>
-              )}
-              {!['ENTREGADO', 'CANCELADO', 'EN_CAMINO'].includes(detalle.estado) && (
-                <button
-                  type="button"
-                  className="det-pedido__boton det-pedido__boton--peligro"
-                  onClick={() => {
-                    setCancelForm({
-                      motivo: MOTIVOS_CANCELACION[0],
-                      observaciones: '',
-                      reintegrar: true,
-                    })
-                    setACancelar(true)
-                  }}
-                >
-                  Cancelar pedido
-                </button>
-              )}
-              <button
-                type="button"
-                className="det-pedido__boton"
-                onClick={abrirTicket}
-                disabled={aTicket}
-              >
-                {aTicket ? 'Generando…' : 'Ver ticket'}
-              </button>
-            </div>
+            <AccionesPedido
+              estado={detalle.estado}
+              aTicket={aTicket}
+              abrirTicket={abrirTicket}
+              onConfirmar={setAConfirmar}
+              onCancelar={() => {
+                setCancelForm({
+                  motivo: MOTIVOS_CANCELACION[0],
+                  observaciones: '',
+                  reintegrar: true,
+                })
+                setACancelar(true)
+              }}
+            />
 
             <div className="det-pedido__repartidor">
-              {!puedeGestionarRepartidor ? (
-                <p className="det-pedido__nota">
-                  {detalle.id_repartidor
-                    ? `Asignado a ${repartidorAsignado?.nombre || `#${detalle.id_repartidor}`}. No se puede modificar en el estado actual.`
-                    : 'Este pedido no tiene repartidor asignado y no se puede modificar en el estado actual.'}
-                </p>
-              ) : detalle.id_repartidor ? (
-                <div className="det-pedido__asignacion">
-                  <p className="det-pedido__asignacion-actual">
-                    Asignado a <strong>{repartidorAsignado?.nombre || `#${detalle.id_repartidor}`}</strong>
-                  </p>
-                  <button
-                    type="button"
-                    className="det-pedido__boton det-pedido__boton--peligro"
-                    onClick={() => setAConfirmar('__DESASIGNAR__')}
-                    disabled={desasignando}
-                  >
-                    {desasignando ? 'Desasignando…' : 'Desasignar repartidor'}
-                  </button>
-                </div>
-              ) : (
-                <form className="det-pedido__asignacion" onSubmit={guardarAsignacion}>
-                  <label className="det-pedido__label" htmlFor="det-pedido-repartidor">
-                    Repartidor disponible
-                  </label>
-                  <select
-                    id="det-pedido-repartidor"
-                    className="det-pedido__select"
-                    value={repartidorSel}
-                    onChange={(evento) => setRepartidorSel(evento.target.value)}
-                    required
-                  >
-                    <option value="">Selecciona…</option>
-                    {repartidoresDisponibles.map((r) => (
-                      <option key={r.id_repartidor} value={r.id_repartidor}>
-                        {r.nombre}
-                      </option>
-                    ))}
-                  </select>
-                  {repartidoresDisponibles.length === 0 && (
-                    <p className="det-pedido__nota">No hay repartidores disponibles en este momento.</p>
-                  )}
-                  <button
-                    type="submit"
-                    className="det-pedido__boton det-pedido__boton--avanzar"
-                    disabled={asignando || repartidoresDisponibles.length === 0}
-                  >
-                    {asignando ? 'Asignando…' : 'Asignar repartidor'}
-                  </button>
-                </form>
-              )}
+              <GestionRepartidor
+                detalle={detalle}
+                repartidorAsignado={repartidorAsignado}
+                repartidoresDisponibles={repartidoresDisponibles}
+                puedeGestionar={puedeGestionarRepartidor}
+                repartidorSel={repartidorSel}
+                onSeleccionarRepartidor={(evento) => setRepartidorSel(evento.target.value)}
+                asignando={asignando}
+                desasignando={desasignando}
+                onAsignar={guardarAsignacion}
+                onDesasignar={() => setAConfirmar('__DESASIGNAR__')}
+              />
             </div>
           </div>
         </div>
