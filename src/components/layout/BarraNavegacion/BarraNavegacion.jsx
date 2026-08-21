@@ -44,6 +44,7 @@ export default function BarraNavegacion() {
                 <span className="barra__carrito-icono" aria-hidden="true">
                   <IconoCarrito tamano={18} />
                 </span>
+                {' '}
                 Carrito
               </Link>
               <Link to="/perfil" className="barra__boton barra__boton--relleno">
@@ -103,6 +104,7 @@ export default function BarraNavegacion() {
                 <span className="barra__carrito-icono" aria-hidden="true">
                   <IconoCarrito tamano={18} />
                 </span>
+                {' '}
                 Carrito
               </Link>
               <Link

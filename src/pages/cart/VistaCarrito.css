@@ -440,9 +440,6 @@
 
   .carrito__tabla-bloque {
     padding: 8px 14px 6px;
-  }
-
-  .carrito__tabla-bloque {
     overflow-x: auto;
   }
 

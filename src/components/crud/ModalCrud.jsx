@@ -1,40 +1,45 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import './Crud.css'
 
 export default function ModalCrud({ abierto, titulo, onCerrar, children }) {
-  useEffect(() => {
-    if (!abierto) return undefined
-    const manejarTecla = (evento) => {
-      if (evento.key === 'Escape') onCerrar()
-    }
-    document.addEventListener('keydown', manejarTecla)
-    return () => document.removeEventListener('keydown', manejarTecla)
-  }, [abierto, onCerrar])
+  const dialogoRef = useRef(null)
 
-  if (!abierto) return null
+  useEffect(() => {
+    const dialogo = dialogoRef.current
+    if (!dialogo) return undefined
+
+    if (abierto && !dialogo.open) {
+      dialogo.showModal()
+    } else if (!abierto && dialogo.open) {
+      dialogo.close()
+    }
+  }, [abierto])
 
   return (
-    <div className="crud__velo" onClick={onCerrar}>
-      <div
-        className="crud__modal"
-        role="dialog"
-        aria-modal="true"
-        aria-label={titulo}
-        onClick={(evento) => evento.stopPropagation()}
-      >
-        <div className="crud__modal-cabecera">
-          <h3 className="crud__modal-titulo">{titulo}</h3>
-          <button
-            type="button"
-            className="crud__modal-cerrar"
-            aria-label="Cerrar"
-            onClick={onCerrar}
-          >
-            ×
-          </button>
-        </div>
-        <div className="crud__modal-cuerpo">{children}</div>
+    <dialog
+      ref={dialogoRef}
+      className="crud__modal"
+      aria-label={titulo}
+      onClick={(evento) => {
+        if (evento.target === evento.currentTarget) onCerrar()
+      }}
+      onCancel={(evento) => {
+        evento.preventDefault()
+        onCerrar()
+      }}
+    >
+      <div className="crud__modal-cabecera">
+        <h3 className="crud__modal-titulo">{titulo}</h3>
+        <button
+          type="button"
+          className="crud__modal-cerrar"
+          aria-label="Cerrar"
+          onClick={onCerrar}
+        >
+          ×
+        </button>
       </div>
-    </div>
+      <div className="crud__modal-cuerpo">{children}</div>
+    </dialog>
   )
 }

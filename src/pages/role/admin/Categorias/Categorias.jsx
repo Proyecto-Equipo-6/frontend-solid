@@ -211,8 +211,9 @@ export default function Categorias() {
       <ModalCrud abierto={modal} titulo="Categoría" onCerrar={() => setModal(false)}>
         <form className="crud__form" onSubmit={guardarCategoria}>
           <div className="crud__campo">
-            <label className="crud__campo-label">Nombre</label>
+            <label className="crud__campo-label" htmlFor="categoria-nombre">Nombre</label>
             <input
+              id="categoria-nombre"
               className="crud__campo-input"
               value={form.nombre}
               onChange={(e) => cambiarCampo('nombre', e.target.value)}
@@ -220,16 +221,18 @@ export default function Categorias() {
             />
           </div>
           <div className="crud__campo">
-            <label className="crud__campo-label">Descripción</label>
+            <label className="crud__campo-label" htmlFor="categoria-descripcion">Descripción</label>
             <textarea
+              id="categoria-descripcion"
               className="crud__campo-textarea"
               value={form.descripcion}
               onChange={(e) => cambiarCampo('descripcion', e.target.value)}
             />
           </div>
           <div className="crud__campo">
-            <label className="crud__campo-label">Estado</label>
+            <label className="crud__campo-label" htmlFor="categoria-estado">Estado</label>
             <select
+              id="categoria-estado"
               className="crud__campo-select"
               value={form.estado}
               onChange={(e) => cambiarCampo('estado', Number(e.target.value))}
