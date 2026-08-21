@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
 import { getHistorialRepartidor } from '@/services/repartidor'
 import { ESTADOS_REPARTIDOR } from '@/config/repartidor'
+import { formatoPrecio } from '@/utils/formato'
+import { IconoOjo } from '@/components/ui/Iconos/Iconos'
+import DetallePedidoRepartidor from '@/pages/role/repartidor/DetallePedidoRepartidor/DetallePedidoRepartidor'
 import './HistorialRepartidor.css'
 
 function BadgeEstado({ estado }) {
@@ -25,6 +28,7 @@ export default function HistorialRepartidor() {
   const [estado, setEstado] = useState('')
   const [orden, setOrden] = useState('reciente')
   const [historial, setHistorial] = useState(null)
+  const [detalleId, setDetalleId] = useState(null)
 
   function cargar() {
     setCargando(true)
@@ -35,10 +39,23 @@ export default function HistorialRepartidor() {
       .finally(() => setCargando(false))
   }
 
-  useEffect(cargar, [estado, orden])
+  useEffect(() => {
+    cargar()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [estado, orden])
 
   const pedidos = historial?.pedidos ?? []
   const mensajeVacio = historial?.mensaje || 'No hay pedidos en tu historial.'
+
+  if (detalleId) {
+    return (
+      <DetallePedidoRepartidor
+        pedidoId={detalleId}
+        puedeActualizar={false}
+        onVolver={() => setDetalleId(null)}
+      />
+    )
+  }
 
   return (
     <section className="rep-hist">
@@ -116,6 +133,8 @@ export default function HistorialRepartidor() {
                 <th>Fecha</th>
                 <th>Estado</th>
                 <th>Dirección</th>
+                <th>Total</th>
+                <th>Detalles</th>
               </tr>
             </thead>
             <tbody>
@@ -127,6 +146,18 @@ export default function HistorialRepartidor() {
                     <BadgeEstado estado={pedido.estado} />
                   </td>
                   <td className="rep-hist__direccion">{pedido.direccion_entrega}</td>
+                  <td>{formatoPrecio(Number(pedido.total))}</td>
+                  <td className="rep-hist__detalles">
+                    <button
+                      type="button"
+                      className="rep-hist__ojo"
+                      aria-label={`Ver detalle del pedido ${pedido.id_pedido}`}
+                      title="Ver detalles"
+                      onClick={() => setDetalleId(pedido.id_pedido)}
+                    >
+                      <IconoOjo tamano={18} />
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

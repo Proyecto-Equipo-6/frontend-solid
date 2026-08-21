@@ -144,6 +144,11 @@
   background: #251a44;
 }
 
+.rep-dash__badge--EN_CAMINO {
+  color: #22d3ee;
+  background: #0b2a30;
+}
+
 .rep-dash__datos {
   display: flex;
   flex-direction: column;

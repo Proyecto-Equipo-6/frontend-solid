@@ -21,7 +21,7 @@ function PedidoTarjeta({ pedido, activo, onVerDetalle }) {
     <article className={`rep-dash__pedido ${activo ? 'rep-dash__pedido--activo' : ''}`}>
       <div className="rep-dash__pedido-cabecera">
         <span className="rep-dash__pedido-numero">Pedido #{pedido.id_pedido}</span>
-        {activo && <BadgeEstado estado={pedido.estado} />}
+        <BadgeEstado estado={pedido.estado} />
       </div>
       <dl className="rep-dash__datos">
         <div className="rep-dash__dato">
