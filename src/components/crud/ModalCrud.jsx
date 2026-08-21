@@ -15,19 +15,27 @@ export default function ModalCrud({ abierto, titulo, onCerrar, children }) {
     }
   }, [abierto])
 
+  useEffect(() => {
+    if (!abierto) return undefined
+
+    const manejarClic = (evento) => {
+      const dialogo = dialogoRef.current
+      if (dialogo && evento.target === dialogo) onCerrar()
+    }
+    const manejarTecla = (evento) => {
+      if (evento.key === 'Escape') onCerrar()
+    }
+
+    document.addEventListener('click', manejarClic)
+    document.addEventListener('keydown', manejarTecla)
+    return () => {
+      document.removeEventListener('click', manejarClic)
+      document.removeEventListener('keydown', manejarTecla)
+    }
+  }, [abierto, onCerrar])
+
   return (
-    <dialog
-      ref={dialogoRef}
-      className="crud__modal"
-      aria-label={titulo}
-      onClick={(evento) => {
-        if (evento.target === evento.currentTarget) onCerrar()
-      }}
-      onCancel={(evento) => {
-        evento.preventDefault()
-        onCerrar()
-      }}
-    >
+    <dialog ref={dialogoRef} className="crud__modal" aria-label={titulo}>
       <div className="crud__modal-cabecera">
         <h3 className="crud__modal-titulo">{titulo}</h3>
         <button

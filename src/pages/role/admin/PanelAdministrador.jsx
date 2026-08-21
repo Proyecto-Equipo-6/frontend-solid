@@ -53,42 +53,14 @@ export default function PanelAdministrador() {
     setVista(clave)
   }
 
-  if (!autorizado) return null
-
-  return (
-    <div className="dashboard">
-      <BarraLateral
-        sesion={sesion}
-        activo={seccion}
-        onNavegar={navegar}
-        onVerPerfil={() => {
-          setVista('perfil')
-          setMenuAbierto(false)
-        }}
-        onCerrarSesion={handleCerrarSesion}
-        cerrando={cerrando}
-        abierto={menuAbierto}
-        onCerrar={() => setMenuAbierto(false)}
-      />
-
-      <div className="dashboard__contenido">
-        <button
-          type="button"
-          className="dashboard__boton-menu"
-          aria-label="Abrir menú"
-          onClick={() => setMenuAbierto(true)}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
-
-        <main className="dashboard__principal">
-          {vista === 'perfil' ? (
-            <VistaPerfil sesion={sesion} onVolver={() => setVista('inicio')} />
-          ) : vista === 'inicio' ? (
-            <>
-              <section id="seccion-overview" className="dashboard__seccion">
+  function renderizarVista() {
+    if (vista === 'perfil') {
+      return <VistaPerfil sesion={sesion} onVolver={() => setVista('inicio')} />
+    }
+    if (vista === 'inicio') {
+      return (
+        <>
+          <section id="seccion-overview" className="dashboard__seccion">
             <h1 className="dashboard__bienvenida">Bienvenido(a), {sesion?.nombre_apellido || 'Administrador'}</h1>
 
             {error && (
@@ -120,11 +92,45 @@ export default function PanelAdministrador() {
               <TarjetaTopClientes clientes={resumen?.topClientes ?? []} />
             </div>
           </section>
-            </>
-          ) : (() => {
-            const Vista = VISTAS_GESTION[vista]
-            return Vista ? <Vista /> : null
-          })()}
+        </>
+      )
+    }
+    const Vista = VISTAS_GESTION[vista]
+    return Vista ? <Vista /> : null
+  }
+
+  if (!autorizado) return null
+
+  return (
+    <div className="dashboard">
+      <BarraLateral
+        sesion={sesion}
+        activo={seccion}
+        onNavegar={navegar}
+        onVerPerfil={() => {
+          setVista('perfil')
+          setMenuAbierto(false)
+        }}
+        onCerrarSesion={handleCerrarSesion}
+        cerrando={cerrando}
+        abierto={menuAbierto}
+        onCerrar={() => setMenuAbierto(false)}
+      />
+
+      <div className="dashboard__contenido">
+        <button
+          type="button"
+          className="dashboard__boton-menu"
+          aria-label="Abrir menú"
+          onClick={() => setMenuAbierto(true)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+
+        <main className="dashboard__principal">
+          {renderizarVista()}
         </main>
       </div>
     </div>
