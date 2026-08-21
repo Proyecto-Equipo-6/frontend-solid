@@ -255,8 +255,9 @@ export default function RepartidoresAdmin() {
         <form className="crud__form" onSubmit={guardarRepartidor}>
           <div className="crud__fila">
             <div className="crud__campo">
-              <label className="crud__campo-label">Nombre completo</label>
+              <label className="crud__campo-label" htmlFor="repartidor-nombre">Nombre completo</label>
               <input
+                id="repartidor-nombre"
                 className="crud__campo-input"
                 value={form.nombre_apellido}
                 onChange={(e) => cambiarCampo('nombre_apellido', e.target.value)}
@@ -264,8 +265,9 @@ export default function RepartidoresAdmin() {
               />
             </div>
             <div className="crud__campo">
-              <label className="crud__campo-label">Email</label>
+              <label className="crud__campo-label" htmlFor="repartidor-email">Email</label>
               <input
+                id="repartidor-email"
                 className="crud__campo-input"
                 type="email"
                 value={form.email}
@@ -277,8 +279,9 @@ export default function RepartidoresAdmin() {
 
           <div className="crud__fila">
             <div className="crud__campo">
-              <label className="crud__campo-label">Teléfono</label>
+              <label className="crud__campo-label" htmlFor="repartidor-telefono">Teléfono</label>
               <input
+                id="repartidor-telefono"
                 className="crud__campo-input"
                 value={form.telefono}
                 onChange={(e) => cambiarCampo('telefono', e.target.value)}
@@ -287,8 +290,9 @@ export default function RepartidoresAdmin() {
               />
             </div>
             <div className="crud__campo">
-              <label className="crud__campo-label">Dirección</label>
+              <label className="crud__campo-label" htmlFor="repartidor-direccion">Dirección</label>
               <input
+                id="repartidor-direccion"
                 className="crud__campo-input"
                 value={form.direccion}
                 onChange={(e) => cambiarCampo('direccion', e.target.value)}
@@ -298,8 +302,9 @@ export default function RepartidoresAdmin() {
 
           {!editandoId && (
             <div className="crud__campo">
-              <label className="crud__campo-label">Contraseña</label>
+              <label className="crud__campo-label" htmlFor="repartidor-password">Contraseña</label>
               <input
+                id="repartidor-password"
                 className="crud__campo-input"
                 type="password"
                 value={form.password}
@@ -312,8 +317,9 @@ export default function RepartidoresAdmin() {
 
           <div className="crud__fila">
             <div className="crud__campo">
-              <label className="crud__campo-label">Vehículo</label>
+              <label className="crud__campo-label" htmlFor="repartidor-vehiculo">Vehículo</label>
               <input
+                id="repartidor-vehiculo"
                 className="crud__campo-input"
                 value={form.vehiculo}
                 onChange={(e) => cambiarCampo('vehiculo', e.target.value)}
@@ -321,8 +327,9 @@ export default function RepartidoresAdmin() {
               />
             </div>
             <div className="crud__campo">
-              <label className="crud__campo-label">Placa</label>
+              <label className="crud__campo-label" htmlFor="repartidor-placa">Placa</label>
               <input
+                id="repartidor-placa"
                 className="crud__campo-input"
                 value={form.placa}
                 onChange={(e) => cambiarCampo('placa', e.target.value)}

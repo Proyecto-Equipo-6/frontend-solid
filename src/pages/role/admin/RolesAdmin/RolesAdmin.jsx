@@ -149,8 +149,9 @@ export default function RolesAdmin() {
       <ModalCrud abierto={modal} titulo={editandoId ? 'Editar rol' : 'Nuevo rol'} onCerrar={() => setModal(false)}>
         <form className="crud__form" onSubmit={guardarRol}>
           <div className="crud__campo">
-            <label className="crud__campo-label">Nombre</label>
+            <label className="crud__campo-label" htmlFor="rol-nombre">Nombre</label>
             <input
+              id="rol-nombre"
               className="crud__campo-input"
               value={form.name}
               onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
@@ -158,8 +159,9 @@ export default function RolesAdmin() {
             />
           </div>
           <div className="crud__campo">
-            <label className="crud__campo-label">Descripción</label>
+            <label className="crud__campo-label" htmlFor="rol-descripcion">Descripción</label>
             <textarea
+              id="rol-descripcion"
               className="crud__campo-textarea"
               value={form.description}
               onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}

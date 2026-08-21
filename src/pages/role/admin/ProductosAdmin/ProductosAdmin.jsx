@@ -312,8 +312,9 @@ export default function ProductosAdmin() {
         <form className="crud__form" onSubmit={guardarProducto}>
           <div className="crud__fila">
             <div className="crud__campo">
-              <label className="crud__campo-label">SKU</label>
+              <label className="crud__campo-label" htmlFor="producto-sku">SKU</label>
               <input
+                id="producto-sku"
                 className="crud__campo-input"
                 value={form.sku}
                 onChange={(e) => cambiarCampo('sku', e.target.value)}
@@ -321,8 +322,9 @@ export default function ProductosAdmin() {
               />
             </div>
             <div className="crud__campo">
-              <label className="crud__campo-label">Nombre</label>
+              <label className="crud__campo-label" htmlFor="producto-nombre">Nombre</label>
               <input
+                id="producto-nombre"
                 className="crud__campo-input"
                 value={form.nombre}
                 onChange={(e) => cambiarCampo('nombre', e.target.value)}
@@ -332,8 +334,9 @@ export default function ProductosAdmin() {
           </div>
 
           <div className="crud__campo">
-            <label className="crud__campo-label">Descripción</label>
+            <label className="crud__campo-label" htmlFor="producto-descripcion">Descripción</label>
             <textarea
+              id="producto-descripcion"
               className="crud__campo-textarea"
               value={form.descripcion}
               onChange={(e) => cambiarCampo('descripcion', e.target.value)}
@@ -342,8 +345,9 @@ export default function ProductosAdmin() {
 
           <div className="crud__fila">
             <div className="crud__campo">
-              <label className="crud__campo-label">Categoría</label>
+              <label className="crud__campo-label" htmlFor="producto-categoria">Categoría</label>
               <select
+                id="producto-categoria"
                 className="crud__campo-select"
                 value={form.id_categoria}
                 onChange={(e) => cambiarCampo('id_categoria', e.target.value)}
@@ -358,8 +362,9 @@ export default function ProductosAdmin() {
               </select>
             </div>
             <div className="crud__campo">
-              <label className="crud__campo-label">Proveedor</label>
+              <label className="crud__campo-label" htmlFor="producto-proveedor">Proveedor</label>
               <select
+                id="producto-proveedor"
                 className="crud__campo-select"
                 value={form.id_proveedor}
                 onChange={(e) => cambiarCampo('id_proveedor', e.target.value)}
@@ -377,8 +382,9 @@ export default function ProductosAdmin() {
 
           <div className="crud__fila--tres crud__fila">
             <div className="crud__campo">
-              <label className="crud__campo-label">Precio</label>
+              <label className="crud__campo-label" htmlFor="producto-precio">Precio</label>
               <input
+                id="producto-precio"
                 className="crud__campo-input"
                 type="number"
                 min="0"
@@ -389,8 +395,9 @@ export default function ProductosAdmin() {
               />
             </div>
             <div className="crud__campo">
-              <label className="crud__campo-label">Stock</label>
+              <label className="crud__campo-label" htmlFor="producto-stock">Stock</label>
               <input
+                id="producto-stock"
                 className="crud__campo-input"
                 type="number"
                 min="0"
@@ -401,8 +408,9 @@ export default function ProductosAdmin() {
               />
             </div>
             <div className="crud__campo">
-              <label className="crud__campo-label">Estado</label>
+              <label className="crud__campo-label" htmlFor="producto-estado">Estado</label>
               <select
+                id="producto-estado"
                 className="crud__campo-select"
                 value={form.estado}
                 onChange={(e) => cambiarCampo('estado', Number(e.target.value))}
@@ -414,8 +422,9 @@ export default function ProductosAdmin() {
           </div>
 
           <div className="crud__campo">
-            <label className="crud__campo-label">URL de imagen (opcional)</label>
+            <label className="crud__campo-label" htmlFor="producto-imagen">URL de imagen (opcional)</label>
             <input
+              id="producto-imagen"
               className="crud__campo-input"
               type="url"
               value={form.imagen_url}
@@ -441,8 +450,9 @@ export default function ProductosAdmin() {
             Producto: <strong>{aAjustar?.nombre}</strong>
           </p>
           <div className="crud__campo">
-            <label className="crud__campo-label">Nueva cantidad</label>
+            <label className="crud__campo-label" htmlFor="ajuste-cantidad">Nueva cantidad</label>
             <input
+              id="ajuste-cantidad"
               className="crud__campo-input"
               type="number"
               min="0"
@@ -453,8 +463,9 @@ export default function ProductosAdmin() {
             />
           </div>
           <div className="crud__campo">
-            <label className="crud__campo-label">Motivo</label>
+            <label className="crud__campo-label" htmlFor="ajuste-motivo">Motivo</label>
             <input
+              id="ajuste-motivo"
               className="crud__campo-input"
               value={ajuste.motivo}
               onChange={(e) => setAjuste((prev) => ({ ...prev, motivo: e.target.value }))}

@@ -301,8 +301,9 @@ export default function PedidosAdmin() {
       <div className="gestion__cabecera">
         <div className="crud__fila">
           <div className="crud__campo">
-            <label className="crud__campo-label">Estado</label>
+            <label className="crud__campo-label" htmlFor="pedido-estado-filtro">Estado</label>
             <select
+              id="pedido-estado-filtro"
               className="crud__campo-select"
               value={estadoFiltro}
               onChange={(e) => {
@@ -319,8 +320,9 @@ export default function PedidosAdmin() {
             </select>
           </div>
           <div className="crud__campo">
-            <label className="crud__campo-label">Repartidor</label>
+            <label className="crud__campo-label" htmlFor="pedido-repartidor-filtro">Repartidor</label>
             <select
+              id="pedido-repartidor-filtro"
               className="crud__campo-select"
               value={repartidorFiltro}
               onChange={(e) => {
@@ -438,8 +440,9 @@ export default function PedidosAdmin() {
             <strong>{formatoPrecio(Number(aAsignar?.total))}</strong>
           </p>
           <div className="crud__campo">
-            <label className="crud__campo-label">Repartidor</label>
+            <label className="crud__campo-label" htmlFor="pedido-repartidor-asignar">Repartidor</label>
             <select
+              id="pedido-repartidor-asignar"
               className="crud__campo-select"
               value={repartidorSel}
               onChange={(e) => setRepartidorSel(e.target.value)}
@@ -472,8 +475,9 @@ export default function PedidosAdmin() {
             Pedido <strong>#{aCancelar?.id_pedido}</strong>
           </p>
           <div className="crud__campo">
-            <label className="crud__campo-label">Motivo</label>
+            <label className="crud__campo-label" htmlFor="pedido-motivo-cancelar">Motivo</label>
             <select
+              id="pedido-motivo-cancelar"
               className="crud__campo-select"
               value={cancelForm.motivo}
               onChange={(e) => setCancelForm((prev) => ({ ...prev, motivo: e.target.value }))}
@@ -486,8 +490,9 @@ export default function PedidosAdmin() {
             </select>
           </div>
           <div className="crud__campo">
-            <label className="crud__campo-label">Observaciones</label>
+            <label className="crud__campo-label" htmlFor="pedido-observaciones-cancelar">Observaciones</label>
             <textarea
+              id="pedido-observaciones-cancelar"
               className="crud__campo-textarea"
               value={cancelForm.observaciones}
               onChange={(e) => setCancelForm((prev) => ({ ...prev, observaciones: e.target.value }))}
@@ -500,7 +505,7 @@ export default function PedidosAdmin() {
               checked={cancelForm.reintegrar}
               onChange={(e) => setCancelForm((prev) => ({ ...prev, reintegrar: e.target.checked }))}
             />
-            Reintegrar stock de los productos
+            <span>Reintegrar stock de los productos</span>
           </label>
           <div className="crud__form-acciones">
             <button type="button" className="crud__boton" onClick={() => setACancelar(null)}>

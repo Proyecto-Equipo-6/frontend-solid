@@ -258,8 +258,9 @@ export default function Usuarios() {
       >
         <form className="crud__form" onSubmit={guardarUsuario}>
           <div className="crud__campo">
-            <label className="crud__campo-label">Rol</label>
+            <label className="crud__campo-label" htmlFor="usuario-rol">Rol</label>
             <select
+              id="usuario-rol"
               className="crud__campo-input"
               value={form.id_rol}
               onChange={(e) => cambiarCampo('id_rol', e.target.value)}
@@ -275,8 +276,9 @@ export default function Usuarios() {
           </div>
 
           <div className="crud__campo">
-            <label className="crud__campo-label">Nombre completo</label>
+            <label className="crud__campo-label" htmlFor="usuario-nombre">Nombre completo</label>
             <input
+              id="usuario-nombre"
               className="crud__campo-input"
               value={form.nombre_apellido}
               onChange={(e) => cambiarCampo('nombre_apellido', e.target.value)}
@@ -286,8 +288,9 @@ export default function Usuarios() {
 
           <div className="crud__fila">
             <div className="crud__campo">
-              <label className="crud__campo-label">Tipo de documento</label>
+              <label className="crud__campo-label" htmlFor="usuario-tipo-documento">Tipo de documento</label>
               <select
+                id="usuario-tipo-documento"
                 className="crud__campo-input"
                 value={form.tipo_documento}
                 onChange={(e) => cambiarCampo('tipo_documento', e.target.value)}
@@ -300,8 +303,9 @@ export default function Usuarios() {
               </select>
             </div>
             <div className="crud__campo">
-              <label className="crud__campo-label">N° de documento</label>
+              <label className="crud__campo-label" htmlFor="usuario-numero-documento">N° de documento</label>
               <input
+                id="usuario-numero-documento"
                 className="crud__campo-input"
                 value={form.numero_documento}
                 onChange={(e) => cambiarCampo('numero_documento', e.target.value)}
@@ -312,8 +316,9 @@ export default function Usuarios() {
 
           <div className="crud__fila">
             <div className="crud__campo">
-              <label className="crud__campo-label">Email</label>
+              <label className="crud__campo-label" htmlFor="usuario-email">Email</label>
               <input
+                id="usuario-email"
                 className="crud__campo-input"
                 type="email"
                 value={form.email}
@@ -322,8 +327,9 @@ export default function Usuarios() {
               />
             </div>
             <div className="crud__campo">
-              <label className="crud__campo-label">Teléfono</label>
+              <label className="crud__campo-label" htmlFor="usuario-telefono">Teléfono</label>
               <input
+                id="usuario-telefono"
                 className="crud__campo-input"
                 value={form.telefono}
                 onChange={(e) => cambiarCampo('telefono', e.target.value)}
@@ -334,8 +340,9 @@ export default function Usuarios() {
           </div>
 
           <div className="crud__campo">
-            <label className="crud__campo-label">Dirección</label>
+            <label className="crud__campo-label" htmlFor="usuario-direccion">Dirección</label>
             <input
+              id="usuario-direccion"
               className="crud__campo-input"
               value={form.direccion}
               onChange={(e) => cambiarCampo('direccion', e.target.value)}
@@ -345,8 +352,9 @@ export default function Usuarios() {
 
           {!editandoId && (
             <div className="crud__campo">
-              <label className="crud__campo-label">Contraseña</label>
+              <label className="crud__campo-label" htmlFor="usuario-password">Contraseña</label>
               <input
+                id="usuario-password"
                 className="crud__campo-input"
                 type="password"
                 value={form.password}

@@ -230,8 +230,9 @@ export default function Proveedores() {
         <form className="crud__form" onSubmit={guardarProveedor}>
           <div className="crud__fila">
             <div className="crud__campo">
-              <label className="crud__campo-label">NIT</label>
+              <label className="crud__campo-label" htmlFor="proveedor-nit">NIT</label>
               <input
+                id="proveedor-nit"
                 className="crud__campo-input"
                 value={form.nit_proveedor}
                 onChange={(e) => cambiarCampo('nit_proveedor', e.target.value)}
@@ -240,8 +241,9 @@ export default function Proveedores() {
               />
             </div>
             <div className="crud__campo">
-              <label className="crud__campo-label">Razón social</label>
+              <label className="crud__campo-label" htmlFor="proveedor-razon-social">Razón social</label>
               <input
+                id="proveedor-razon-social"
                 className="crud__campo-input"
                 value={form.razon_social}
                 onChange={(e) => cambiarCampo('razon_social', e.target.value)}
@@ -252,8 +254,9 @@ export default function Proveedores() {
 
           <div className="crud__fila">
             <div className="crud__campo">
-              <label className="crud__campo-label">Teléfono</label>
+              <label className="crud__campo-label" htmlFor="proveedor-telefono">Teléfono</label>
               <input
+                id="proveedor-telefono"
                 className="crud__campo-input"
                 value={form.telefono}
                 onChange={(e) => cambiarCampo('telefono', e.target.value)}
@@ -262,8 +265,9 @@ export default function Proveedores() {
               />
             </div>
             <div className="crud__campo">
-              <label className="crud__campo-label">Email</label>
+              <label className="crud__campo-label" htmlFor="proveedor-email">Email</label>
               <input
+                id="proveedor-email"
                 className="crud__campo-input"
                 type="email"
                 value={form.email}
@@ -274,8 +278,9 @@ export default function Proveedores() {
           </div>
 
           <div className="crud__campo">
-            <label className="crud__campo-label">Estado</label>
+            <label className="crud__campo-label" htmlFor="proveedor-estado">Estado</label>
             <select
+              id="proveedor-estado"
               className="crud__campo-select"
               value={form.estado}
               onChange={(e) => cambiarCampo('estado', Number(e.target.value))}
