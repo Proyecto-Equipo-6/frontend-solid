@@ -158,8 +158,10 @@ export default function RepartidoresAdmin() {
       etiqueta: 'Estado',
       alineacion: 'centro',
       render: (r) => (
-        <span className={`crud__badge crud__badge--${r.estado === 'DISPONIBLE' ? 'activo' : 'inactivo'}`}>
-          {r.estado === 'DISPONIBLE' ? 'Disponible' : 'Inactivo'}
+        <span
+          className={`crud__badge crud__badge--${r.estado === 'INACTIVO' ? 'inactivo' : 'activo'}`}
+        >
+          {r.estado === 'INACTIVO' ? 'Inactivo' : r.estado === 'OCUPADO' ? 'Ocupado' : 'Disponible'}
         </span>
       ),
     },
@@ -213,7 +215,7 @@ export default function RepartidoresAdmin() {
     }
   }
 
-  const esActivo = (r) => r.estado === 'DISPONIBLE'
+  const esActivo = (r) => r.estado === 'DISPONIBLE' || r.estado === 'OCUPADO'
   const activos = repartidores.filter(esActivo)
   const inactivos = repartidores.filter((r) => !esActivo(r))
   const filas = filtro === 'activos' ? activos : inactivos
