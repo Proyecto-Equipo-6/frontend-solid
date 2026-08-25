@@ -31,11 +31,11 @@ export function getProductosAdmin() {
 }
 
 export function crearProducto(datos) {
-  return request('/v1/productos', { metodo: 'POST', datos })
+  return requestFormData('/v1/productos', { metodo: 'POST', datos })
 }
 
 export function editarProducto(id, datos) {
-  return request(`/v1/productos/${id}`, { metodo: 'PUT', datos })
+  return requestFormData(`/v1/productos/${id}`, { metodo: 'PUT', datos })
 }
 
 export function eliminarProducto(id) {
