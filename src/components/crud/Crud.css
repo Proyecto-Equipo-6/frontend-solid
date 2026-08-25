@@ -506,3 +506,7 @@
 .crud__campo-check input {
   accent-color: var(--dash-azul);
 }
+.crud__badge--ocupado {
+  background: #f59e0b;
+  color: #fff;
+}

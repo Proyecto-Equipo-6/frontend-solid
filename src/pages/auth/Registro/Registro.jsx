@@ -46,7 +46,7 @@ function validar(form) {
   }
 
   if (!esPasswordValida(form.password)) {
-    errores.password = 'La contraseña debe tener entre 8 y 20 caracteres.'
+    errores.password = 'La contraseña debe tener entre 8 y 20 caracteres, con mayúscula, minúscula y número.'
   }
 
   if (!form.telefono.trim()) {

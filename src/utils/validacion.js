@@ -10,7 +10,13 @@ export function esEmailValido(valor) {
 }
 
 export function esPasswordValida(valor) {
-  return valor.length >= MIN_PASSWORD && valor.length <= MAX_PASSWORD
+  return (
+    valor.length >= MIN_PASSWORD &&
+    valor.length <= MAX_PASSWORD &&
+    /[A-Z]/.test(valor) &&
+    /[a-z]/.test(valor) &&
+    /[0-9]/.test(valor)
+  )
 }
 
 export function esTelefonoValido(valor) {
