@@ -23,9 +23,12 @@ const FORM_VACIO = {
   email: '',
   password: '',
   telefono: '',
-  direccion: '',
-  vehiculo: '',
-  placa: '',
+}
+
+const ESTADOS_BADGE = {
+  INACTIVO: { clase: 'inactivo', texto: 'Inactivo' },
+  OCUPADO: { clase: 'ocupado', texto: 'Ocupado' },
+  DISPONIBLE: { clase: 'activo', texto: 'Disponible' },
 }
 
 export default function RepartidoresAdmin() {
@@ -67,9 +70,6 @@ export default function RepartidoresAdmin() {
       email: repartidor.email || '',
       password: '',
       telefono: repartidor.telefono || '',
-      direccion: repartidor.direccion || '',
-      vehiculo: repartidor.vehiculo || '',
-      placa: repartidor.placa || '',
     })
     setEditandoId(repartidor.id_repartidor)
     setModal(true)
@@ -88,9 +88,6 @@ export default function RepartidoresAdmin() {
         nombre_apellido: form.nombre_apellido,
         email: form.email,
         telefono: form.telefono,
-        direccion: form.direccion,
-        vehiculo: form.vehiculo,
-        placa: form.placa,
       }
       if (editandoId) {
         await actualizarRepartidor(editandoId, datos)
@@ -157,13 +154,14 @@ export default function RepartidoresAdmin() {
       clave: 'estado',
       etiqueta: 'Estado',
       alineacion: 'centro',
-      render: (r) => (
-        <span
-          className={`crud__badge crud__badge--${r.estado === 'INACTIVO' ? 'inactivo' : 'activo'}`}
-        >
-          {r.estado === 'INACTIVO' ? 'Inactivo' : r.estado === 'OCUPADO' ? 'Ocupado' : 'Disponible'}
-        </span>
-      ),
+      render: (r) => {
+        const badge = ESTADOS_BADGE[r.estado] || ESTADOS_BADGE.DISPONIBLE
+        return (
+          <span className={`crud__badge crud__badge--${badge.clase}`}>
+            {badge.texto}
+          </span>
+        )
+      },
     },
   ]
 
@@ -291,15 +289,7 @@ export default function RepartidoresAdmin() {
                 required
               />
             </div>
-            <div className="crud__campo">
-              <label className="crud__campo-label" htmlFor="repartidor-direccion">Dirección</label>
-              <input
-                id="repartidor-direccion"
-                className="crud__campo-input"
-                value={form.direccion}
-                onChange={(e) => cambiarCampo('direccion', e.target.value)}
-              />
-            </div>
+           
           </div>
 
           {!editandoId && (
@@ -316,29 +306,6 @@ export default function RepartidoresAdmin() {
               />
             </div>
           )}
-
-          <div className="crud__fila">
-            <div className="crud__campo">
-              <label className="crud__campo-label" htmlFor="repartidor-vehiculo">Vehículo</label>
-              <input
-                id="repartidor-vehiculo"
-                className="crud__campo-input"
-                value={form.vehiculo}
-                onChange={(e) => cambiarCampo('vehiculo', e.target.value)}
-                placeholder="Ej: Moto"
-              />
-            </div>
-            <div className="crud__campo">
-              <label className="crud__campo-label" htmlFor="repartidor-placa">Placa</label>
-              <input
-                id="repartidor-placa"
-                className="crud__campo-input"
-                value={form.placa}
-                onChange={(e) => cambiarCampo('placa', e.target.value)}
-                placeholder="Ej: ABC-123"
-              />
-            </div>
-          </div>
 
           <div className="crud__form-acciones">
             <button type="button" className="crud__boton" onClick={() => setModal(false)}>

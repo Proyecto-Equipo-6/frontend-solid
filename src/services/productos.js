@@ -24,9 +24,9 @@ export function normalizarProducto(producto) {
 export function getProductosPublicos() {
   if (USAR_MOCK) return Promise.resolve(PRODUCTOS_MOCK)
 
-  return request(ENDPOINTS.productosPublicos).then((productos) =>
-    productos.map(normalizarProducto),
-  )
+  return request(ENDPOINTS.productosPublicos).then((respuesta) =>
+  (respuesta.items || []).map(normalizarProducto),
+  ) 
 }
 
 export function getProductoPublico(id) {

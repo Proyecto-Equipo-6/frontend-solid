@@ -13,7 +13,6 @@ export const TIPOS_DOCUMENTO = ['CC', 'Pasaporte', 'CE', 'Otro']
 
 export const OPCIONES_ENVIO = [
   { id: 'estandar', nombre: 'Estándar', costo: 0 },
-  { id: 'express', nombre: 'Exprés', costo: 12000 },
 ]
 
 export const CATALOGO = {

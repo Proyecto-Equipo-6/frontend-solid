@@ -12,7 +12,6 @@ export const ENDPOINTS = {
   productosPublicos: '/v1/productos/publico',
   productoDetalle: (id) => `/v1/productos/${id}`,
   categoriasPublicas: '/v1/categorias',
-  bancosPublicos: '/v1/bancos',
   analiticaResumen: '/v1/analitica/resumen',
   carritoAgregar: '/v1/carrito',
   perfil: '/v1/users/perfil',
@@ -79,17 +78,7 @@ export function getCategoriasPublicas() {
   return request(ENDPOINTS.categoriasPublicas)
 }
 
-export function getBancosPublicos() {
-  if (USAR_MOCK) {
-    return Promise.resolve([
-      { id_banco: 1, nombre: 'Nequi', descripcion: 'Monedero virtual', numero_cuenta: '300 123 4567' },
-      { id_banco: 2, nombre: 'Daviplata', descripcion: 'Monedero virtual', numero_cuenta: '300 123 4567' },
-      { id_banco: 3, nombre: 'Bancolombia', descripcion: 'Transferencia a cuenta de ahorros', numero_cuenta: '123-456789-01' },
-    ])
-  }
 
-  return request(ENDPOINTS.bancosPublicos)
-}
 
 export function getResumenAnalitica() {
   return request(ENDPOINTS.analiticaResumen)

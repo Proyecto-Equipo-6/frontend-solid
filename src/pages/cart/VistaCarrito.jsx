@@ -118,21 +118,17 @@ export default function VistaCarrito() {
                       <input
                         className="carrito__cantidad-input"
                         type="number"
-                        min="1"
-                        value={item.cantidad}
-                        aria-label={`Cantidad de ${item.titulo}`}
-                        onChange={(evento) => {
-                          const valor = evento.target.value
-                          if (valor === '') return
-                          cambiarCantidad(item, Number(valor))
-                        }}
-                      />
+                        min="1" max={item.stock} value={item.cantidad} onChange={(evento) => {
+                        const valor = evento.target.value
+                        if (valor === '') return
+                        cambiarCantidad(item, Math.min(Number(valor), item.stock))
+                      }} />
                       <button
                         type="button"
                         className="carrito__cantidad-boton"
                         aria-label={`Aumentar cantidad de ${item.titulo}`}
-                        onClick={() => cambiarCantidad(item, item.cantidad + 1)}
-                      >
+                        disabled={item.cantidad >= item.stock} onClick={() => cambiarCantidad(item, item.cantidad + 1)}
+                        >
                         +
                       </button>
                     </div>
