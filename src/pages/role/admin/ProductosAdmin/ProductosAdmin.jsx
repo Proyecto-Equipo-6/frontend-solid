@@ -24,7 +24,7 @@ const FORM_VACIO = {
   id_proveedor: '',
   precio: '',
   stock: '',
-  imagen_url: '',
+  imagen: null,
   estado: 1,
 }
 
@@ -79,7 +79,7 @@ export default function ProductosAdmin() {
       id_proveedor: producto.id_proveedor,
       precio: Number(producto.precio),
       stock: Number(producto.stock),
-      imagen_url: producto.imagen_url || '',
+      imagen: null,
       estado: Number(producto.estado),
     })
     setEditandoId(producto.id_producto)
@@ -103,8 +103,10 @@ export default function ProductosAdmin() {
         descripcion: form.descripcion,
         precio: Number(form.precio),
         stock: Number(form.stock),
-        imagen_url: form.imagen_url || null,
         estado: Number(form.estado),
+      }
+      if (form.imagen) {
+        datos.imagen = form.imagen
       }
       if (editandoId) {
         await editarProducto(editandoId, datos)
@@ -265,7 +267,6 @@ export default function ProductosAdmin() {
         descripcion: producto.descripcion || '',
         precio: Number(producto.precio),
         stock: Number(producto.stock),
-        imagen_url: producto.imagen_url || null,
         estado: 1,
       })
       setAlerta(`Producto "${producto.nombre}" activado correctamente.`)
@@ -422,14 +423,13 @@ export default function ProductosAdmin() {
           </div>
 
           <div className="crud__campo">
-            <label className="crud__campo-label" htmlFor="producto-imagen">URL de imagen (opcional)</label>
+            <label className="crud__campo-label" htmlFor="producto-imagen">Imagen del producto (opcional)</label>
             <input
               id="producto-imagen"
               className="crud__campo-input"
-              type="url"
-              value={form.imagen_url}
-              onChange={(e) => cambiarCampo('imagen_url', e.target.value)}
-              placeholder="https://…"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              onChange={(e) => cambiarCampo('imagen', e.target.files?.[0] || null)}
             />
           </div>
 
