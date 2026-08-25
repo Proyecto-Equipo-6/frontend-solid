@@ -15,7 +15,7 @@ export function esPasswordValida(valor) {
     valor.length <= MAX_PASSWORD &&
     /[A-Z]/.test(valor) &&
     /[a-z]/.test(valor) &&
-    /[0-9]/.test(valor)
+    /\d/.test(valor)
   )
 }
 

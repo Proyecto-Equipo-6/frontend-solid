@@ -25,6 +25,12 @@ const FORM_VACIO = {
   telefono: '',
 }
 
+const ESTADOS_BADGE = {
+  INACTIVO: { clase: 'inactivo', texto: 'Inactivo' },
+  OCUPADO: { clase: 'ocupado', texto: 'Ocupado' },
+  DISPONIBLE: { clase: 'activo', texto: 'Disponible' },
+}
+
 export default function RepartidoresAdmin() {
   const [repartidores, setRepartidores] = useState([])
   const [cargando, setCargando] = useState(true)
@@ -148,13 +154,14 @@ export default function RepartidoresAdmin() {
       clave: 'estado',
       etiqueta: 'Estado',
       alineacion: 'centro',
-      render: (r) => (
-        <span
-          className={`crud__badge crud__badge--${r.estado === 'INACTIVO' ? 'inactivo' : r.estado === 'OCUPADO' ? 'ocupado' : 'activo'}`}
-        >
-          {r.estado === 'INACTIVO' ? 'Inactivo' : r.estado === 'OCUPADO' ? 'Ocupado' : 'Disponible'}
-        </span>
-      ),
+      render: (r) => {
+        const badge = ESTADOS_BADGE[r.estado] || ESTADOS_BADGE.DISPONIBLE
+        return (
+          <span className={`crud__badge crud__badge--${badge.clase}`}>
+            {badge.texto}
+          </span>
+        )
+      },
     },
   ]
 
