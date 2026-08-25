@@ -29,7 +29,7 @@ function Filtros({ categorias, categoriaActiva, busqueda, onChangeCategoria, onC
           type="search"
           value={busqueda}
           onChange={(e) => onChangeBusqueda(e.target.value)}
-          placeholder={`Escribe al menos ${CATALOGO.minimoBusqueda} letras…`}
+          placeholder={`Busca por nombre o SKU (mín. ${CATALOGO.minimoBusqueda} letras)`}
         />
       </label>
     </div>
@@ -93,7 +93,9 @@ export default function Catalogo({ articulos, categorias, cargando }) {
       const coincideCategoria =
         categoriaActiva === null || articulo.categoria === categoriaActiva
       const coincideBusqueda =
-        !usarBusqueda || articulo.titulo.toLowerCase().includes(busquedaNormalizada)
+        !usarBusqueda ||
+        articulo.titulo.toLowerCase().includes(busquedaNormalizada) ||
+        (articulo.sku || '').toLowerCase().includes(busquedaNormalizada)
       return coincideCategoria && coincideBusqueda
     })
   }, [articulos, categoriaActiva, busquedaNormalizada, usarBusqueda])
