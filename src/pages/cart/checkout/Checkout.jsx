@@ -27,7 +27,7 @@ export default function Checkout() {
 
   const [paso, setPaso] = useState(0)
   const [items, setItems] = useState([])
-  const [envio, setEnvio] = useState('estandar')
+  const [envio] = useState('estandar')
   const [datosEnvio, setDatosEnvio] = useState(null)
   const [datosPago, setDatosPago] = useState(null)
   const [aviso, setAviso] = useState('')
@@ -129,9 +129,7 @@ export default function Checkout() {
           <ResumenPedido
             items={items}
             subtotal={subtotal}
-            envio={opcionEnvio}
             total={total}
-            onEnvio={setEnvio}
           />
         </div>
       )}
@@ -185,9 +183,7 @@ export default function Checkout() {
           <ResumenPedido
             items={items}
             subtotal={subtotal}
-            envio={opcionEnvio}
             total={total}
-            onEnvio={setEnvio}
           />
         </aside>
       </div>

@@ -18,7 +18,7 @@ function lineasProducto(item) {
 export default function VistaCarrito() {
   const navigate = useNavigate()
   const [items, setItems] = useState([])
-  const [envio, setEnvio] = useState('estandar')
+  const [envio] = useState('estandar')
 
   useEffect(() => {
     obtenerCarrito()
@@ -150,41 +150,6 @@ export default function VistaCarrito() {
           <div className="carrito__resumen-fila">
             <span>Artículos</span>
             <span className="carrito__resumen-subtotal">{formatoPrecio(subtotal)}</span>
-          </div>
-
-          <div className="carrito__envio">
-            <span className="carrito__envio-titulo">Envío:</span>
-            <div className="carrito__select">
-              <select
-                className="carrito__select-control"
-                value={envio}
-                aria-label="Método de envío"
-                onChange={(evento) => setEnvio(evento.target.value)}
-              >
-                {OPCIONES_ENVIO.map((opcion) => (
-                  <option key={opcion.id} value={opcion.id}>
-                    {opcion.nombre}
-                    {opcion.costo ? ` (+${formatoPrecio(opcion.costo)})` : ''}
-                  </option>
-                ))}
-              </select>
-              <svg
-                className="carrito__select-flecha"
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M3.5 5.25 7 8.75l3.5-3.5"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
           </div>
 
           <div className="carrito__resumen-total">
