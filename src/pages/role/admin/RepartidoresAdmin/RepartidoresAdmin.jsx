@@ -7,7 +7,6 @@ import FiltroEstado from '@/components/crud/FiltroEstado'
 import {
   getRepartidores,
   cambiarEstadoRepartidor,
-  crearRepartidor,
   actualizarRepartidor,
   eliminarRepartidor,
 } from '@/services/admin'
@@ -15,13 +14,11 @@ import {
   IconoEditar,
   IconoEliminar,
   IconoReactivar,
-  IconoAgregar,
 } from '@/components/ui/Iconos/Iconos'
 
 const FORM_VACIO = {
   nombre_apellido: '',
   email: '',
-  password: '',
   telefono: '',
 }
 
@@ -58,17 +55,10 @@ export default function RepartidoresAdmin() {
 
   useEffect(cargarTodo, [])
 
-  function abrirNuevo() {
-    setForm(FORM_VACIO)
-    setEditandoId(null)
-    setModal(true)
-  }
-
   function abrirEdicion(repartidor) {
     setForm({
       nombre_apellido: repartidor.nombre_apellido || repartidor.nombre || '',
       email: repartidor.email || '',
-      password: '',
       telefono: repartidor.telefono || '',
     })
     setEditandoId(repartidor.id_repartidor)
@@ -89,13 +79,8 @@ export default function RepartidoresAdmin() {
         email: form.email,
         telefono: form.telefono,
       }
-      if (editandoId) {
-        await actualizarRepartidor(editandoId, datos)
-        setAlerta('Repartidor actualizado correctamente.')
-      } else {
-        await crearRepartidor({ ...datos, password: form.password })
-        setAlerta('Repartidor creado correctamente.')
-      }
+      await actualizarRepartidor(editandoId, datos)
+      setAlerta('Repartidor actualizado correctamente.')
       setModal(false)
       setEditandoId(null)
       cargarTodo()
@@ -221,7 +206,7 @@ export default function RepartidoresAdmin() {
   return (
     <VistaGestion
       titulo="Repartidores"
-      descripcion="Administra los repartidores: crea, edita, elimina y controla su estado operativo."
+      descripcion="Administra los repartidores: edita, elimina y controla su estado operativo."
     >
       <div className="gestion__cabecera">
         <FiltroEstado
@@ -229,10 +214,6 @@ export default function RepartidoresAdmin() {
           onCambiar={setFiltro}
           conteos={{ activos: activos.length, inactivos: inactivos.length }}
         />
-        <button type="button" className="crud__boton crud__boton--nuevo" onClick={abrirNuevo}>
-          <IconoAgregar tamano={16} />
-          Nuevo repartidor
-        </button>
       </div>
 
       {alerta && <p className="crud__alerta">{alerta}</p>}
@@ -249,7 +230,7 @@ export default function RepartidoresAdmin() {
 
       <ModalCrud
         abierto={modal}
-        titulo={editandoId ? 'Editar repartidor' : 'Nuevo repartidor'}
+        titulo="Editar repartidor"
         onCerrar={() => setModal(false)}
       >
         <form className="crud__form" onSubmit={guardarRepartidor}>
@@ -291,21 +272,6 @@ export default function RepartidoresAdmin() {
             </div>
            
           </div>
-
-          {!editandoId && (
-            <div className="crud__campo">
-              <label className="crud__campo-label" htmlFor="repartidor-password">Contraseña</label>
-              <input
-                id="repartidor-password"
-                className="crud__campo-input"
-                type="password"
-                value={form.password}
-                onChange={(e) => cambiarCampo('password', e.target.value)}
-                placeholder="Mínimo 4 caracteres"
-                required
-              />
-            </div>
-          )}
 
           <div className="crud__form-acciones">
             <button type="button" className="crud__boton" onClick={() => setModal(false)}>
