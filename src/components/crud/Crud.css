@@ -382,6 +382,10 @@
   font-size: 13px;
 }
 
+.crud__alerta--error {
+  color: var(--dash-rojo);
+}
+
 .crud__filtro {
   display: inline-flex;
   align-items: center;

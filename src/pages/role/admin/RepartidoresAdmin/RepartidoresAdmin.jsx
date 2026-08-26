@@ -50,7 +50,7 @@ export default function RepartidoresAdmin() {
   function cargarTodo() {
     setCargando(true)
     setError('')
-    getRepartidores()
+    getRepartidores({ estado: 'Todos' })
       .then(setRepartidores)
       .catch((e) => setError(e.message || 'No se pudieron cargar los repartidores.'))
       .finally(() => setCargando(false))
