@@ -291,3 +291,30 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.mis-pedidos__ticket {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 12px 20px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--sobre-accent);
+  background: var(--accent);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.mis-pedidos__ticket:hover {
+  opacity: 0.9;
+}
+
+.mis-pedidos__ticket:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

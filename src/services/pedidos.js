@@ -18,3 +18,7 @@ export function crearPedido(datos) {
     datos,
   })
 }
+
+export function getTicketPedido(idPedido) {
+  return request(`/v1/pedidos/${idPedido}/ticket`)
+}

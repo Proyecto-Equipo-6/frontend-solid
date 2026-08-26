@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import Alerta from '@/components/ui/Alerta/Alerta'
 import TablaCrud from '@/components/crud/TablaCrud'
 import ModalCrud from '@/components/crud/ModalCrud'
-import { IconoOjo, IconoPaquete } from '@/components/ui/Iconos/Iconos'
-import { getMisPedidos, cancelarPedidoCliente } from '@/services/pedidos'
+import { IconoOjo, IconoPaquete, IconoTicket } from '@/components/ui/Iconos/Iconos'
+import { getMisPedidos, cancelarPedidoCliente, getTicketPedido } from '@/services/pedidos'
 import { formatoPrecio } from '@/utils/formato'
 import './MisPedidos.css'
 
@@ -69,6 +69,7 @@ export default function MisPedidos() {
   const [motivo, setMotivo] = useState('')
   const [cancelando, setCancelando] = useState(false)
   const [detalle, setDetalle] = useState(null)
+  const [descargandoTicket, setDescargandoTicket] = useState(false)
 
   function cargar(estado = filtro) {
     setCargando(true)
@@ -106,6 +107,25 @@ export default function MisPedidos() {
       setAviso({ variante: 'error', texto: e.message })
     } finally {
       setCancelando(false)
+    }
+  }
+
+  async function descargarTicket() {
+    if (!detalle) return
+    setDescargandoTicket(true)
+    setAviso(null)
+    try {
+      const ticket = await getTicketPedido(detalle.id_pedido)
+      const ventana = window.open('', '_blank')
+      if (ventana) {
+        ventana.document.write(ticket.html)
+        ventana.document.close()
+        ventana.print()
+      }
+    } catch (e) {
+      setAviso({ variante: 'error', texto: e.message })
+    } finally {
+      setDescargandoTicket(false)
     }
   }
 
@@ -224,11 +244,12 @@ export default function MisPedidos() {
 
       <ModalCrud abierto={Boolean(detalle)} titulo="Detalle del pedido" onCerrar={() => setDetalle(null)}>
         {detalle && (
-          <div className="crud__resumen">
-            <div className="crud__resumen-fila">
-              <span>Pedido</span>
-              <strong>#{detalle.id_pedido}</strong>
-            </div>
+          <>
+            <div className="crud__resumen">
+              <div className="crud__resumen-fila">
+                <span>Pedido</span>
+                <strong>#{detalle.id_pedido}</strong>
+              </div>
             <div className="crud__resumen-fila">
               <span>Estado</span>
               <strong>
@@ -265,6 +286,16 @@ export default function MisPedidos() {
               <strong>{formatoPrecio(detalle.total)}</strong>
             </div>
           </div>
+          <button
+            type="button"
+            className="mis-pedidos__ticket"
+            onClick={descargarTicket}
+            disabled={descargandoTicket}
+          >
+            <IconoTicket tamano={18} />
+            {descargandoTicket ? 'Generando…' : 'Descargar ticket'}
+          </button>
+          </>
         )}
       </ModalCrud>
 
