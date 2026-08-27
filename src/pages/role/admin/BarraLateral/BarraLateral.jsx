@@ -9,6 +9,7 @@ import {
   IconoRoles,
   IconoCerrarSesion,
 } from '@/components/ui/Iconos/Iconos'
+import BotonTema from '@/components/ui/BotonTema/BotonTema'
 import { NAVEGACION_PRINCIPAL_DASHBOARD } from '@/config/dashboard'
 import './BarraLateral.css'
 
@@ -87,6 +88,11 @@ export default function BarraLateral({ sesion, activo, onNavegar, onVerPerfil, o
         </nav>
 
         <div className="barra-lat__pie">
+          <div className="barra-lat__tema">
+            <BotonTema tamano={16} />
+            <span className="barra-lat__tema-texto">Modo claro / oscuro</span>
+          </div>
+
           <button
             type="button"
             className="barra-lat__cerrar"

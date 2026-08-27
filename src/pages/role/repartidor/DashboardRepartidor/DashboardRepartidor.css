@@ -215,3 +215,13 @@
   font-size: 13px;
   color: var(--dash-texto-suave);
 }
+
+:root[data-tema='claro'] .rep-dash__badge--ASIGNADO {
+  color: #6d28d9;
+  background: #ede9fe;
+}
+
+:root[data-tema='claro'] .rep-dash__badge--EN_CAMINO {
+  color: #0e7490;
+  background: #cffafe;
+}

@@ -16,6 +16,10 @@ function guardarCarrito(items) {
   localStorage.setItem(CLAVE_CARRITO, JSON.stringify(items))
 }
 
+function notificarCarrito() {
+  window.dispatchEvent(new CustomEvent('nexbit:carrito'))
+}
+
 function normalizarItems(items) {
   return items.map((item) => ({
     id: item.idProducto,
@@ -55,12 +59,16 @@ export function agregarAlCarrito(producto, cantidad = 1) {
     }
 
     guardarCarrito(items)
+    notificarCarrito()
     return Promise.resolve({ ok: true })
   }
 
   return request(ENDPOINTS.carritoAgregar, {
     metodo: 'POST',
     datos: { productoId: producto.id, cantidad },
+  }).then((resultado) => {
+    notificarCarrito()
+    return resultado
   })
 }
 

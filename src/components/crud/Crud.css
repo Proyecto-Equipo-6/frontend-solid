@@ -172,7 +172,11 @@
   border: 1px solid var(--dash-border);
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .crud__acciones button + button,
@@ -183,6 +187,12 @@
 .crud__acciones button:hover,
 .crud__boton:hover {
   background: var(--dash-tarjeta);
+}
+
+.crud__acciones button:not(:disabled):hover,
+.crud__boton:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.4);
 }
 
 .crud__acciones button:disabled,
@@ -228,6 +238,11 @@
   align-items: center;
   justify-content: center;
   color: var(--dash-texto-suave);
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.crud__icono:hover:not(:disabled) {
+  transform: scale(1.12);
 }
 
 .crud__icono--editar {
@@ -409,11 +424,16 @@
   border: 1px solid transparent;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
 }
 
 .crud__filtro-boton:hover {
   color: var(--dash-texto);
+  transform: translateY(-1px);
 }
 
 .crud__filtro-boton--activo {
@@ -513,4 +533,23 @@
 .crud__badge--ocupado {
   background: #f59e0b;
   color: #fff;
+}
+
+:root[data-tema='claro'] .crud__table tbody tr:hover td {
+  background: rgba(29, 78, 216, 0.05);
+}
+
+:root[data-tema='claro'] .crud__badge--pendiente {
+  color: #b45309;
+  background: #fef3c7;
+}
+
+:root[data-tema='claro'] .crud__badge--asignado {
+  color: #6d28d9;
+  background: #ede9fe;
+}
+
+:root[data-tema='claro'] .crud__badge--en-camino {
+  color: #0e7490;
+  background: #cffafe;
 }

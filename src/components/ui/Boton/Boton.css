@@ -34,7 +34,33 @@
   opacity: 0.9;
 }
 
+.boton:not(:disabled):not(.boton--secundario):hover {
+  box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.35);
+}
+
 .boton:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+:root[data-tema='claro'] .boton--carrito:hover:not(:disabled) {
+  background: #16a34a;
+  border-color: #16a34a;
+}
+
+.boton--exito {
+  background: #16a34a;
+  border-color: #16a34a;
+  color: #fff;
+}
+
+.boton--exito:hover:not(:disabled) {
+  background: #15803d;
+  border-color: #15803d;
+}
+
+.boton__check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }

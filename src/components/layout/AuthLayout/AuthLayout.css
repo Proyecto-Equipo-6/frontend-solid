@@ -1,4 +1,5 @@
 .auth {
+  position: relative;
   flex: 1;
   min-height: 100vh;
   min-height: 100svh;
@@ -6,11 +7,30 @@
   align-items: center;
   justify-content: center;
   padding: 24px 16px;
+}
+
+:root[data-tema='oscuro'] .auth,
+:root:not([data-tema]) .auth {
+  background: radial-gradient(
+    at 50% 50%,
+    rgba(255, 255, 255, 0.07),
+    hsl(0, 0%, 6%)
+  );
+}
+
+:root[data-tema='claro'] .auth {
   background: radial-gradient(
     ellipse at 50% 40%,
-    hsl(0, 0%, 97%),
-    hsl(0, 0%, 88%)
+    hsl(216, 100%, 98%),
+    hsl(213, 90%, 86%)
   );
+}
+
+.auth__tema {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 5;
 }
 
 .auth__tarjeta {
@@ -88,14 +108,4 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-@media (prefers-color-scheme: dark) {
-  .auth {
-    background: radial-gradient(
-      at 50% 50%,
-      rgba(255, 255, 255, 0.07),
-      hsl(0, 0%, 6%)
-    );
-  }
 }

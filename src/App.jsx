@@ -1,5 +1,6 @@
 import { Suspense, lazy, useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { MotionConfig } from 'framer-motion'
 import Loader from '@/components/ui/Loader/Loader'
 
 const LayoutPublico = lazy(() => import('@/components/layout/LayoutPublico/LayoutPublico'))
@@ -58,30 +59,32 @@ function App() {
   return (
     <>
       {mostrando && <Loader oculto={oculto} />}
-      <BrowserRouter>
-        <Suspense fallback={<CargandoRuta />}>
-          <Routes>
-            <Route element={<LayoutPublico />}>
-              <Route path="/" element={<Inicio />} />
-              <Route path="/articulo/:id" element={<ArticuloDetalle />} />
-              <Route path="/perfil" element={<Perfil />} />
-              <Route path="/perfil/editar" element={<EditarPerfil />} />
-              <Route path="/cliente" element={<VistaCliente />} />
-              <Route path="/carrito" element={<VistaCarrito />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/mis-pedidos" element={<MisPedidos />} />
-              <Route path="/ayuda" element={<Ayuda />} />
-              <Route path="*" element={<NoEncontrado />} />
-            </Route>
-            <Route path="/login" element={<IniciarSesion />} />
-            <Route path="/register" element={<Registro />} />
-            <Route path="/recuperar" element={<RecuperarContrasena />} />
-            <Route path="/restablecer" element={<RestablecerContrasena />} />
-            <Route path="/admin" element={<PanelAdministrador />} />
-            <Route path="/repartidor" element={<PanelRepartidor />} />
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
+      <MotionConfig reducedMotion="user">
+        <BrowserRouter>
+          <Suspense fallback={<CargandoRuta />}>
+            <Routes>
+              <Route element={<LayoutPublico />}>
+                <Route path="/" element={<Inicio />} />
+                <Route path="/articulo/:id" element={<ArticuloDetalle />} />
+                <Route path="/perfil" element={<Perfil />} />
+                <Route path="/perfil/editar" element={<EditarPerfil />} />
+                <Route path="/cliente" element={<VistaCliente />} />
+                <Route path="/carrito" element={<VistaCarrito />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/mis-pedidos" element={<MisPedidos />} />
+                <Route path="/ayuda" element={<Ayuda />} />
+                <Route path="*" element={<NoEncontrado />} />
+              </Route>
+              <Route path="/login" element={<IniciarSesion />} />
+              <Route path="/register" element={<Registro />} />
+              <Route path="/recuperar" element={<RecuperarContrasena />} />
+              <Route path="/restablecer" element={<RestablecerContrasena />} />
+              <Route path="/admin" element={<PanelAdministrador />} />
+              <Route path="/repartidor" element={<PanelRepartidor />} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
+      </MotionConfig>
     </>
   )
 }

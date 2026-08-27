@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
 import usePanelRol from '@/hooks/usePanelRol'
 import BarraLateralRepartidor from '@/pages/role/repartidor/BarraLateralRepartidor/BarraLateralRepartidor'
 import DashboardRepartidor from '@/pages/role/repartidor/DashboardRepartidor/DashboardRepartidor'
 import DetallePedidoRepartidor from '@/pages/role/repartidor/DetallePedidoRepartidor/DetallePedidoRepartidor'
 import HistorialRepartidor from '@/pages/role/repartidor/HistorialRepartidor/HistorialRepartidor'
+import TransicionVista from '@/components/ui/TransicionVista/TransicionVista'
 import './PanelRepartidor.css'
 
 export default function PanelRepartidor() {
@@ -74,7 +76,16 @@ export default function PanelRepartidor() {
           <span />
         </button>
 
-        <main className="repartidor__principal">{renderizarVista()}</main>
+        <main className="repartidor__principal">
+          <AnimatePresence mode="wait" initial={false}>
+            <TransicionVista
+              key={detalleId ? 'detalle' : seccion}
+              clave={detalleId ? 'detalle' : seccion}
+            >
+              {renderizarVista()}
+            </TransicionVista>
+          </AnimatePresence>
+        </main>
       </div>
     </div>
   )

@@ -48,12 +48,16 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
 }
 
 .barra-lat__enlace:hover {
   color: var(--dash-texto);
   background: var(--dash-tarjeta-alta);
+  transform: translateX(3px);
 }
 
 .barra-lat__enlace--activo {
@@ -66,6 +70,11 @@
   align-items: center;
   justify-content: center;
   color: var(--dash-texto-tenue);
+  transition: transform 0.15s ease;
+}
+
+.barra-lat__enlace:hover .barra-lat__enlace-icono {
+  transform: scale(1.12);
 }
 
 .barra-lat__enlace--activo .barra-lat__enlace-icono {
@@ -78,6 +87,20 @@
   gap: 8px;
   padding-top: 14px;
   border-top: 1px solid var(--dash-border);
+}
+
+.barra-lat__tema {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 12px;
+  border-radius: 8px;
+}
+
+.barra-lat__tema-texto {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--dash-texto-suave);
 }
 
 .barra-lat__cerrar {

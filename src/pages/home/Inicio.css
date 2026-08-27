@@ -221,3 +221,25 @@
   }
 }
 
+:root[data-tema='claro'] .hero__titulo {
+  background: var(--gradiente);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+:root[data-tema='claro'] .hero__boton--relleno {
+  background: var(--gradiente);
+}
+
+:root[data-tema='claro'] .hero__panel-estado {
+  color: #16a34a;
+  background: rgba(22, 163, 74, 0.12);
+}
+
+:root[data-tema='claro'] .hero__registro {
+  background: linear-gradient(135deg, #eaf2ff, #dcfce7);
+  border-color: #c7e0ff;
+}
+

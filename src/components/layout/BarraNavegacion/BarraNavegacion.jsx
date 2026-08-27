@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Marca from '@/components/ui/Marca/Marca'
+import BotonTema from '@/components/ui/BotonTema/BotonTema'
 import { IconoCarrito } from '@/components/ui/Iconos/Iconos'
 import { obtenerSesion } from '@/services/sesion'
 import { NAVEGACION_PRINCIPAL } from '@/config/aplicacion'
@@ -8,8 +9,22 @@ import './BarraNavegacion.css'
 
 export default function BarraNavegacion() {
   const [menuAbierto, setMenuAbierto] = useState(false)
+  const [carritoMovido, setCarritoMovido] = useState(false)
   const sesion = obtenerSesion()
   const esCliente = Boolean(sesion && Number(sesion.id_rol) === 2)
+
+  useEffect(() => {
+    function manejarCarrito() {
+      setCarritoMovido(true)
+      window.setTimeout(() => setCarritoMovido(false), 700)
+    }
+    window.addEventListener('nexbit:carrito', manejarCarrito)
+    return () => window.removeEventListener('nexbit:carrito', manejarCarrito)
+  }, [])
+
+  const claseCarrito = `barra__boton barra__boton--borde barra__boton--carrito${
+    carritoMovido ? ' barra__boton--carrito-activo' : ''
+  }`
 
   return (
     <header className="barra">
@@ -35,11 +50,12 @@ export default function BarraNavegacion() {
         </nav>
 
         <div className="barra__acciones">
+          <BotonTema tamano={16} />
           {sesion ? (
             <>
               <Link
                 to="/carrito"
-                className="barra__boton barra__boton--borde barra__boton--carrito"
+                className={claseCarrito}
               >
                 <span className="barra__carrito-icono" aria-hidden="true">
                   <IconoCarrito tamano={18} />
@@ -73,6 +89,9 @@ export default function BarraNavegacion() {
 
       {menuAbierto && (
         <div className="barra__panel">
+          <div className="barra__panel-tema">
+            <BotonTema tamano={16} />
+          </div>
           {NAVEGACION_PRINCIPAL.map((enlace) => (
             <Link
               key={enlace.nombre}
@@ -96,7 +115,7 @@ export default function BarraNavegacion() {
             <>
               <Link
                 to="/carrito"
-                className="barra__boton barra__boton--borde barra__boton--carrito"
+                className={claseCarrito}
                 onClick={() => setMenuAbierto(false)}
               >
                 <span className="barra__carrito-icono" aria-hidden="true">

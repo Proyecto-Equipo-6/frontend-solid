@@ -136,3 +136,16 @@
     grid-template-columns: 1fr;
   }
 }
+
+:root[data-tema='claro'] .catalogo__titulo {
+  background: var(--gradiente);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+:root[data-tema='claro'] .catalogo__pagina--activa {
+  background: var(--gradiente);
+  border-color: transparent;
+}

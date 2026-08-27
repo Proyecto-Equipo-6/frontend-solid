@@ -47,11 +47,16 @@
   color: var(--text);
   text-decoration: none;
   border-radius: 8px;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    transform 0.15s ease;
 }
 
 .barra__enlace:hover {
-  color: var(--text-h);
+  color: var(--accent);
   background: var(--accent-bg);
+  transform: translateY(-1px);
 }
 
 .barra__acciones {
@@ -70,6 +75,12 @@
   border: 1px solid transparent;
   border-radius: 8px;
   cursor: pointer;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
 }
 
 .barra__boton--texto {
@@ -77,7 +88,9 @@
 }
 
 .barra__boton--texto:hover {
+  color: var(--accent);
   background: var(--accent-bg);
+  transform: translateY(-1px);
 }
 
 .barra__boton--relleno {
@@ -86,13 +99,23 @@
 }
 
 .barra__boton--relleno:hover {
-  opacity: 0.9;
+  box-shadow: 0 8px 18px -8px var(--accent);
+  transform: translateY(-1px);
+  filter: brightness(1.06);
 }
 
 .barra__boton--borde {
   color: var(--text-h);
   border-color: var(--border);
   background: var(--bg);
+}
+
+.barra__boton--borde:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px -8px var(--accent);
 }
 
 .barra__boton--carrito {
@@ -106,6 +129,51 @@
   align-items: center;
   justify-content: center;
   line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.barra__boton--carrito:hover .barra__carrito-icono {
+  transform: scale(1.15) rotate(-6deg);
+}
+
+.barra__boton--carrito-activo {
+  animation: barra-carrito-mueve 0.7s ease;
+}
+
+.barra__carrito-icono {
+  animation: barra-carrito-vaiven 4s ease-in-out infinite;
+}
+
+.barra__boton--carrito:hover .barra__carrito-icono {
+  animation: none;
+}
+
+@keyframes barra-carrito-mueve {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(8px);
+  }
+  50% {
+    transform: translateX(-8px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes barra-carrito-vaiven {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(2px);
+  }
 }
 
 .barra__menu {
@@ -118,6 +186,16 @@
   border: 1px solid var(--border);
   border-radius: 8px;
   cursor: pointer;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.barra__menu:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-1px);
 }
 
 .barra__panel {
@@ -135,6 +213,14 @@
   border: 1px solid var(--border);
   border-radius: 12px;
   box-shadow: var(--shadow);
+}
+
+.barra__panel-tema {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--border);
 }
 
 .barra__enlace--panel {

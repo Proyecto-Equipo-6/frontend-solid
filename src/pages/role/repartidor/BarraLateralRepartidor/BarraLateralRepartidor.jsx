@@ -3,6 +3,7 @@ import {
   IconoPedido,
   IconoCerrarSesion,
 } from '@/components/ui/Iconos/Iconos'
+import BotonTema from '@/components/ui/BotonTema/BotonTema'
 import { NAVEGACION_REPARTIDOR } from '@/config/repartidor'
 import './BarraLateralRepartidor.css'
 
@@ -55,6 +56,11 @@ export default function BarraLateralRepartidor({ sesion, activo, onNavegar, onCe
         </nav>
 
         <div className="barra-lat-rep__pie">
+          <div className="barra-lat-rep__tema">
+            <BotonTema tamano={16} />
+            <span className="barra-lat-rep__tema-texto">Modo claro / oscuro</span>
+          </div>
+
           <button
             type="button"
             className="barra-lat-rep__cerrar"

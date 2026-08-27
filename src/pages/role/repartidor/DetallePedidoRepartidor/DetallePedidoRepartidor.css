@@ -368,3 +368,13 @@
   justify-content: flex-end;
   gap: 10px;
 }
+
+:root[data-tema='claro'] .rep-det__badge--ASIGNADO {
+  color: #6d28d9;
+  background: #ede9fe;
+}
+
+:root[data-tema='claro'] .rep-det__badge--EN_CAMINO {
+  color: #0e7490;
+  background: #cffafe;
+}
