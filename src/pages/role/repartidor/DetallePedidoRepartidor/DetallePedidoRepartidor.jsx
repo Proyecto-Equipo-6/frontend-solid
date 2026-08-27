@@ -10,7 +10,7 @@ import { formatoPrecio } from '@/utils/formato'
 import './DetallePedidoRepartidor.css'
 
 const TAMANO_MAXIMO = 3 * 1024 * 1024
-const FORMATOS_PERMITIDOS = ['image/jpeg', 'image/png']
+const FORMATOS_PERMITIDOS = new Set(['image/jpeg', 'image/png'])
 
 function BadgeEstado({ estado }) {
   return (
@@ -75,7 +75,7 @@ export default function DetallePedidoRepartidor({ pedidoId, puedeActualizar, onV
     evento.target.value = ''
     if (!archivo) return
 
-    if (!FORMATOS_PERMITIDOS.includes(archivo.type)) {
+    if (!FORMATOS_PERMITIDOS.has(archivo.type)) {
       setAviso('La foto debe ser en formato JPG o PNG')
       return
     }
@@ -148,7 +148,7 @@ export default function DetallePedidoRepartidor({ pedidoId, puedeActualizar, onV
             ← Volver
           </button>
         </header>
-        {aviso && <Alerta variante={aviso === 'El pedido ya no está disponible' ? 'error' : 'error'}>{aviso}</Alerta>}
+        {aviso && <Alerta variante="error">{aviso}</Alerta>}
         {aviso && aviso !== 'El pedido ya no está disponible' && (
           <div className="rep-det__acciones">
             <button type="button" className="rep-det__boton" onClick={cargar}>

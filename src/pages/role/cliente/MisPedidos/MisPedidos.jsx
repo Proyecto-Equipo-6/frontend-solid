@@ -183,6 +183,36 @@ export default function MisPedidos() {
     </>
   )
 
+  let contenido
+  if (cargando) {
+    contenido = <p className="mis-pedidos__mensaje">Cargando tus pedidos…</p>
+  } else if (pedidos.length === 0) {
+    contenido = (
+      <div className="mis-pedidos__vacio">
+        <span className="mis-pedidos__vacio-icono" aria-hidden="true">
+          <IconoPaquete tamano={40} />
+        </span>
+        <p className="mis-pedidos__vacio-titulo">No tienes pedidos realizados aún</p>
+        <p className="mis-pedidos__vacio-texto">
+          Cuando hagas una compra, podrás consultar aquí su estado.
+        </p>
+        <Link to="/#catalogo" className="mis-pedidos__enlace">
+          Explorar catálogo
+        </Link>
+      </div>
+    )
+  } else {
+    contenido = (
+      <TablaCrud
+        columnas={columnas}
+        filas={pedidos}
+        claveFila={(p) => p.id_pedido}
+        claseFila={(p) => `mis-pedidos__fila ${MAPA_CLASE_ESTADO[p.estado] || ''}`}
+        acciones={acciones}
+      />
+    )
+  }
+
   return (
     <section className="mis-pedidos">
       <header className="mis-pedidos__cabecera">
@@ -217,30 +247,7 @@ export default function MisPedidos() {
 
       {aviso && <Alerta variante={aviso.variante}>{aviso.texto}</Alerta>}
 
-      {cargando ? (
-        <p className="mis-pedidos__mensaje">Cargando tus pedidos…</p>
-      ) : pedidos.length === 0 ? (
-        <div className="mis-pedidos__vacio">
-          <span className="mis-pedidos__vacio-icono" aria-hidden="true">
-            <IconoPaquete tamano={40} />
-          </span>
-          <p className="mis-pedidos__vacio-titulo">No tienes pedidos realizados aún</p>
-          <p className="mis-pedidos__vacio-texto">
-            Cuando hagas una compra, podrás consultar aquí su estado.
-          </p>
-          <Link to="/#catalogo" className="mis-pedidos__enlace">
-            Explorar catálogo
-          </Link>
-        </div>
-      ) : (
-        <TablaCrud
-          columnas={columnas}
-          filas={pedidos}
-          claveFila={(p) => p.id_pedido}
-          claseFila={(p) => `mis-pedidos__fila ${MAPA_CLASE_ESTADO[p.estado] || ''}`}
-          acciones={acciones}
-        />
-      )}
+      {contenido}
 
       <ModalCrud abierto={Boolean(detalle)} titulo="Detalle del pedido" onCerrar={() => setDetalle(null)}>
         {detalle && (
@@ -300,10 +307,15 @@ export default function MisPedidos() {
       </ModalCrud>
 
       {aCancelar && (
-        <div className="mis-pedidos__velo" onClick={() => setACancelar(null)}>
+        <div className="mis-pedidos__velo">
+          <button
+            type="button"
+            className="mis-pedidos__velo-fondo"
+            aria-label="Cerrar"
+            onClick={() => setACancelar(null)}
+          />
           <form
             className="mis-pedidos__modal"
-            onClick={(evento) => evento.stopPropagation()}
             onSubmit={confirmarCancelacion}
           >
             <h2 className="mis-pedidos__modal-titulo">Cancelar pedido #{aCancelar.id_pedido}</h2>

@@ -135,14 +135,11 @@
 
 .barra__boton--carrito:hover .barra__carrito-icono {
   transform: scale(1.15) rotate(-6deg);
+  animation: none;
 }
 
 .barra__boton--carrito-activo {
   animation: barra-carrito-mueve 0.7s ease;
-}
-
-.barra__boton--carrito:hover .barra__carrito-icono {
-  animation: none;
 }
 
 @keyframes barra-carrito-mueve {

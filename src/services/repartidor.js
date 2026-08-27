@@ -58,5 +58,6 @@ export function getHistorialRepartidor(filtros = {}) {
   if (filtros.orden) params.set('orden', filtros.orden)
 
   const query = params.toString()
-  return request(`/v1/repartidor/historial${query ? `?${query}` : ''}`)
+  const sufijo = query ? `?${query}` : ''
+  return request(`/v1/repartidor/historial${sufijo}`)
 }

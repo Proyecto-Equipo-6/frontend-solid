@@ -174,11 +174,13 @@ function GestionRepartidor({
   onAsignar,
   onDesasignar,
 }) {
+  const nombreRepartidor = repartidorAsignado?.nombre || `#${detalle.id_repartidor}`
+
   if (!puedeGestionar) {
     return (
       <p className="det-pedido__nota">
         {detalle.id_repartidor
-          ? `Asignado a ${repartidorAsignado?.nombre || `#${detalle.id_repartidor}`}. No se puede modificar en el estado actual.`
+          ? `Asignado a ${nombreRepartidor}. No se puede modificar en el estado actual.`
           : 'Este pedido no tiene repartidor asignado y no se puede modificar en el estado actual.'}
       </p>
     )
@@ -188,7 +190,7 @@ function GestionRepartidor({
     return (
       <div className="det-pedido__asignacion">
         <p className="det-pedido__asignacion-actual">
-          Asignado a <strong>{repartidorAsignado?.nombre || `#${detalle.id_repartidor}`}</strong>
+          Asignado a <strong>{nombreRepartidor}</strong>
         </p>
         <button
           type="button"

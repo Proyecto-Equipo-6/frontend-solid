@@ -34,7 +34,7 @@ export default function TarjetaArticulo({ articulo }) {
         </div>
         <span className="tarjeta__garantia">Garantía: {garantia}</span>
         <span className="tarjeta__boton">
-          Ver producto
+          {'Ver producto '}
           <span className="tarjeta__boton-flecha" aria-hidden="true">
             <IconoFlecha tamano={14} />
           </span>

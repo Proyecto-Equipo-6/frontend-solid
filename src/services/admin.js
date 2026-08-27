@@ -88,9 +88,9 @@ export function getUsuarios(filtros = {}) {
   if (filtros.busqueda) params.set('busqueda', filtros.busqueda)
   if (filtros.page) params.set('page', filtros.page)
   if (filtros.limit) params.set('limit', filtros.limit)
-
   const query = params.toString()
-  return request(`/v1/admin/usuarios${query ? `?${query}` : ''}`)
+  const sufijo = query ? `?${query}` : ''
+  return request(`/v1/admin/usuarios${sufijo}`)
 }
 
 export function actualizarEstadoUsuario(id, activo) {
@@ -136,7 +136,8 @@ export function getRepartidores(filtros = {}) {
   if (filtros.estado) params.set('estado', filtros.estado)
 
   const query = params.toString()
-  return request(`/v1/admin/repartidores${query ? `?${query}` : ''}`)
+  const sufijo = query ? `?${query}` : ''
+  return request(`/v1/admin/repartidores${sufijo}`)
 }
 
 export function cambiarEstadoRepartidor(id, estado) {
@@ -167,7 +168,8 @@ export function getPedidos(filtros = {}) {
   if (filtros.limit) params.set('limit', filtros.limit)
 
   const query = params.toString()
-  return request(`/v1/admin/pedidos${query ? `?${query}` : ''}`)
+  const sufijo = query ? `?${query}` : ''
+  return request(`/v1/admin/pedidos${sufijo}`)
 }
 
 export function getDetallePedido(id) {

@@ -16,7 +16,6 @@ export default function BotonDescargarApp({ href = '/app-movil', className = '' 
         <span className="descargar__icono" aria-hidden="true">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            role="img"
             width="2em"
             height="2em"
             preserveAspectRatio="xMidYMid meet"

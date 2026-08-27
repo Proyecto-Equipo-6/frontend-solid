@@ -112,7 +112,7 @@ export default function ArticuloDetalle() {
           <span className="detalle__atras-icono" aria-hidden="true">
             <IconoAtras tamano={16} />
           </span>
-          Volver al catálogo
+          {' Volver al catálogo'}
         </EnlaceAtras>
       </div>
 
