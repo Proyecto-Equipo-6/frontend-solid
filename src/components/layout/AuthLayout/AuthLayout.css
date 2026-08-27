@@ -33,6 +33,12 @@
   z-index: 5;
 }
 
+.auth__contenido {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .auth__tarjeta {
   width: 100%;
   box-sizing: border-box;
@@ -47,11 +53,11 @@
 }
 
 .auth__tarjeta--medio {
-  max-width: 450px;
+  max-width: 480px;
 }
 
 .auth__tarjeta--grande {
-  max-width: 540px;
+  max-width: 500px;
 }
 
 .auth__logo {

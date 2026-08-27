@@ -1,5 +1,5 @@
 .barra-lat {
-  width: 240px;
+  width: 264px;
   flex-shrink: 0;
   height: 100vh;
   position: sticky;
@@ -23,6 +23,7 @@
   flex-direction: column;
   gap: 24px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .barra-lat__grupo {
@@ -57,7 +58,6 @@
 .barra-lat__enlace:hover {
   color: var(--dash-texto);
   background: var(--dash-tarjeta-alta);
-  transform: translateX(3px);
 }
 
 .barra-lat__enlace--activo {
