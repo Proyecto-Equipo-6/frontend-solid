@@ -279,12 +279,36 @@
   border: 1px solid var(--border);
   border-radius: var(--radio);
   cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.mis-pedidos__modal-boton:not(:disabled):hover {
+  color: #fff;
+  background: var(--mal);
+  border-color: var(--mal);
 }
 
 .mis-pedidos__modal-boton--peligro {
   color: var(--error);
   background: var(--error-bg);
   border-color: var(--error-border);
+}
+
+.mis-pedidos__modal-boton--peligro:not(:disabled):hover {
+  color: #fff;
+  background: var(--mal);
+  border-color: var(--mal);
+}
+
+:root[data-tema='oscuro'] .mis-pedidos__modal-boton:not(:disabled):hover,
+:root:not([data-tema]) .mis-pedidos__modal-boton:not(:disabled):hover,
+:root[data-tema='oscuro'] .mis-pedidos__modal-boton--peligro:not(:disabled):hover,
+:root:not([data-tema]) .mis-pedidos__modal-boton--peligro:not(:disabled):hover {
+  color: var(--mal);
+  border-color: var(--mal);
 }
 
 .mis-pedidos__modal-boton:disabled {

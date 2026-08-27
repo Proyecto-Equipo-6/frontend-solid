@@ -1,0 +1,244 @@
+.appm {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 130px 20px 80px;
+  box-sizing: border-box;
+}
+
+/* --- Hero --- */
+
+.appm__hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.appm__hero-visual {
+  position: relative;
+  height: 380px;
+  overflow: hidden;
+}
+
+.appm__hero-contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.appm__badge {
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--sobre-accent);
+  background: var(--accent);
+  border-radius: 999px;
+}
+
+.appm__titulo {
+  margin: 0;
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
+  line-height: 1.05;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+:root[data-tema='claro'] .appm__titulo {
+  background: var(--gradiente);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.appm__subtitulo {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text);
+  max-width: 460px;
+}
+
+.appm__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+/* --- Secciones --- */
+
+.appm__seccion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 80px;
+}
+
+.appm__h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-h);
+  text-align: center;
+}
+
+.appm__sub {
+  margin: 0 0 24px;
+  font-size: 15px;
+  color: var(--text);
+  text-align: center;
+}
+
+.appm__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  width: 100%;
+}
+
+.appm__tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.appm__tarjeta:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+}
+
+:root[data-tema='claro'] .appm__tarjeta:hover {
+  box-shadow: 0 14px 30px -10px rgba(29, 78, 216, 0.35);
+}
+
+.appm__tarjeta-icono {
+  width: 46px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sobre-accent);
+  background: var(--gradiente);
+  border-radius: 12px;
+}
+
+.appm__tarjeta-titulo {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.appm__tarjeta-texto {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* --- Paridad --- */
+
+.appm__paridad {
+  padding: 40px 24px;
+  background: var(--bg-suave);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+
+.appm__lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  width: 100%;
+  max-width: 720px;
+}
+
+.appm__lista-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--text-h);
+}
+
+.appm__lista-check {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: #16a34a;
+  border-radius: 50%;
+}
+
+/* --- CTA final --- */
+
+.appm__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 80px;
+  padding: 40px 24px;
+  text-align: center;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow-card);
+}
+
+.appm__cta-titulo {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.appm__cta-texto {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: var(--text);
+}
+
+/* --- Responsive --- */
+
+@media (max-width: 900px) {
+  .appm__hero {
+    grid-template-columns: 1fr;
+  }
+
+  .appm__hero-visual {
+    height: 320px;
+  }
+
+  .appm__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .appm__grid,
+  .appm__lista {
+    grid-template-columns: 1fr;
+  }
+}

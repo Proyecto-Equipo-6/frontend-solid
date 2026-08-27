@@ -242,7 +242,7 @@ export default function Categorias() {
             </select>
           </div>
           <div className="crud__form-acciones">
-            <button type="button" className="crud__boton" onClick={() => setModal(false)}>
+            <button type="button" className="crud__boton crud__boton--cancelar" onClick={() => setModal(false)}>
               Cancelar
             </button>
             <button type="submit" className="crud__boton" disabled={guardando}>
@@ -259,6 +259,7 @@ export default function Categorias() {
           onConfirmar={confirmarEliminar}
           onCancelar={() => setAEliminar(null)}
           cargando={eliminando}
+          peligro
         />
       )}
     </VistaGestion>

@@ -32,6 +32,8 @@
   --success: #4ade80;
   --success-bg: rgba(74, 222, 128, 0.12);
   --success-border: rgba(74, 222, 128, 0.35);
+  --ok: #4ade80;
+  --mal: #f87171;
   --shadow:
     rgba(0, 0, 0, 0.3) 0 10px 15px -3px,
     rgba(0, 0, 0, 0.2) 0 4px 6px -2px;
@@ -60,6 +62,8 @@
   --success: #15803d;
   --success-bg: #dcfce7;
   --success-border: #bbf7d0;
+  --ok: #16a34a;
+  --mal: #dc2626;
   --shadow:
     rgba(29, 78, 216, 0.1) 0 10px 15px -3px,
     rgba(29, 78, 216, 0.05) 0 4px 6px -2px;
@@ -104,4 +108,31 @@ select {
 
 ::selection {
   background: var(--accent-bg);
+}
+
+/* --- Hover semántico: confirmar (verde) / deshacer (rojo) --- */
+/* Claro: rellena el botón. Oscuro: solo letras + borde. */
+
+.accion-verde:not(:disabled):hover {
+  color: #fff;
+  background: var(--ok);
+  border-color: var(--ok);
+}
+
+.accion-roja:not(:disabled):hover {
+  color: #fff;
+  background: var(--mal);
+  border-color: var(--mal);
+}
+
+:root[data-tema='oscuro'] .accion-verde:not(:disabled):hover,
+:root:not([data-tema]) .accion-verde:not(:disabled):hover {
+  color: #15803d;
+  border-color: #15803d;
+}
+
+:root[data-tema='oscuro'] .accion-roja:not(:disabled):hover,
+:root:not([data-tema]) .accion-roja:not(:disabled):hover {
+  color: var(--mal);
+  border-color: var(--mal);
 }

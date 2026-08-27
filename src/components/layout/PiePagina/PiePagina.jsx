@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import Marca from '@/components/ui/Marca/Marca'
+import BotonDescargarApp from '@/components/ui/BotonDescargarApp/BotonDescargarApp'
 import { MARCA, NAVEGACION_PRINCIPAL } from '@/config/aplicacion'
 import './PiePagina.css'
 
@@ -11,6 +12,9 @@ export default function PiePagina() {
           <div className="pie__marca">
             <Marca cubo={false} alInicio />
             <p className="pie__descripcion">{MARCA.descripcion}</p>
+            <div className="pie__app">
+              <BotonDescargarApp />
+            </div>
           </div>
 
           <div className="pie__columna">

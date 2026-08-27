@@ -180,22 +180,29 @@ export default function Checkout() {
                 {paso === 0 ? (
                   <button
                     type="button"
-                    className="checkout__accion checkout__accion--secundario"
+                    className="checkout__accion checkout__accion--secundario accion-roja"
                     onClick={() => navigate('/carrito')}
                   >
-                    Volver al carrito
+                    Volver
                   </button>
                 ) : (
-                  <button type="button" className="checkout__accion checkout__accion--secundario" onClick={retroceder}>
+                  <button
+                    type="button"
+                    className="checkout__accion checkout__accion--secundario accion-roja"
+                    onClick={retroceder}
+                  >
                     Volver
                   </button>
                 )}
                 <button
                   type="button"
-                  className="checkout__accion checkout__accion--completo"
+                  className={`checkout__accion checkout__accion--completo accion-verde${
+                    generando ? ' checkout__accion--generando' : ''
+                  }`}
                   disabled={generando}
                   onClick={paso === 2 ? realizarPedido : avanzar}
                 >
+                  {generando && <span className="checkout__spinner" aria-hidden="true" />}
                   {etiquetaAccion(paso, generando)}
                 </button>
               </div>

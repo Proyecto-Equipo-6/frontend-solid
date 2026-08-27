@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import PasosCompra from '@/components/ui/PasosCompra/PasosCompra'
 import { IconoCarrito, IconoImagen } from '@/components/ui/Iconos/Iconos'
-import { OPCIONES_ENVIO } from '@/config/aplicacion'
 import { obtenerCarrito, actualizarCantidad, eliminarDelCarrito } from '@/services/carrito'
 import { formatoPrecio } from '@/utils/formato'
 import './VistaCarrito.css'
@@ -18,7 +17,6 @@ function lineasProducto(item) {
 export default function VistaCarrito() {
   const navigate = useNavigate()
   const [items, setItems] = useState([])
-  const [envio, setEnvio] = useState('estandar')
 
   useEffect(() => {
     obtenerCarrito()
@@ -40,9 +38,8 @@ export default function VistaCarrito() {
     navigate('/checkout')
   }
 
-  const opcionEnvio = OPCIONES_ENVIO.find((opcion) => opcion.id === envio)
   const subtotal = items.reduce((suma, item) => suma + item.precio * item.cantidad, 0)
-  const total = subtotal + opcionEnvio.costo
+  const total = subtotal
   const carritoVacio = items.length === 0
 
   return (
@@ -152,39 +149,9 @@ export default function VistaCarrito() {
             <span className="carrito__resumen-subtotal">{formatoPrecio(subtotal)}</span>
           </div>
 
-          <div className="carrito__envio">
-            <span className="carrito__envio-titulo">Envío:</span>
-            <div className="carrito__select">
-              <select
-                className="carrito__select-control"
-                value={envio}
-                aria-label="Método de envío"
-                onChange={(evento) => setEnvio(evento.target.value)}
-              >
-                {OPCIONES_ENVIO.map((opcion) => (
-                  <option key={opcion.id} value={opcion.id}>
-                    {opcion.nombre}
-                    {opcion.costo ? ` (+${formatoPrecio(opcion.costo)})` : ''}
-                  </option>
-                ))}
-              </select>
-              <svg
-                className="carrito__select-flecha"
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M3.5 5.25 7 8.75l3.5-3.5"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
+          <div className="carrito__resumen-fila carrito__resumen-descuento">
+            <span>Descuento</span>
+            <span className="carrito__resumen-subtotal">{formatoPrecio(0)}</span>
           </div>
 
           <div className="carrito__resumen-total">

@@ -578,7 +578,7 @@ export default function DetallePedidoAdmin({ pedidoId, onVolver, onActualizado }
             <span>Reintegrar stock de los productos</span>
           </label>
           <div className="crud__form-acciones">
-            <button type="button" className="crud__boton" onClick={() => setACancelar(null)}>
+            <button type="button" className="crud__boton crud__boton--cancelar" onClick={() => setACancelar(null)}>
               Volver
             </button>
             <button type="submit" className="crud__boton--peligro crud__boton" disabled={cancelando}>

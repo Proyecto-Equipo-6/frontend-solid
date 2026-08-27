@@ -261,6 +261,14 @@
   color: var(--text);
 }
 
+.carrito__resumen-descuento {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+  font-size: 14px;
+  color: var(--text-suave);
+}
+
 .carrito__envio {
   display: flex;
   flex-direction: column;

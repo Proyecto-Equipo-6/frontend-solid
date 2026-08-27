@@ -434,7 +434,7 @@ export default function ProductosAdmin() {
           </div>
 
           <div className="crud__form-acciones">
-            <button type="button" className="crud__boton" onClick={() => setModal(null)}>
+            <button type="button" className="crud__boton crud__boton--cancelar" onClick={() => setModal(null)}>
               Cancelar
             </button>
             <button type="submit" className="crud__boton" disabled={guardando}>
@@ -474,7 +474,7 @@ export default function ProductosAdmin() {
             />
           </div>
           <div className="crud__form-acciones">
-            <button type="button" className="crud__boton" onClick={() => setAAjustar(null)}>
+            <button type="button" className="crud__boton crud__boton--cancelar" onClick={() => setAAjustar(null)}>
               Cancelar
             </button>
             <button type="submit" className="crud__boton" disabled={guardando}>
@@ -491,6 +491,7 @@ export default function ProductosAdmin() {
           onConfirmar={confirmarEliminar}
           onCancelar={() => setAEliminar(null)}
           cargando={eliminando}
+          peligro
         />
       )}
     </VistaGestion>

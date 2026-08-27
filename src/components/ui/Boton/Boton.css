@@ -47,17 +47,11 @@
   cursor: not-allowed;
 }
 
-.boton--carrito:hover:not(:disabled) {
-  background: #16a34a;
-  border-color: #16a34a;
-  color: #fff;
-}
-
-:root[data-tema='oscuro'] .boton:not(.boton--secundario):not(.boton--exito):not(.boton--carrito):hover:not(:disabled),
-:root:not([data-tema]) .boton:not(.boton--secundario):not(.boton--exito):not(.boton--carrito):hover:not(:disabled) {
-  background: #16a34a;
-  border-color: #16a34a;
-  color: #fff;
+.boton--peligro,
+.boton--cancelar {
+  color: var(--mal);
+  background: transparent;
+  border-color: var(--mal);
 }
 
 .boton--exito {
@@ -66,9 +60,12 @@
   color: #fff;
 }
 
-.boton--exito:hover:not(:disabled) {
+.boton--exito:not(:disabled):hover,
+.boton--exito.accion-verde:not(:disabled):hover,
+.boton--exito.accion-roja:not(:disabled):hover {
   background: #15803d;
   border-color: #15803d;
+  color: #fff;
 }
 
 .boton__check {

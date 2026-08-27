@@ -553,3 +553,57 @@
   color: #0e7490;
   background: #cffafe;
 }
+
+/* --- Hover semántico CRUD: confirmar verde / deshacer rojo --- */
+
+.crud__boton--cancelar {
+  color: var(--dash-rojo);
+  border-color: var(--dash-rojo);
+  background: var(--dash-rojo-bg);
+}
+
+.crud__boton:not(:disabled):hover {
+  color: #fff;
+  background: var(--ok);
+  border-color: var(--ok);
+}
+
+.crud__boton--peligro:not(:disabled):hover,
+.crud__boton--eliminar:not(:disabled):hover,
+.crud__boton--cancelar:not(:disabled):hover {
+  color: #fff;
+  background: var(--mal);
+  border-color: var(--mal);
+}
+
+.crud__boton--nuevo:not(:disabled):hover {
+  color: #fff;
+  background: var(--ok);
+  border-color: var(--ok);
+}
+
+:root[data-tema='oscuro'] .crud__boton:not(:disabled):hover,
+:root:not([data-tema]) .crud__boton:not(:disabled):hover,
+:root[data-tema='oscuro'] .crud__boton--nuevo:not(:disabled):hover,
+:root:not([data-tema]) .crud__boton--nuevo:not(:disabled):hover {
+  color: var(--ok);
+  border-color: var(--ok);
+}
+
+:root[data-tema='oscuro'] .crud__boton--peligro:not(:disabled):hover,
+:root:not([data-tema]) .crud__boton--peligro:not(:disabled):hover,
+:root[data-tema='oscuro'] .crud__boton--eliminar:not(:disabled):hover,
+:root:not([data-tema]) .crud__boton--eliminar:not(:disabled):hover,
+:root[data-tema='oscuro'] .crud__boton--cancelar:not(:disabled):hover,
+:root:not([data-tema]) .crud__boton--cancelar:not(:disabled):hover {
+  color: var(--mal);
+  border-color: var(--mal);
+}
+
+.crud__icono--eliminar:not(:disabled):hover {
+  color: var(--mal);
+}
+
+.crud__icono--reactivar:not(:disabled):hover {
+  color: var(--ok);
+}

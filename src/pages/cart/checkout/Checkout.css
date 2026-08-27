@@ -89,7 +89,13 @@
   border-radius: 999px;
   cursor: pointer;
   text-decoration: none;
-  transition: opacity 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+  transition:
+    opacity 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.1s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .checkout__accion:hover {
@@ -118,14 +124,38 @@
   border-color: var(--border);
 }
 
-.checkout__accion--secundario:hover {
-  color: var(--accent);
-  background: var(--accent-bg);
-  opacity: 1;
-}
-
 .checkout__accion--completo {
   flex: 1;
+}
+
+.checkout__accion--generando {
+  animation: checkout-pulso 0.8s ease-in-out infinite;
+}
+
+.checkout__spinner {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: checkout-gira 0.7s linear infinite;
+}
+
+@keyframes checkout-gira {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes checkout-pulso {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
 }
 
 /* --- Estado vacío --- */
@@ -179,6 +209,7 @@
 }
 
 .checkout__gracias-icono {
+  position: relative;
   width: 64px;
   height: 64px;
   margin: 0 auto;
@@ -189,6 +220,21 @@
   background: var(--accent-bg);
   border-radius: 50%;
   box-shadow: var(--shadow);
+}
+
+.checkout__gracias-check {
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: #16a34a;
+  border: 2px solid var(--bg);
+  border-radius: 50%;
 }
 
 .checkout__gracias-titulo {

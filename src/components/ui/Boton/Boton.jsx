@@ -1,7 +1,12 @@
-import './Boton.css'
-
 import { motion } from 'framer-motion'
 import './Boton.css'
+
+const CLASES_SEMANTICAS = {
+  primario: 'accion-verde',
+  carrito: 'accion-verde',
+  peligro: 'accion-roja',
+  cancelar: 'accion-roja',
+}
 
 export default function Boton({
   variante = 'primario',
@@ -13,9 +18,10 @@ export default function Boton({
   className,
   ...rest
 }) {
+  const semantica = CLASES_SEMANTICAS[variante] || ''
   return (
     <motion.button
-      className={`boton boton--${variante} ${completo ? 'boton--completo' : ''} ${className || ''}`}
+      className={`boton boton--${variante} ${semantica} ${completo ? 'boton--completo' : ''} ${className || ''}`}
       type={tipo}
       disabled={cargando || disabled}
       whileHover={disabled || cargando ? undefined : { scale: 1.02 }}
