@@ -31,7 +31,9 @@
 
 .tarjeta__imagen {
   position: relative;
+  flex-shrink: 0;
   aspect-ratio: 16 / 10;
+  min-height: 170px;
   background: var(--bg-suave);
   overflow: hidden;
 }
