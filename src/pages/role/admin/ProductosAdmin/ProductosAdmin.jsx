@@ -15,6 +15,7 @@ import {
   getProveedores,
 } from '@/services/admin'
 import { formatoPrecio } from '@/utils/formato'
+import { generarSku } from '@/utils/sku'
 
 const FORM_VACIO = {
   sku: '',
@@ -86,9 +87,18 @@ export default function ProductosAdmin() {
     setModal('form')
   }
 
-  function cambiarCampo(campo, valor) {
-    setForm((prev) => ({ ...prev, [campo]: valor }))
-  }
+function cambiarCampo(campo, valor) {
+  setForm((prev) => {
+    const siguiente = { ...prev, [campo]: valor }
+    if (!editandoId && (campo === 'nombre' || campo === 'id_categoria')) {
+      const nombre = campo === 'nombre' ? valor : prev.nombre
+      const idCategoria = campo === 'id_categoria' ? valor : prev.id_categoria
+      const categoria = categorias.find((c) => c.id_categoria === Number(idCategoria))
+      siguiente.sku = generarSku(nombre, categoria?.nombre, productos)
+    }
+    return siguiente
+  })
+}
 
   async function guardarProducto(evento) {
     evento.preventDefault()
@@ -313,12 +323,21 @@ export default function ProductosAdmin() {
         <form className="crud__form" onSubmit={guardarProducto}>
           <div className="crud__fila">
             <div className="crud__campo">
-              <label className="crud__campo-label" htmlFor="producto-sku">SKU</label>
+              <label className="crud__campo-label" htmlFor="producto-sku">
+                SKU
+                <span
+                  className="crud__auto"
+                  title="Se autocompleta al escribir el nombre y elegir la categoría"
+                >
+                  auto
+                </span>
+              </label>
               <input
                 id="producto-sku"
                 className="crud__campo-input"
                 value={form.sku}
                 onChange={(e) => cambiarCampo('sku', e.target.value)}
+                title="Se autocompleta al escribir el nombre y elegir la categoría"
                 required
               />
             </div>

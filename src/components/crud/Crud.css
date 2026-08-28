@@ -348,6 +348,20 @@
   color: var(--dash-texto);
 }
 
+.crud__auto {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 7px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--dash-azul);
+  background: var(--dash-azul-bg);
+  border-radius: 999px;
+  vertical-align: middle;
+}
+
 .crud__campo-input,
 .crud__campo-select,
 .crud__campo-textarea {
