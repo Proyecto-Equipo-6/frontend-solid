@@ -4,8 +4,9 @@ import Alerta from '@/components/ui/Alerta/Alerta'
 import TablaCrud from '@/components/crud/TablaCrud'
 import ModalCrud from '@/components/crud/ModalCrud'
 import { IconoOjo, IconoPaquete, IconoTicket } from '@/components/ui/Iconos/Iconos'
-import { getMisPedidos, cancelarPedidoCliente, getTicketPedido } from '@/services/pedidos'
+import { getMisPedidos, cancelarPedidoCliente, getTicketPedido, getDetallePedidoCliente } from '@/services/pedidos'
 import { formatoPrecio } from '@/utils/formato'
+import TicketPedido from './TicketPedido'
 import './MisPedidos.css'
 
 const ETIQUETAS_ESTADO = {
@@ -69,6 +70,8 @@ export default function MisPedidos() {
   const [motivo, setMotivo] = useState('')
   const [cancelando, setCancelando] = useState(false)
   const [detalle, setDetalle] = useState(null)
+  const [detalleProductos, setDetalleProductos] = useState([])
+  const [cargandoDetalle, setCargandoDetalle] = useState(false)
   const [descargandoTicket, setDescargandoTicket] = useState(false)
 
   function cargar(estado = filtro) {
@@ -129,6 +132,16 @@ export default function MisPedidos() {
     }
   }
 
+  function abrirDetalle(pedido) {
+    setDetalle(pedido)
+    setDetalleProductos([])
+    setCargandoDetalle(true)
+    getDetallePedidoCliente(pedido.id_pedido)
+      .then((resultado) => setDetalleProductos(resultado.productos || []))
+      .catch(() => setDetalleProductos([]))
+      .finally(() => setCargandoDetalle(false))
+  }
+
   const columnas = [
     {
       clave: 'id_pedido',
@@ -164,7 +177,7 @@ export default function MisPedidos() {
         className="crud__icono mis-pedidos__ojo"
         aria-label={`Ver detalle del pedido ${pedido.id_pedido}`}
         title="Ver detalle"
-        onClick={() => setDetalle(pedido)}
+        onClick={() => abrirDetalle(pedido)}
       >
         <IconoOjo tamano={18} />
       </button>
@@ -293,15 +306,59 @@ export default function MisPedidos() {
               <strong>{formatoPrecio(detalle.total)}</strong>
             </div>
           </div>
-          <button
-            type="button"
-            className="mis-pedidos__ticket"
-            onClick={descargarTicket}
-            disabled={descargandoTicket}
-          >
-            <IconoTicket tamano={18} />
-            {descargandoTicket ? 'Generando…' : 'Descargar ticket'}
-          </button>
+
+          <div className="mis-pedidos__productos-seccion">
+            <h4 className="mis-pedidos__productos-titulo">Productos</h4>
+            {cargandoDetalle ? (
+              <p className="mis-pedidos__productos-mensaje">Cargando productos…</p>
+            ) : detalleProductos.length === 0 ? (
+              <p className="mis-pedidos__productos-mensaje">Sin productos.</p>
+            ) : (
+              <ul className="mis-pedidos__productos">
+                {detalleProductos.map((producto) => (
+                  <li className="mis-pedidos__producto" key={producto.id_producto}>
+                    {producto.imagen_url ? (
+                      <img
+                        className="mis-pedidos__producto-imagen"
+                        src={producto.imagen_url}
+                        alt={producto.nombre}
+                      />
+                    ) : (
+                      <span className="mis-pedidos__producto-imagen mis-pedidos__producto-imagen--vacio" aria-hidden="true" />
+                    )}
+                    <div className="mis-pedidos__producto-info">
+                      <span className="mis-pedidos__producto-nombre">{producto.nombre}</span>
+                      <span className="mis-pedidos__producto-detalle">
+                        {producto.cantidad} × {formatoPrecio(Number(producto.precio_unitario))}
+                      </span>
+                    </div>
+                    <strong className="mis-pedidos__producto-subtotal">
+                      {formatoPrecio(Number(producto.subtotal))}
+                    </strong>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          <div className="mis-pedidos__ticket-seccion">
+            <TicketPedido
+              idPedido={detalle.id_pedido}
+              fecha={detalle.fecha}
+              estado={ETIQUETAS_ESTADO[detalle.estado] || detalle.estado}
+              total={detalle.total}
+              productos={detalleProductos}
+            />
+            <button
+              type="button"
+              className="mis-pedidos__ticket"
+              onClick={descargarTicket}
+              disabled={descargandoTicket}
+            >
+              <IconoTicket tamano={18} />
+              {descargandoTicket ? 'Generando…' : 'Descargar ticket'}
+            </button>
+          </div>
           </>
         )}
       </ModalCrud>

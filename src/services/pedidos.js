@@ -22,3 +22,7 @@ export function crearPedido(datos) {
 export function getTicketPedido(idPedido) {
   return request(`/v1/pedidos/${idPedido}/ticket`)
 }
+
+export function getDetallePedidoCliente(idPedido) {
+  return request(`/v1/pedidos/${idPedido}`)
+}
