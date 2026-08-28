@@ -102,7 +102,9 @@ export default function BarraLateral({ sesion, activo, onNavegar, onVerPerfil, o
             <span className="barra-lat__cerrar-icono" aria-hidden="true">
               <IconoCerrarSesion tamano={16} />
             </span>
-            {cerrando ? 'Cerrando sesión…' : 'Cerrar sesión'}
+            <span className="barra-lat__cerrar-texto">
+              {cerrando ? 'Cerrando sesión…' : 'Cerrar sesión'}
+            </span>
           </button>
 
           <Perfil sesion={sesion} onVerPerfil={onVerPerfil} onCerrar={onCerrar} />

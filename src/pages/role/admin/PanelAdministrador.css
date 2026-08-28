@@ -167,18 +167,14 @@
 }
 
 @media (max-width: 900px) {
-  .dashboard__boton-menu {
-    display: inline-flex;
-  }
-
   .dashboard__principal {
-    padding-top: 64px;
+    padding: 24px;
   }
 }
 
 @media (max-width: 640px) {
   .dashboard__principal {
-    padding: 64px 16px 16px;
+    padding: 20px 16px;
   }
 
   .dashboard__metricas {

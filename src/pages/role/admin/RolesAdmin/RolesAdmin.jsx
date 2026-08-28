@@ -107,7 +107,7 @@ export default function RolesAdmin() {
         title="Editar"
         onClick={() => abrirEdicion(rol)}
       >
-        <IconoEditar tamano={18} />
+        <IconoEditar tamano={26} />
       </button>
       <button
         type="button"
@@ -116,7 +116,7 @@ export default function RolesAdmin() {
         title="Eliminar"
         onClick={() => setAEliminar(rol)}
       >
-        <IconoEliminar tamano={18} />
+        <IconoEliminar tamano={26} />
       </button>
     </>
   )

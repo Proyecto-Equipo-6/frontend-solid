@@ -184,3 +184,26 @@
     padding-top: 120px;
   }
 }
+
+@media (max-width: 480px) {
+  .detalle {
+    padding: 104px 16px 56px;
+  }
+
+  .detalle__imagen {
+    height: 260px;
+  }
+
+  .detalle__titulo {
+    font-size: 26px;
+  }
+
+  .detalle__ficha-fila {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .detalle__ficha-valor {
+    text-align: left;
+  }
+}

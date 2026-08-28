@@ -186,7 +186,7 @@ export default function RepartidoresAdmin() {
             title="Editar"
             onClick={() => abrirEdicion(repartidor)}
           >
-            <IconoEditar tamano={18} />
+            <IconoEditar tamano={26} />
           </button>
           <button
             type="button"
@@ -195,7 +195,7 @@ export default function RepartidoresAdmin() {
             title="Eliminar"
             onClick={() => setAEliminar(repartidor)}
           >
-            <IconoEliminar tamano={18} />
+            <IconoEliminar tamano={26} />
           </button>
         </>
       )}

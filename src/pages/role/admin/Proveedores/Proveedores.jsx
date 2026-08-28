@@ -159,7 +159,7 @@ export default function Proveedores() {
             title="Editar"
             onClick={() => abrirEdicion(proveedor)}
           >
-            <IconoEditar tamano={18} />
+            <IconoEditar tamano={26} />
           </button>
           <button
             type="button"
@@ -168,7 +168,7 @@ export default function Proveedores() {
             title="Eliminar"
             onClick={() => setAEliminar(proveedor)}
           >
-            <IconoEliminar tamano={18} />
+            <IconoEliminar tamano={26} />
           </button>
         </>
       )}

@@ -178,7 +178,7 @@
 }
 
 .mis-pedidos .crud__table tbody tr:hover td {
-  background: var(--accent-bg);
+  background: transparent;
 }
 
 .mis-pedidos__badge {
@@ -545,4 +545,29 @@
 .mis-pedidos__ticket:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* --- Modo tarjeta en móvil (base en Crud.css; aquí solo lo específico de pedidos) --- */
+
+@media (max-width: 640px) {
+  .mis-pedidos .crud__table tr.mis-pedidos__fila {
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    background: var(--bg-suave);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    border-left: 4px solid var(--linea-estado, var(--border));
+  }
+
+  .mis-pedidos .crud__table tr.mis-pedidos__fila:hover {
+    background: transparent;
+  }
+
+  .mis-pedidos .crud__table td:first-child {
+    box-shadow: none;
+  }
+
+  .mis-pedidos .crud__table tbody tr:hover td {
+    background: transparent;
+  }
 }

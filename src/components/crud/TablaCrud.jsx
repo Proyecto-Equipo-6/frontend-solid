@@ -18,7 +18,12 @@ export default function TablaCrud({
             {columnas.map((columna) => (
               <th
                 key={columna.clave}
-                className={columna.alineacion ? `crud__celda--${columna.alineacion}` : undefined}
+                className={[
+                  columna.alineacion ? `crud__celda--${columna.alineacion}` : undefined,
+                  columna.ocultaMovil ? 'crud__celda--oculta-movil' : undefined,
+                ]
+                  .filter(Boolean)
+                  .join(' ') || undefined}
               >
                 {columna.etiqueta}
               </th>
@@ -33,11 +38,24 @@ export default function TablaCrud({
               className={claseFila ? claseFila(fila, indice) : undefined}
             >
               {columnas.map((columna) => (
-                <td key={columna.clave} className={columna.alineacion ? `crud__celda--${columna.alineacion}` : undefined}>
+                <td
+                  key={columna.clave}
+                  data-etiqueta={columna.etiqueta}
+                  className={[
+                    columna.alineacion ? `crud__celda--${columna.alineacion}` : undefined,
+                    columna.ocultaMovil ? 'crud__celda--oculta-movil' : undefined,
+                  ]
+                    .filter(Boolean)
+                    .join(' ') || undefined}
+                >
                   {columna.render ? columna.render(fila) : fila[columna.clave]}
                 </td>
               ))}
-              {acciones && <td className="crud__acciones">{acciones(fila)}</td>}
+              {acciones && (
+                <td className="crud__acciones" data-etiqueta="Acciones">
+                  {acciones(fila)}
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

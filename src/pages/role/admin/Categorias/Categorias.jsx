@@ -143,7 +143,7 @@ export default function Categorias() {
             title="Editar"
             onClick={() => abrirEdicion(categoria)}
           >
-            <IconoEditar tamano={18} />
+            <IconoEditar tamano={26} />
           </button>
           <button
             type="button"
@@ -152,7 +152,7 @@ export default function Categorias() {
             title="Eliminar"
             onClick={() => setAEliminar(categoria)}
           >
-            <IconoEliminar tamano={18} />
+            <IconoEliminar tamano={26} />
           </button>
         </>
       )}

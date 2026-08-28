@@ -278,3 +278,14 @@
     padding: 104px 16px 48px;
   }
 }
+
+@media (max-width: 380px) {
+  .checkout__acciones {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .checkout__accion--completo {
+    width: 100%;
+  }
+}

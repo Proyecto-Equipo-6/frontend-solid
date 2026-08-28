@@ -407,6 +407,15 @@ export function IconoReactivar({ tamano }) {
   )
 }
 
+export function IconoUsuario({ tamano = 18 }) {
+  return (
+    <IconoBase tamano={tamano}>
+      <circle cx="12" cy="8" r="3.6" />
+      <path d="M5 20a7 7 0 0 1 14 0" />
+    </IconoBase>
+  )
+}
+
 export function IconoSol({ tamano = 18 }) {
   return (
     <IconoBase tamano={tamano}>

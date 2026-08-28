@@ -33,7 +33,7 @@
 }
 
 .crud__table tbody tr:hover td {
-  background: rgba(255, 255, 255, 0.02);
+  background: transparent;
 }
 
 .crud__celda--centro {
@@ -231,8 +231,8 @@
 }
 
 .crud__icono {
-  width: 32px;
-  height: 32px;
+  width: 38px;
+  height: 38px;
   padding: 0;
   display: inline-flex;
   align-items: center;
@@ -513,6 +513,7 @@
 
 .crud__paginacion {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
@@ -536,7 +537,7 @@
 }
 
 :root[data-tema='claro'] .crud__table tbody tr:hover td {
-  background: rgba(29, 78, 216, 0.05);
+  background: transparent;
 }
 
 :root[data-tema='claro'] .crud__badge--pendiente {
@@ -606,4 +607,112 @@
 
 .crud__icono--reactivar:not(:disabled):hover {
   color: var(--ok);
+}
+
+@media (max-width: 640px) {
+  .crud__fila,
+  .crud__fila--tres {
+    grid-template-columns: 1fr;
+  }
+
+  .crud__filtro {
+    flex-wrap: wrap;
+  }
+
+  .crud__paginacion {
+    justify-content: center;
+  }
+
+  .crud__modal-acciones,
+  .crud__form-acciones {
+    flex-direction: column;
+  }
+
+  .crud__modal-acciones > *,
+  .crud__form-acciones > * {
+    width: 100%;
+  }
+}
+
+/* --- Modo tarjeta en móvil (todas las tablas CRUD) --- */
+
+@media (max-width: 640px) {
+  .crud__tabla {
+    overflow: visible;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+  }
+
+  .crud__table,
+  .crud__table thead,
+  .crud__table tbody,
+  .crud__table tr,
+  .crud__table th,
+  .crud__table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .crud__table thead {
+    display: none;
+  }
+
+  .crud__celda--oculta-movil {
+    display: none !important;
+  }
+
+  .crud__table tbody tr {
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    background: var(--dash-tarjeta-alta);
+    border: 1px solid var(--dash-border);
+    border-radius: 12px;
+  }
+
+  .crud__table td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 0;
+    text-align: right;
+    border-bottom: 1px solid var(--dash-border);
+    overflow-wrap: anywhere;
+  }
+
+  .crud__table td:last-child {
+    border-bottom: none;
+  }
+
+  .crud__table tbody tr:last-child td {
+    border-bottom: 1px solid var(--dash-border);
+  }
+
+  .crud__table td > *,
+  .crud__celda-nombre,
+  .crud__celda-nombre > * {
+    min-width: 0;
+  }
+
+  .crud__table td::before {
+    content: attr(data-etiqueta);
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--dash-texto-tenue);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .crud__acciones {
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    padding-top: 10px;
+  }
+
+  .crud__acciones::before {
+    display: none;
+  }
 }

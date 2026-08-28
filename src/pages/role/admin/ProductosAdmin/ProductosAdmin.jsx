@@ -240,7 +240,7 @@ export default function ProductosAdmin() {
             title="Editar"
             onClick={() => abrirEdicion(producto)}
           >
-            <IconoEditar tamano={18} />
+            <IconoEditar tamano={26} />
           </button>
           <button
             type="button"
@@ -249,7 +249,7 @@ export default function ProductosAdmin() {
             title="Eliminar"
             onClick={() => setAEliminar(producto)}
           >
-            <IconoEliminar tamano={18} />
+            <IconoEliminar tamano={26} />
           </button>
         </>
       )}

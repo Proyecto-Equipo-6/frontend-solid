@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Marca from '@/components/ui/Marca/Marca'
 import BotonTema from '@/components/ui/BotonTema/BotonTema'
-import { IconoCarrito } from '@/components/ui/Iconos/Iconos'
+import { IconoCarrito, IconoCategorias, IconoPedido, IconoUsuario } from '@/components/ui/Iconos/Iconos'
 import { obtenerSesion } from '@/services/sesion'
 import { NAVEGACION_PRINCIPAL } from '@/config/aplicacion'
 import './BarraNavegacion.css'
@@ -25,6 +25,7 @@ export default function BarraNavegacion() {
   const claseCarrito = `barra__boton barra__boton--borde barra__boton--carrito${
     carritoMovido ? ' barra__boton--carrito-activo' : ''
   }`
+  const claseCarritoIcono = `barra__icono${carritoMovido ? ' barra__boton--carrito-activo' : ''}`
 
   return (
     <header className="barra">
@@ -77,77 +78,68 @@ export default function BarraNavegacion() {
           )}
         </div>
 
-        <button
-          className="barra__menu"
-          type="button"
-          aria-label={menuAbierto ? 'Cerrar menú' : 'Abrir menú'}
-          onClick={() => setMenuAbierto((v) => !v)}
-        >
-          {menuAbierto ? '✕' : '☰'}
-        </button>
-      </div>
-
-      {menuAbierto && (
-        <div className="barra__panel">
-          <div className="barra__panel-tema">
-            <BotonTema tamano={16} />
-          </div>
-          {NAVEGACION_PRINCIPAL.map((enlace) => (
-            <Link
-              key={enlace.nombre}
-              to={enlace.destino}
-              className="barra__enlace--panel"
-              onClick={() => setMenuAbierto(false)}
-            >
-              {enlace.nombre}
-            </Link>
-          ))}
+        <div className="barra__iconos">
+          <Link
+            to="/#catalogo"
+            className="barra__icono"
+            aria-label="Catálogo"
+            title="Catálogo"
+          >
+            <IconoCategorias tamano={18} />
+          </Link>
           {esCliente && (
             <Link
               to="/mis-pedidos"
-              className="barra__enlace--panel"
-              onClick={() => setMenuAbierto(false)}
+              className="barra__icono"
+              aria-label="Mis pedidos"
+              title="Mis pedidos"
             >
-              Mis pedidos
+              <IconoPedido tamano={18} />
             </Link>
           )}
-          {sesion ? (
+          <BotonTema tamano={16} />
+          {sesion && (
             <>
-              <Link
-                to="/carrito"
-                className={claseCarrito}
-                onClick={() => setMenuAbierto(false)}
-              >
+              <Link to="/carrito" className={claseCarritoIcono} aria-label="Carrito" title="Carrito">
                 <span className="barra__carrito-icono" aria-hidden="true">
                   <IconoCarrito tamano={18} />
-                </span>{' '}Carrito
+                </span>
               </Link>
-              <Link
-                to="/perfil"
-                className="barra__boton barra__boton--relleno"
-                onClick={() => setMenuAbierto(false)}
-              >
-                Mi perfil
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link
-                to="/login"
-                className="barra__boton barra__boton--borde"
-                onClick={() => setMenuAbierto(false)}
-              >
-                Iniciar sesión
-              </Link>
-              <Link
-                to="/register"
-                className="barra__boton barra__boton--relleno"
-                onClick={() => setMenuAbierto(false)}
-              >
-                Registrarse
+              <Link to="/perfil" className="barra__icono" aria-label="Mi perfil" title="Mi perfil">
+                <IconoUsuario tamano={18} />
               </Link>
             </>
           )}
+        </div>
+
+        {!sesion && (
+          <button
+            className="barra__menu"
+            type="button"
+            aria-label={menuAbierto ? 'Cerrar menú' : 'Abrir menú'}
+            onClick={() => setMenuAbierto((v) => !v)}
+          >
+            {menuAbierto ? '✕' : '☰'}
+          </button>
+        )}
+      </div>
+
+      {!sesion && menuAbierto && (
+        <div className="barra__panel">
+          <Link
+            to="/login"
+            className="barra__boton barra__boton--borde"
+            onClick={() => setMenuAbierto(false)}
+          >
+            Iniciar sesión
+          </Link>
+          <Link
+            to="/register"
+            className="barra__boton barra__boton--relleno"
+            onClick={() => setMenuAbierto(false)}
+          >
+            Registrarse
+          </Link>
         </div>
       )}
     </header>

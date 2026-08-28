@@ -155,7 +155,7 @@ export default function HistorialRepartidor() {
                       title="Ver detalles"
                       onClick={() => setDetalleId(pedido.id_pedido)}
                     >
-                      <IconoOjo tamano={18} />
+                      <IconoOjo tamano={26} />
                     </button>
                   </td>
                 </tr>

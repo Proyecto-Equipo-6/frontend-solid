@@ -221,6 +221,24 @@
   }
 }
 
+@media (max-width: 480px) {
+  .hero {
+    padding-top: 104px;
+  }
+
+  .hero__titulo {
+    font-size: 30px;
+  }
+
+  .hero__panel-imagen {
+    height: 240px;
+  }
+
+  .hero__registro {
+    padding: 22px 18px;
+  }
+}
+
 :root[data-tema='claro'] .hero__titulo {
   background: var(--gradiente);
   -webkit-background-clip: text;

@@ -6,6 +6,7 @@
 
 .gestion__cabecera {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
@@ -53,4 +54,18 @@
   font-size: 13px;
   color: var(--dash-texto-suave);
   max-width: 440px;
+}
+
+@media (max-width: 640px) {
+  .gestion__cabecera {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .gestion__cabecera .crud__filtro,
+  .gestion__cabecera .crud__acciones-cabecera,
+  .gestion__cabecera .crud__boton--nuevo {
+    width: 100%;
+    justify-content: center;
+  }
 }

@@ -200,7 +200,7 @@ export default function Usuarios() {
             title="Editar"
             onClick={() => abrirEdicion(usuario)}
           >
-            <IconoEditar tamano={18} />
+            <IconoEditar tamano={26} />
           </button>
           <button
             type="button"
@@ -217,7 +217,7 @@ export default function Usuarios() {
               setAEliminar(usuario)
             }}
           >
-            <IconoEliminar tamano={18} />
+            <IconoEliminar tamano={26} />
           </button>
         </>
       )}

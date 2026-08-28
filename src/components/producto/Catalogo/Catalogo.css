@@ -70,9 +70,10 @@
 
 .catalogo__paginacion {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 12px;
   margin-top: 32px;
 }
 
@@ -134,6 +135,16 @@
 @media (max-width: 480px) {
   .catalogo__grid {
     grid-template-columns: 1fr;
+  }
+
+  .catalogo__paginacion {
+    gap: 8px;
+  }
+
+  .catalogo__pagina,
+  .catalogo__pagina-boton {
+    min-width: 32px;
+    padding: 8px 10px;
   }
 }
 

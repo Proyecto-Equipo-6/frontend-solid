@@ -157,7 +157,7 @@ export default function MisPedidos() {
           timeStyle: 'short',
         }),
     },
-    { clave: 'direccion', etiqueta: 'Dirección' },
+    { clave: 'direccion', etiqueta: 'Dirección', ocultaMovil: true },
     {
       clave: 'total',
       etiqueta: 'Total',
@@ -179,7 +179,7 @@ export default function MisPedidos() {
         title="Ver detalle"
         onClick={() => abrirDetalle(pedido)}
       >
-        <IconoOjo tamano={18} />
+        <IconoOjo tamano={26} />
       </button>
       {pedido.estado === 'PENDIENTE' && (
         <button
