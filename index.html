@@ -9,6 +9,14 @@
       content="Nexbit — Tu tienda en línea con productos verificados, precios justos y entrega segura."
     />
     <title>Nexbit — Compra fácil y seguro</title>
+    <script>
+      try {
+        document.documentElement.dataset.tema =
+          localStorage.getItem('nexbit_tema') === 'claro' ? 'claro' : 'oscuro'
+      } catch (e) {
+        document.documentElement.dataset.tema = 'oscuro'
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

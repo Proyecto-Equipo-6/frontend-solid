@@ -18,6 +18,7 @@ import {
   IconoReactivar,
   IconoAgregar,
 } from '@/components/ui/Iconos/Iconos'
+import { obtenerSesion } from '@/services/sesion'
 
 const TIPOS_DOCUMENTO = ['CC', 'CE', 'Pasaporte', 'Otro']
 
@@ -46,6 +47,9 @@ export default function Usuarios() {
 
   const [aEliminar, setAEliminar] = useState(null)
   const [eliminando, setEliminando] = useState(false)
+  const [errorEliminar, setErrorEliminar] = useState('')
+
+  const idAdminActual = Number(obtenerSesion()?.id_usuario) || null
 
   const [filtro, setFiltro] = useState('activos')
 
@@ -68,12 +72,16 @@ export default function Usuarios() {
   }
 
   function abrirNuevo() {
+    setAlerta('')
+    setErrorEliminar('')
     setForm(FORM_VACIO)
     setEditandoId(null)
     setModal(true)
   }
 
   function abrirEdicion(usuario) {
+    setAlerta('')
+    setErrorEliminar('')
     setForm({
       id_rol: String(usuario.id_rol),
       nombre_apellido: usuario.nombre_apellido || '',
@@ -128,10 +136,12 @@ export default function Usuarios() {
     setAlerta('')
     try {
       await eliminarUsuarioAdmin(aEliminar.id_usuario)
+      setErrorEliminar('')
       setAlerta('Usuario eliminado correctamente.')
       setAEliminar(null)
       cargarTodo()
     } catch (e) {
+      setErrorEliminar(e.message)
       setAlerta(e.message)
     } finally {
       setEliminando(false)
@@ -190,16 +200,24 @@ export default function Usuarios() {
             title="Editar"
             onClick={() => abrirEdicion(usuario)}
           >
-            <IconoEditar tamano={18} />
+            <IconoEditar tamano={26} />
           </button>
           <button
             type="button"
             className="crud__icono crud__icono--eliminar"
             aria-label={`Eliminar ${usuario.nombre_apellido}`}
-            title="Eliminar"
-            onClick={() => setAEliminar(usuario)}
+            title={Number(usuario.id_usuario) === idAdminActual ? 'No puedes eliminar tu propia cuenta' : 'Eliminar'}
+            onClick={() => {
+              if (Number(usuario.id_usuario) === idAdminActual) {
+                setAlerta('')
+                setErrorEliminar('No puedes desactivar tu propia cuenta de administrador')
+                return
+              }
+              setErrorEliminar('')
+              setAEliminar(usuario)
+            }}
           >
-            <IconoEliminar tamano={18} />
+            <IconoEliminar tamano={26} />
           </button>
         </>
       )}
@@ -240,6 +258,7 @@ export default function Usuarios() {
       </div>
 
       {alerta && <p className="crud__alerta">{alerta}</p>}
+      {errorEliminar && <p className="crud__alerta crud__alerta--error">{errorEliminar}</p>}
 
       <TablaCrud
         columnas={columnas}
@@ -365,8 +384,10 @@ export default function Usuarios() {
             </div>
           )}
 
+          {alerta && <p className="crud__alerta crud__alerta--error">{alerta}</p>}
+
           <div className="crud__form-acciones">
-            <button type="button" className="crud__boton" onClick={() => setModal(false)}>
+            <button type="button" className="crud__boton crud__boton--cancelar" onClick={() => setModal(false)}>
               Cancelar
             </button>
             <button type="submit" className="crud__boton" disabled={guardando}>
@@ -381,8 +402,13 @@ export default function Usuarios() {
           titulo="Eliminar usuario"
           mensaje={`¿Eliminar al usuario "${aEliminar.nombre_apellido}"?`}
           onConfirmar={confirmarEliminar}
-          onCancelar={() => setAEliminar(null)}
+          onCancelar={() => {
+            setAEliminar(null)
+            setErrorEliminar('')
+          }}
           cargando={eliminando}
+          peligro
+          mensajeError={errorEliminar}
         />
       )}
     </VistaGestion>

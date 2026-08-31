@@ -24,6 +24,10 @@
   color: var(--text);
 }
 
+.pie__app {
+  margin-top: 18px;
+}
+
 .pie__columna {
   display: flex;
   flex-direction: column;

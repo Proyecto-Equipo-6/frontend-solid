@@ -178,7 +178,7 @@
 }
 
 .mis-pedidos .crud__table tbody tr:hover td {
-  background: var(--accent-bg);
+  background: transparent;
 }
 
 .mis-pedidos__badge {
@@ -216,10 +216,21 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
+}
+
+.mis-pedidos__velo-fondo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
   background: rgba(0, 0, 0, 0.55);
+  cursor: pointer;
 }
 
 .mis-pedidos__modal {
+  position: relative;
   width: 100%;
   max-width: 440px;
   padding: 24px;
@@ -279,6 +290,16 @@
   border: 1px solid var(--border);
   border-radius: var(--radio);
   cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.mis-pedidos__modal-boton:not(:disabled):hover {
+  color: #fff;
+  background: var(--mal);
+  border-color: var(--mal);
 }
 
 .mis-pedidos__modal-boton--peligro {
@@ -287,9 +308,217 @@
   border-color: var(--error-border);
 }
 
+.mis-pedidos__modal-boton--peligro:not(:disabled):hover {
+  color: #fff;
+  background: var(--mal);
+  border-color: var(--mal);
+}
+
+:root[data-tema='oscuro'] .mis-pedidos__modal-boton:not(:disabled):hover,
+:root:not([data-tema]) .mis-pedidos__modal-boton:not(:disabled):hover,
+:root[data-tema='oscuro'] .mis-pedidos__modal-boton--peligro:not(:disabled):hover,
+:root:not([data-tema]) .mis-pedidos__modal-boton--peligro:not(:disabled):hover {
+  color: var(--mal);
+  border-color: var(--mal);
+}
+
 .mis-pedidos__modal-boton:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.mis-pedidos__productos-seccion {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.mis-pedidos__productos-titulo {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dash-texto);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.mis-pedidos__productos-mensaje {
+  margin: 0;
+  font-size: 13px;
+  color: var(--dash-texto-suave);
+}
+
+.mis-pedidos__productos {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mis-pedidos__producto {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  background: var(--dash-tarjeta-alta);
+  border: 1px solid var(--dash-border);
+  border-radius: 10px;
+}
+
+.mis-pedidos__producto-imagen {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 8px;
+  background: var(--dash-tarjeta);
+}
+
+.mis-pedidos__producto-imagen--vacio {
+  border: 1px dashed var(--dash-border);
+}
+
+.mis-pedidos__producto-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.mis-pedidos__producto-nombre {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dash-texto);
+}
+
+.mis-pedidos__producto-detalle {
+  font-size: 12px;
+  color: var(--dash-texto-suave);
+}
+
+.mis-pedidos__producto-subtotal {
+  font-size: 13px;
+  color: var(--dash-texto);
+  white-space: nowrap;
+}
+
+.mis-pedidos__ticket-seccion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px dashed var(--dash-border);
+}
+
+/* --- Recibo de caja (estilo supermercado) --- */
+
+.mis-recibo {
+  --h: calc(var(--gap) / 2);
+  --gap: 14px;
+
+  width: 100%;
+  max-width: 320px;
+  padding: calc(14px + var(--h)) 14px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #000;
+  background: #ffffff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+
+  -webkit-mask:
+    conic-gradient(from 135deg at 50% 0%, #000 90deg, #0000 0) 0 0 / var(--gap) var(--h) repeat-x,
+    conic-gradient(from -45deg at 50% 100%, #000 90deg, #0000 0) 0 100% / var(--gap) var(--h) repeat-x,
+    linear-gradient(#000 0 0) 0 var(--h) / 100% calc(100% - 2 * var(--h)) no-repeat;
+  mask:
+    conic-gradient(from 135deg at 50% 0%, #000 90deg, #0000 0) 0 0 / var(--gap) var(--h) repeat-x,
+    conic-gradient(from -45deg at 50% 100%, #000 90deg, #0000 0) 0 100% / var(--gap) var(--h) repeat-x,
+    linear-gradient(#000 0 0) 0 var(--h) / 100% calc(100% - 2 * var(--h)) no-repeat;
+}
+
+.mis-recibo__comercio {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.mis-recibo__linea {
+  text-align: center;
+  font-size: 11px;
+}
+
+.mis-recibo__sep {
+  text-align: center;
+  color: #888;
+  margin: 8px 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.mis-recibo__fila {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 2px 0;
+}
+
+.mis-recibo__label {
+  color: #333;
+}
+
+.mis-recibo__valor {
+  font-weight: 700;
+  text-align: right;
+}
+
+.mis-recibo__total {
+  font-size: 16px;
+  font-weight: 700;
+  border-top: 1px dashed #000;
+  padding-top: 8px;
+  margin-top: 8px;
+}
+
+.mis-recibo__item {
+  margin: 6px 0;
+}
+
+.mis-recibo__item-fila {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.mis-recibo__item-nombre {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mis-recibo__item-subtotal {
+  white-space: nowrap;
+}
+
+.mis-recibo__item-detalle {
+  padding-left: 14px;
+  font-size: 12px;
+  color: #333;
+}
+
+.mis-recibo__pie {
+  text-align: center;
+  margin-top: 2px;
+}
+
+.mis-recibo__pie:first-of-type {
+  margin-top: 10px;
 }
 
 .mis-pedidos__ticket {
@@ -297,7 +526,6 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  margin-top: 18px;
   padding: 12px 20px;
   font-family: inherit;
   font-size: 14px;
@@ -317,4 +545,29 @@
 .mis-pedidos__ticket:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* --- Modo tarjeta en móvil (base en Crud.css; aquí solo lo específico de pedidos) --- */
+
+@media (max-width: 640px) {
+  .mis-pedidos .crud__table tr.mis-pedidos__fila {
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    background: var(--bg-suave);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    border-left: 4px solid var(--linea-estado, var(--border));
+  }
+
+  .mis-pedidos .crud__table tr.mis-pedidos__fila:hover {
+    background: transparent;
+  }
+
+  .mis-pedidos .crud__table td:first-child {
+    box-shadow: none;
+  }
+
+  .mis-pedidos .crud__table tbody tr:hover td {
+    background: transparent;
+  }
 }

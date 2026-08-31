@@ -23,6 +23,26 @@
   color: var(--dash-texto);
 }
 
+:root[data-tema='claro'] .dashboard {
+  --dash-bg: #eef3fd;
+  --dash-fondo: #e3ecfa;
+  --dash-tarjeta: #ffffff;
+  --dash-tarjeta-alta: #eef4ff;
+  --dash-border: #d3e1f7;
+  --dash-texto: #1f2c4d;
+  --dash-texto-suave: #5a6b8c;
+  --dash-texto-tenue: #8794b0;
+  --dash-accent: #1d4ed8;
+  --dash-verde: #16a34a;
+  --dash-verde-bg: rgba(22, 163, 74, 0.12);
+  --dash-rojo: #dc2626;
+  --dash-rojo-bg: rgba(220, 38, 38, 0.1);
+  --dash-azul: #2563eb;
+  --dash-azul-bg: rgba(37, 99, 235, 0.1);
+  --dash-azul-oscuro: #1d4ed8;
+  --dash-cian: #0891b2;
+}
+
 .dashboard__contenido {
   flex: 1;
   min-width: 0;
@@ -147,18 +167,14 @@
 }
 
 @media (max-width: 900px) {
-  .dashboard__boton-menu {
-    display: inline-flex;
-  }
-
   .dashboard__principal {
-    padding-top: 64px;
+    padding: 24px;
   }
 }
 
 @media (max-width: 640px) {
   .dashboard__principal {
-    padding: 64px 16px 16px;
+    padding: 20px 16px;
   }
 
   .dashboard__metricas {

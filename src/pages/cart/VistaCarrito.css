@@ -261,6 +261,14 @@
   color: var(--text);
 }
 
+.carrito__resumen-descuento {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+  font-size: 14px;
+  color: var(--text-suave);
+}
+
 .carrito__envio {
   display: flex;
   flex-direction: column;
@@ -440,12 +448,39 @@
 
   .carrito__tabla-bloque {
     padding: 8px 14px 6px;
-    overflow-x: auto;
   }
 
-  .carrito__tabla-cabecera,
+  .carrito__tabla-cabecera {
+    display: none;
+  }
+
   .carrito__item {
-    grid-template-columns: minmax(260px, 1fr) 128px 96px 104px;
-    min-width: 640px;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      'producto producto producto'
+      'cantidad precio total';
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .carrito__producto {
+    grid-area: producto;
+  }
+
+  .carrito__cantidad {
+    grid-area: cantidad;
+    justify-self: center;
+  }
+
+  .carrito__precio {
+    grid-area: precio;
+    justify-self: center;
+    text-align: center;
+  }
+
+  .carrito__total-linea {
+    grid-area: total;
+    justify-self: end;
+    text-align: right;
   }
 }

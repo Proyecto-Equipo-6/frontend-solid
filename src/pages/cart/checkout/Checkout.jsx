@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { AnimatePresence, motion } from 'framer-motion'
 import Alerta from '@/components/ui/Alerta/Alerta'
 import PasosCompra from '@/components/ui/PasosCompra/PasosCompra'
 import ConfirmacionEnvio from './ConfirmacionEnvio/ConfirmacionEnvio'
@@ -147,33 +148,61 @@ export default function Checkout() {
             </div>
           ) : (
             <>
-              {paso === 0 && <ConfirmacionEnvio ref={direccionRef} />}
-              {paso === 1 && <FormularioPago ref={pagoRef} />}
-              {paso === 2 && (
-                <Revision
-                  items={items}
-                  subtotal={subtotal}
-                  envio={opcionEnvio}
-                  total={total}
-                  datosEnvio={datosEnvio}
-                  datosPago={datosPago}
-                />
+              {paso < 3 && (
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={paso}
+                    className="checkout__paso"
+                    initial={{ opacity: 0, x: 24 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -24 }}
+                    transition={{ duration: 0.22, ease: 'easeOut' }}
+                  >
+                    {paso === 0 && <ConfirmacionEnvio ref={direccionRef} />}
+                    {paso === 1 && <FormularioPago ref={pagoRef} />}
+                    {paso === 2 && (
+                      <Revision
+                        items={items}
+                        subtotal={subtotal}
+                        envio={opcionEnvio}
+                        total={total}
+                        datosEnvio={datosEnvio}
+                        datosPago={datosPago}
+                      />
+                    )}
+                  </motion.div>
+                </AnimatePresence>
               )}
 
               {aviso && <Alerta variante="error">{aviso}</Alerta>}
 
               <div className="checkout__acciones">
-                {paso > 0 && (
-                  <button type="button" className="checkout__accion checkout__accion--secundario" onClick={retroceder}>
+                {paso === 0 ? (
+                  <button
+                    type="button"
+                    className="checkout__accion checkout__accion--secundario accion-roja"
+                    onClick={() => navigate('/carrito')}
+                  >
+                    Volver
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="checkout__accion checkout__accion--secundario accion-roja"
+                    onClick={retroceder}
+                  >
                     Volver
                   </button>
                 )}
                 <button
                   type="button"
-                  className="checkout__accion checkout__accion--completo"
+                  className={`checkout__accion checkout__accion--completo accion-verde${
+                    generando ? ' checkout__accion--generando' : ''
+                  }`}
                   disabled={generando}
                   onClick={paso === 2 ? realizarPedido : avanzar}
                 >
+                  {generando && <span className="checkout__spinner" aria-hidden="true" />}
                   {etiquetaAccion(paso, generando)}
                 </button>
               </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
 import usePanelRol from '@/hooks/usePanelRol'
 import BarraLateral from '@/pages/role/admin/BarraLateral/BarraLateral'
 import TarjetaMetrica from '@/pages/role/admin/TarjetaMetrica/TarjetaMetrica'
@@ -14,6 +15,7 @@ import PedidosAdmin from '@/pages/role/admin/PedidosAdmin/PedidosAdmin'
 import Proveedores from '@/pages/role/admin/Proveedores/Proveedores'
 import RepartidoresAdmin from '@/pages/role/admin/RepartidoresAdmin/RepartidoresAdmin'
 import RolesAdmin from '@/pages/role/admin/RolesAdmin/RolesAdmin'
+import TransicionVista from '@/components/ui/TransicionVista/TransicionVista'
 import { getResumenAnalitica } from '@/services/api'
 import './PanelAdministrador.css'
 
@@ -130,7 +132,11 @@ export default function PanelAdministrador() {
         </button>
 
         <main className="dashboard__principal">
-          {renderizarVista()}
+          <AnimatePresence mode="wait" initial={false}>
+            <TransicionVista key={vista} clave={vista}>
+              {renderizarVista()}
+            </TransicionVista>
+          </AnimatePresence>
         </main>
       </div>
     </div>

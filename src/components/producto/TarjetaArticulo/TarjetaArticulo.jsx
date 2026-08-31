@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { IconoFlecha } from '@/components/ui/Iconos/Iconos'
 import { formatoPrecio, estadoStock, textoStock } from '@/utils/formato'
 import './TarjetaArticulo.css'
 
@@ -8,7 +9,11 @@ export default function TarjetaArticulo({ articulo }) {
   const estado = estadoStock(stock)
 
   return (
-    <article className="tarjeta">
+    <Link
+      className="tarjeta"
+      to={`/articulo/${id}`}
+      aria-label={`Ver detalles de ${titulo}`}
+    >
       <div className="tarjeta__imagen">
         {imagen ? (
           <img src={imagen} alt={titulo} />
@@ -28,10 +33,13 @@ export default function TarjetaArticulo({ articulo }) {
           <span className="tarjeta__precio-stock">{textoStock(stock)}</span>
         </div>
         <span className="tarjeta__garantia">Garantía: {garantia}</span>
-        <Link className="tarjeta__boton" to={`/articulo/${id}`}>
-          Ver producto
-        </Link>
+        <span className="tarjeta__boton">
+          {'Ver producto '}
+          <span className="tarjeta__boton-flecha" aria-hidden="true">
+            <IconoFlecha tamano={14} />
+          </span>
+        </span>
       </div>
-    </article>
+    </Link>
   )
 }

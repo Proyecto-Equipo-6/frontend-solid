@@ -1,0 +1,72 @@
+.descargar {
+  --ancho: 240px;
+  --alto: 44px;
+  width: var(--ancho);
+  height: var(--alto);
+  background: var(--accent);
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  border-radius: 0.45em;
+  font-family: var(--sans);
+  color: var(--sobre-accent);
+  text-decoration: none;
+  transition: background-color 0.5s;
+}
+
+.descargar__capa,
+.descargar__texto,
+.descargar__icono {
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  color: var(--sobre-accent);
+}
+
+.descargar__texto {
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.descargar__texto,
+.descargar__icono {
+  transition: top 0.5s;
+}
+
+.descargar__icono {
+  top: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: top 0.5s;
+}
+
+.descargar__icono svg {
+  width: 24px;
+  height: 24px;
+}
+
+.descargar:hover {
+  background: #16a34a;
+}
+
+.descargar:hover .descargar__capa,
+.descargar:hover .descargar__texto,
+.descargar:hover .descargar__icono {
+  color: #fff;
+}
+
+.descargar:hover .descargar__texto {
+  top: -100%;
+}
+
+.descargar:hover .descargar__icono {
+  top: 0;
+}

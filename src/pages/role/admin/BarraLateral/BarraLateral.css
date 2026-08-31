@@ -1,5 +1,5 @@
 .barra-lat {
-  width: 240px;
+  width: 264px;
   flex-shrink: 0;
   height: 100vh;
   position: sticky;
@@ -23,6 +23,7 @@
   flex-direction: column;
   gap: 24px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .barra-lat__grupo {
@@ -48,7 +49,10 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
 }
 
 .barra-lat__enlace:hover {
@@ -66,6 +70,11 @@
   align-items: center;
   justify-content: center;
   color: var(--dash-texto-tenue);
+  transition: transform 0.15s ease;
+}
+
+.barra-lat__enlace:hover .barra-lat__enlace-icono {
+  transform: scale(1.12);
 }
 
 .barra-lat__enlace--activo .barra-lat__enlace-icono {
@@ -78,6 +87,20 @@
   gap: 8px;
   padding-top: 14px;
   border-top: 1px solid var(--dash-border);
+}
+
+.barra-lat__tema {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 12px;
+  border-radius: 8px;
+}
+
+.barra-lat__tema-texto {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--dash-texto-suave);
 }
 
 .barra-lat__cerrar {
@@ -189,26 +212,55 @@
 
 @media (max-width: 900px) {
   .barra-lat {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 40;
-    transform: translateX(-100%);
-    transition: transform 0.2s ease;
-    box-shadow: 16px 0 40px rgba(0, 0, 0, 0.4);
+    width: 72px;
+    padding: 16px 10px;
+    position: sticky;
+    transform: none;
+    box-shadow: none;
+    height: 100vh;
+    height: 100dvh;
   }
 
   .barra-lat--abierta {
-    transform: translateX(0);
+    transform: none;
   }
 
   .barra-lat__velo {
-    display: block;
-    position: fixed;
-    inset: 0;
-    z-index: 39;
-    background: rgba(0, 0, 0, 0.5);
-    border: none;
-    cursor: pointer;
+    display: none;
+  }
+
+  .barra-lat__nav {
+    gap: 16px;
+  }
+
+  .barra-lat__enlace {
+    justify-content: center;
+    gap: 0;
+    padding: 10px 0;
+  }
+
+  .barra-lat__enlace-texto,
+  .barra-lat__tema-texto,
+  .barra-lat__perfil-info,
+  .barra-lat__cerrar-texto {
+    display: none;
+  }
+
+  .barra-lat__tema {
+    justify-content: center;
+    gap: 0;
+    padding: 9px 0;
+  }
+
+  .barra-lat__cerrar {
+    justify-content: center;
+    gap: 0;
+    padding: 9px 0;
+  }
+
+  .barra-lat__perfil {
+    justify-content: center;
+    gap: 0;
+    padding: 10px 0;
   }
 }

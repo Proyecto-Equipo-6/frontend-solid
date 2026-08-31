@@ -1,4 +1,5 @@
 .auth {
+  position: relative;
   flex: 1;
   min-height: 100vh;
   min-height: 100svh;
@@ -6,11 +7,36 @@
   align-items: center;
   justify-content: center;
   padding: 24px 16px;
+}
+
+:root[data-tema='oscuro'] .auth,
+:root:not([data-tema]) .auth {
+  background: radial-gradient(
+    at 50% 50%,
+    rgba(255, 255, 255, 0.07),
+    hsl(0, 0%, 6%)
+  );
+}
+
+:root[data-tema='claro'] .auth {
   background: radial-gradient(
     ellipse at 50% 40%,
-    hsl(0, 0%, 97%),
-    hsl(0, 0%, 88%)
+    hsl(216, 100%, 98%),
+    hsl(213, 90%, 86%)
   );
+}
+
+.auth__tema {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 5;
+}
+
+.auth__contenido {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .auth__tarjeta {
@@ -27,11 +53,11 @@
 }
 
 .auth__tarjeta--medio {
-  max-width: 450px;
+  max-width: 480px;
 }
 
 .auth__tarjeta--grande {
-  max-width: 540px;
+  max-width: 500px;
 }
 
 .auth__logo {
@@ -90,12 +116,17 @@
   gap: 10px;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (max-width: 480px) {
   .auth {
-    background: radial-gradient(
-      at 50% 50%,
-      rgba(255, 255, 255, 0.07),
-      hsl(0, 0%, 6%)
-    );
+    padding: 16px 12px;
+  }
+
+  .auth__tarjeta {
+    padding: 22px 18px;
+  }
+
+  .auth__tema {
+    top: 14px;
+    right: 14px;
   }
 }

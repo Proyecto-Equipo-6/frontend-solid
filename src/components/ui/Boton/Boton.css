@@ -12,7 +12,11 @@
   border: 1px solid transparent;
   border-radius: var(--radio);
   cursor: pointer;
-  transition: opacity 0.2s ease, background-color 0.15s ease;
+  transition:
+    opacity 0.2s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .boton--completo {
@@ -34,7 +38,38 @@
   opacity: 0.9;
 }
 
+.boton:not(:disabled):not(.boton--secundario):hover {
+  box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.35);
+}
+
 .boton:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.boton--peligro,
+.boton--cancelar {
+  color: var(--mal);
+  background: transparent;
+  border-color: var(--mal);
+}
+
+.boton--exito {
+  background: #15803d;
+  border-color: #15803d;
+  color: #fff;
+}
+
+.boton--exito:not(:disabled):hover,
+.boton--exito.accion-verde:not(:disabled):hover,
+.boton--exito.accion-roja:not(:disabled):hover {
+  background: #166534;
+  border-color: #166534;
+  color: #fff;
+}
+
+.boton__check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }

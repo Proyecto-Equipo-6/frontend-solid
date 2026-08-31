@@ -143,7 +143,7 @@ export default function PedidosAdmin() {
         title="Ver detalle"
         onClick={() => setVistaDetalle(pedido.id_pedido)}
       >
-        <IconoOjo tamano={18} />
+        <IconoOjo tamano={26} />
       </button>
     </>
   )

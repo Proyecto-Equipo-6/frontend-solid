@@ -24,21 +24,27 @@ export default function TablaProductos({ filas }) {
           <tbody>
             {filas.map((fila) => (
               <tr key={fila.id_producto}>
-                <td>
-                  <span className="tabla-productos__nombre">{fila.nombre}</span>
-                  <span className="tabla-productos__sku">{fila.sku}</span>
-                  <span className="tabla-productos__barra-fondo" aria-hidden="true">
-                    <span
-                      className="tabla-productos__barra"
-                      style={{ width: `${(fila.unidades / maximoUnidades) * 100}%` }}
-                    />
-                  </span>
+                <td data-etiqueta="Producto">
+                  <div className="tabla-productos__info">
+                    <span className="tabla-productos__nombre">{fila.nombre}</span>
+                    <span className="tabla-productos__sku">{fila.sku}</span>
+                    <span className="tabla-productos__barra-fondo" aria-hidden="true">
+                      <span
+                        className="tabla-productos__barra"
+                        style={{ width: `${(fila.unidades / maximoUnidades) * 100}%` }}
+                      />
+                    </span>
+                  </div>
                 </td>
-                <td>
+                <td data-etiqueta="Categoría">
                   <span className="tabla-productos__categoria">{fila.categoria}</span>
                 </td>
-                <td className="tabla-productos__numero">{formatoNumero(fila.unidades)}</td>
-                <td className="tabla-productos__numero tabla-productos__ventas">{formatoPrecio(fila.ventas)}</td>
+                <td className="tabla-productos__numero" data-etiqueta="Unidades vendidas">
+                  {formatoNumero(fila.unidades)}
+                </td>
+                <td className="tabla-productos__numero tabla-productos__ventas" data-etiqueta="Ventas">
+                  {formatoPrecio(fila.ventas)}
+                </td>
               </tr>
             ))}
           </tbody>

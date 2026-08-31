@@ -159,7 +159,7 @@ export default function Proveedores() {
             title="Editar"
             onClick={() => abrirEdicion(proveedor)}
           >
-            <IconoEditar tamano={18} />
+            <IconoEditar tamano={26} />
           </button>
           <button
             type="button"
@@ -168,7 +168,7 @@ export default function Proveedores() {
             title="Eliminar"
             onClick={() => setAEliminar(proveedor)}
           >
-            <IconoEliminar tamano={18} />
+            <IconoEliminar tamano={26} />
           </button>
         </>
       )}
@@ -291,7 +291,7 @@ export default function Proveedores() {
           </div>
 
           <div className="crud__form-acciones">
-            <button type="button" className="crud__boton" onClick={() => setModal(false)}>
+            <button type="button" className="crud__boton crud__boton--cancelar" onClick={() => setModal(false)}>
               Cancelar
             </button>
             <button type="submit" className="crud__boton" disabled={guardando}>
@@ -308,6 +308,7 @@ export default function Proveedores() {
           onConfirmar={confirmarEliminar}
           onCancelar={() => setAEliminar(null)}
           cargando={eliminando}
+          peligro
         />
       )}
     </VistaGestion>

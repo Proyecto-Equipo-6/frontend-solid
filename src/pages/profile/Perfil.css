@@ -86,3 +86,22 @@
   text-align: center;
   color: var(--text-suave);
 }
+
+@media (max-width: 480px) {
+  .perfil {
+    padding: 104px 16px 56px;
+  }
+
+  .perfil__tarjeta {
+    padding: 22px 18px;
+  }
+
+  .perfil__fila {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .perfil__fila-valor {
+    text-align: left;
+  }
+}

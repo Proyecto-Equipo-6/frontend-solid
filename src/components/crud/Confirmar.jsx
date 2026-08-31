@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import Boton from '@/components/ui/Boton/Boton'
 import './Crud.css'
 
-export default function Confirmar({ titulo = '¿Confirmar acción?', mensaje, onConfirmar, onCancelar, cargando = false }) {
+export default function Confirmar({ titulo = '¿Confirmar acción?', mensaje, onConfirmar, onCancelar, cargando = false, mensajeError, peligro = false }) {
   const dialogoRef = useRef(null)
 
   useEffect(() => {
@@ -33,11 +33,12 @@ export default function Confirmar({ titulo = '¿Confirmar acción?', mensaje, on
     >
       <h3 className="crud__modal-titulo">{titulo}</h3>
       <p className="crud__modal-texto">{mensaje}</p>
+      {mensajeError && <p className="crud__alerta crud__alerta--error">{mensajeError}</p>}
       <div className="crud__modal-acciones">
-        <Boton variante="secundario" onClick={onCancelar} disabled={cargando}>
+        <Boton variante="cancelar" onClick={onCancelar} disabled={cargando}>
           Cancelar
         </Boton>
-        <Boton variante="primario" className="crud__boton-peligro" onClick={onConfirmar} cargando={cargando}>
+        <Boton variante={peligro ? 'peligro' : 'primario'} className="crud__boton-peligro" onClick={onConfirmar} cargando={cargando}>
           Confirmar
         </Boton>
       </div>
