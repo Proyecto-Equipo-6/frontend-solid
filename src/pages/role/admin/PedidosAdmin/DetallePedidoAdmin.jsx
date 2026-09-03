@@ -219,7 +219,7 @@ function GestionRepartidor({
         <option value="">Selecciona…</option>
         {repartidoresDisponibles.map((r) => (
           <option key={r.id_repartidor} value={r.id_repartidor}>
-            {r.nombre}
+            {r.nombre} ({r.pedidos_hoy ?? 0} hoy)
           </option>
         ))}
       </select>
@@ -296,7 +296,7 @@ export default function DetallePedidoAdmin({ pedidoId, onVolver, onActualizado }
     ? repartidores.find((r) => Number(r.id_repartidor) === Number(detalle.id_repartidor))
     : null
 
-  const repartidoresDisponibles = repartidores.filter((r) => r.estado === 'DISPONIBLE')
+  const repartidoresDisponibles = repartidores.filter((r) => r.estado === 'DISPONIBLE' || r.estado === 'OCUPADO')
 
   const puedeGestionarRepartidor = ['CONFIRMADO', 'ASIGNADO'].includes(detalle?.estado)
 

@@ -488,6 +488,42 @@
   border-radius: 999px;
 }
 
+.crud__buscar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--dash-tarjeta-alta);
+  border: 1px solid var(--dash-border);
+  border-radius: 10px;
+  transition: border-color 0.15s ease;
+}
+
+.crud__buscar:focus-within {
+  border-color: var(--dash-azul);
+}
+
+.crud__buscar-icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dash-texto-suave);
+}
+
+.crud__buscar-input {
+  min-width: 200px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--dash-texto);
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.crud__buscar-input::placeholder {
+  color: var(--dash-texto-tenue);
+}
+
 .crud__resumen {
   display: flex;
   flex-direction: column;

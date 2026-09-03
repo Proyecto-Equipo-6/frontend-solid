@@ -1,51 +1,37 @@
 import { useEffect, useState } from 'react'
 import VistaGestion from '@/pages/role/admin/VistaGestion/VistaGestion'
 import TablaCrud from '@/components/crud/TablaCrud'
-import ModalCrud from '@/components/crud/ModalCrud'
-import Confirmar from '@/components/crud/Confirmar'
 import FiltroEstado from '@/components/crud/FiltroEstado'
+import HistorialRepartidor from './HistorialRepartidor'
+import { getRepartidores } from '@/services/admin'
 import {
-  getRepartidores,
-  cambiarEstadoRepartidor,
-  crearRepartidor,
-  actualizarRepartidor,
-  eliminarRepartidor,
-} from '@/services/admin'
-import {
-  IconoEditar,
-  IconoEliminar,
-  IconoReactivar,
-  IconoAgregar,
+  IconoBuscar,
+  IconoOjo,
+  IconoActivo,
+  IconoInactivo,
+  IconoRepartidor,
 } from '@/components/ui/Iconos/Iconos'
 
-const FORM_VACIO = {
-  nombre_apellido: '',
-  email: '',
-  password: '',
-  telefono: '',
-}
+const OPCIONES_ESTADO = [
+  { clave: 'activos', etiqueta: 'Activos', icono: IconoActivo, clase: 'activo' },
+  { clave: 'inactivos', etiqueta: 'Inactivos', icono: IconoInactivo, clase: 'inactivo' },
+  { clave: 'todos', etiqueta: 'Todos', icono: IconoRepartidor, clase: 'todos' },
+]
 
 const ESTADOS_BADGE = {
   INACTIVO: { clase: 'inactivo', texto: 'Inactivo' },
-  OCUPADO: { clase: 'ocupado', texto: 'Ocupado' },
-  DISPONIBLE: { clase: 'activo', texto: 'Disponible' },
+  OCUPADO: { clase: 'activo', texto: 'Activo' },
+  DISPONIBLE: { clase: 'activo', texto: 'Activo' },
 }
 
 export default function RepartidoresAdmin() {
   const [repartidores, setRepartidores] = useState([])
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState('')
-  const [alerta, setAlerta] = useState('')
-
-  const [modal, setModal] = useState(false)
-  const [editandoId, setEditandoId] = useState(null)
-  const [form, setForm] = useState(FORM_VACIO)
-  const [guardando, setGuardando] = useState(false)
-
-  const [aEliminar, setAEliminar] = useState(null)
-  const [eliminando, setEliminando] = useState(false)
 
   const [filtro, setFiltro] = useState('activos')
+  const [busqueda, setBusqueda] = useState('')
+  const [historialRepartidor, setHistorialRepartidor] = useState(null)
 
   function cargarTodo() {
     setCargando(true)
@@ -58,98 +44,43 @@ export default function RepartidoresAdmin() {
 
   useEffect(cargarTodo, [])
 
-  function abrirNuevo() {
-    setForm(FORM_VACIO)
-    setEditandoId(null)
-    setModal(true)
-  }
+  const esActivo = (r) => r.estado === 'DISPONIBLE' || r.estado === 'OCUPADO'
 
-  function abrirEdicion(repartidor) {
-    setForm({
-      nombre_apellido: repartidor.nombre_apellido || repartidor.nombre || '',
-      email: repartidor.email || '',
-      password: '',
-      telefono: repartidor.telefono || '',
-    })
-    setEditandoId(repartidor.id_repartidor)
-    setModal(true)
-  }
+  const filtradosPorEstado = repartidores.filter((r) => {
+    if (filtro === 'activos') return esActivo(r)
+    if (filtro === 'inactivos') return !esActivo(r)
+    return true
+  })
 
-  function cambiarCampo(campo, valor) {
-    setForm((prev) => ({ ...prev, [campo]: valor }))
-  }
+  const termino = busqueda.trim().toLowerCase()
+  const filas = termino
+    ? filtradosPorEstado.filter(
+        (r) =>
+          String(r.id_repartidor).includes(termino) ||
+          (r.nombre || r.nombre_apellido || '').toLowerCase().includes(termino)
+      )
+    : filtradosPorEstado
 
-  async function guardarRepartidor(evento) {
-    evento.preventDefault()
-    setGuardando(true)
-    setAlerta('')
-    try {
-      const datos = {
-        nombre_apellido: form.nombre_apellido,
-        email: form.email,
-        telefono: form.telefono,
-      }
-      if (editandoId) {
-        await actualizarRepartidor(editandoId, datos)
-        setAlerta('Repartidor actualizado correctamente.')
-      } else {
-        await crearRepartidor({ ...datos, password: form.password })
-        setAlerta('Repartidor creado correctamente.')
-      }
-      setModal(false)
-      setEditandoId(null)
-      cargarTodo()
-    } catch (e) {
-      setAlerta(e.message)
-    } finally {
-      setGuardando(false)
-    }
-  }
-
-  async function confirmarEliminar() {
-    setEliminando(true)
-    setAlerta('')
-    try {
-      await eliminarRepartidor(aEliminar.id_repartidor)
-      setAlerta('Repartidor eliminado correctamente.')
-      setAEliminar(null)
-      cargarTodo()
-    } catch (e) {
-      setAlerta(e.message)
-    } finally {
-      setEliminando(false)
-    }
+  const conteos = {
+    activos: repartidores.filter(esActivo).length,
+    inactivos: repartidores.filter((r) => !esActivo(r)).length,
+    todos: repartidores.length,
   }
 
   const columnas = [
     {
       clave: 'id_repartidor',
-      etiqueta: 'ID',
+      etiqueta: 'ID Repartidor',
       alineacion: 'centro',
       render: (r) => <span className="crud__texto-secundario">{r.id_repartidor}</span>,
     },
     {
       clave: 'nombre',
-      etiqueta: 'Repartidor',
-      render: (r) => <span className="crud__texto-principal">{r.nombre}</span>,
+      etiqueta: 'Nombre',
+      render: (r) => <span className="crud__texto-principal">{r.nombre || r.nombre_apellido}</span>,
     },
     { clave: 'telefono', etiqueta: 'Teléfono' },
-    { clave: 'email', etiqueta: 'Email' },
-    {
-      clave: 'pedidos_hoy',
-      etiqueta: 'Hoy',
-      render: (r) => r.pedidos_hoy ?? '—',
-    },
-    {
-      clave: 'pedidos_semana',
-      etiqueta: 'Semana',
-      render: (r) => r.pedidos_semana ?? '—',
-    },
-    {
-      clave: 'pedidos_mes',
-      etiqueta: 'Mes',
-      render: (r) => r.pedidos_mes ?? '—',
-    },
+    { clave: 'email', etiqueta: 'Correo' },
     {
       clave: 'estado',
       etiqueta: 'Estado',
@@ -163,79 +94,73 @@ export default function RepartidoresAdmin() {
         )
       },
     },
+    {
+      clave: 'pedidos_hoy',
+      etiqueta: 'Pedidos Hoy',
+      alineacion: 'centro',
+      render: (r) => r.pedidos_hoy ?? '—',
+    },
+    {
+      clave: 'pedidos_semana',
+      etiqueta: 'Pedidos Semana',
+      alineacion: 'centro',
+      render: (r) => r.pedidos_semana ?? '—',
+    },
+    {
+      clave: 'pedidos_mes',
+      etiqueta: 'Pedidos Mes',
+      alineacion: 'centro',
+      render: (r) => r.pedidos_mes ?? '—',
+    },
   ]
 
   const acciones = (repartidor) => (
-    <>
-      {filtro === 'inactivos' ? (
-        <button
-          type="button"
-          className="crud__icono crud__icono--reactivar"
-          aria-label={`Activar ${repartidor.nombre}`}
-          title="Activar"
-          onClick={() => reactivarRepartidor(repartidor)}
-        >
-          <IconoReactivar tamano={18} />
-        </button>
-      ) : (
-        <>
-          <button
-            type="button"
-            className="crud__icono crud__icono--editar"
-            aria-label={`Editar ${repartidor.nombre}`}
-            title="Editar"
-            onClick={() => abrirEdicion(repartidor)}
-          >
-            <IconoEditar tamano={26} />
-          </button>
-          <button
-            type="button"
-            className="crud__icono crud__icono--eliminar"
-            aria-label={`Eliminar ${repartidor.nombre}`}
-            title="Eliminar"
-            onClick={() => setAEliminar(repartidor)}
-          >
-            <IconoEliminar tamano={26} />
-          </button>
-        </>
-      )}
-    </>
+    <button
+      type="button"
+      className="crud__icono"
+      aria-label={`Ver historial de ${repartidor.nombre || repartidor.nombre_apellido}`}
+      title="Ver historial"
+      onClick={() => setHistorialRepartidor(repartidor)}
+    >
+      <IconoOjo tamano={26} />
+    </button>
   )
 
-  async function reactivarRepartidor(repartidor) {
-    setAlerta('')
-    try {
-      await cambiarEstadoRepartidor(repartidor.id_repartidor, 'DISPONIBLE')
-      setAlerta(`Repartidor "${repartidor.nombre}" puesto en disponible.`)
-      cargarTodo()
-    } catch (e) {
-      setAlerta(e.message)
-    }
+  if (historialRepartidor) {
+    return (
+      <HistorialRepartidor
+        repartidor={historialRepartidor}
+        onVolver={() => setHistorialRepartidor(null)}
+      />
+    )
   }
-
-  const esActivo = (r) => r.estado === 'DISPONIBLE' || r.estado === 'OCUPADO'
-  const activos = repartidores.filter(esActivo)
-  const inactivos = repartidores.filter((r) => !esActivo(r))
-  const filas = filtro === 'activos' ? activos : inactivos
 
   return (
     <VistaGestion
       titulo="Repartidores"
-      descripcion="Administra los repartidores: crea, edita, elimina y controla su estado operativo."
+      descripcion="Consulta la flota de repartidores, sus métricas de pedidos y su historial individual."
     >
       <div className="gestion__cabecera">
         <FiltroEstado
           valor={filtro}
           onCambiar={setFiltro}
-          conteos={{ activos: activos.length, inactivos: inactivos.length }}
+          conteos={conteos}
+          opciones={OPCIONES_ESTADO}
         />
-        <button type="button" className="crud__boton crud__boton--nuevo" onClick={abrirNuevo}>
-          <IconoAgregar tamano={16} />
-          Nuevo repartidor
-        </button>
+        <label className="crud__buscar">
+          <span className="crud__buscar-icono">
+            <IconoBuscar tamano={16} />
+          </span>
+          <input
+            className="crud__buscar-input"
+            type="search"
+            placeholder="Buscar por ID o nombre…"
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+            aria-label="Buscar repartidor por ID o nombre"
+          />
+        </label>
       </div>
-
-      {alerta && <p className="crud__alerta">{alerta}</p>}
 
       <TablaCrud
         columnas={columnas}
@@ -243,91 +168,13 @@ export default function RepartidoresAdmin() {
         claveFila={(r) => r.id_repartidor}
         cargando={cargando}
         error={error}
-        mensajeVacio="No hay repartidores registrados."
+        mensajeVacio={
+          termino
+            ? 'No se encontraron repartidores con ese criterio.'
+            : 'No hay repartidores registrados.'
+        }
         acciones={acciones}
       />
-
-      <ModalCrud
-        abierto={modal}
-        titulo={editandoId ? 'Editar repartidor' : 'Nuevo repartidor'}
-        onCerrar={() => setModal(false)}
-      >
-        <form className="crud__form" onSubmit={guardarRepartidor}>
-          <div className="crud__fila">
-            <div className="crud__campo">
-              <label className="crud__campo-label" htmlFor="repartidor-nombre">Nombre completo</label>
-              <input
-                id="repartidor-nombre"
-                className="crud__campo-input"
-                value={form.nombre_apellido}
-                onChange={(e) => cambiarCampo('nombre_apellido', e.target.value)}
-                required
-              />
-            </div>
-            <div className="crud__campo">
-              <label className="crud__campo-label" htmlFor="repartidor-email">Email</label>
-              <input
-                id="repartidor-email"
-                className="crud__campo-input"
-                type="email"
-                value={form.email}
-                onChange={(e) => cambiarCampo('email', e.target.value)}
-                required
-              />
-            </div>
-          </div>
-
-          <div className="crud__fila">
-            <div className="crud__campo">
-              <label className="crud__campo-label" htmlFor="repartidor-telefono">Teléfono</label>
-              <input
-                id="repartidor-telefono"
-                className="crud__campo-input"
-                value={form.telefono}
-                onChange={(e) => cambiarCampo('telefono', e.target.value)}
-                placeholder="6012345678"
-                required
-              />
-            </div>
-           
-          </div>
-
-          {!editandoId && (
-            <div className="crud__campo">
-              <label className="crud__campo-label" htmlFor="repartidor-password">Contraseña</label>
-              <input
-                id="repartidor-password"
-                className="crud__campo-input"
-                type="password"
-                value={form.password}
-                onChange={(e) => cambiarCampo('password', e.target.value)}
-                placeholder="Mínimo 4 caracteres"
-                required
-              />
-            </div>
-          )}
-
-          <div className="crud__form-acciones">
-            <button type="button" className="crud__boton crud__boton--cancelar" onClick={() => setModal(false)}>
-              Cancelar
-            </button>
-            <button type="submit" className="crud__boton" disabled={guardando}>
-              {guardando ? 'Guardando…' : 'Guardar'}
-            </button>
-          </div>
-        </form>
-      </ModalCrud>
-
-      {aEliminar && (
-        <Confirmar
-          titulo="Eliminar repartidor"
-          mensaje={`¿Eliminar al repartidor "${aEliminar.nombre}"?`}
-          onConfirmar={confirmarEliminar}
-          onCancelar={() => setAEliminar(null)}
-          cargando={eliminando}
-          peligro
-        />
-      )}
     </VistaGestion>
   )
 }
