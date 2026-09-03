@@ -130,6 +130,16 @@
   color: var(--text-suave);
 }
 
+.tarjeta__precio-stock--pocas {
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+.tarjeta__precio-stock--agotado {
+  color: #ef4444;
+  font-weight: 600;
+}
+
 .tarjeta__garantia {
   font-size: 13px;
   color: var(--text-suave);

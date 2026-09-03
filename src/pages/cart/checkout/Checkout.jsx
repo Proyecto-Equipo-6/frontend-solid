@@ -28,7 +28,6 @@ export default function Checkout() {
 
   const [paso, setPaso] = useState(0)
   const [items, setItems] = useState([])
-  const [envio, setEnvio] = useState('estandar')
   const [datosEnvio, setDatosEnvio] = useState(null)
   const [datosPago, setDatosPago] = useState(null)
   const [aviso, setAviso] = useState('')
@@ -90,7 +89,7 @@ export default function Checkout() {
     }
   }
 
-  const opcionEnvio = OPCIONES_ENVIO.find((opcion) => opcion.id === envio)
+  const opcionEnvio = OPCIONES_ENVIO[0]
   const subtotal = items.reduce((suma, item) => suma + item.precio * item.cantidad, 0)
   const total = subtotal + opcionEnvio.costo
 
@@ -132,7 +131,6 @@ export default function Checkout() {
             subtotal={subtotal}
             envio={opcionEnvio}
             total={total}
-            onEnvio={setEnvio}
           />
         </div>
       )}
@@ -216,7 +214,6 @@ export default function Checkout() {
             subtotal={subtotal}
             envio={opcionEnvio}
             total={total}
-            onEnvio={setEnvio}
           />
         </aside>
       </div>

@@ -13,6 +13,7 @@ import './ArticuloDetalle.css'
 const EnlaceAtras = motion(Link)
 
 function FichaTecnica({ articulo }) {
+  const estado = estadoStock(articulo.stock)
   const filas = [
     ['Código del producto', articulo.sku],
     ['Categoría', articulo.categoria],
@@ -23,12 +24,16 @@ function FichaTecnica({ articulo }) {
 
   return (
     <dl className="detalle__ficha">
-      {filas.map(([etiqueta, valor]) => (
-        <div className="detalle__ficha-fila" key={etiqueta}>
-          <dt className="detalle__ficha-etiqueta">{etiqueta}</dt>
-          <dd className="detalle__ficha-valor">{valor}</dd>
-        </div>
-      ))}
+      {filas.map(([etiqueta, valor]) => {
+        const claseDisponibilidad =
+          etiqueta === 'Disponibilidad' ? ` detalle__ficha-valor--${estado}` : ''
+        return (
+          <div className="detalle__ficha-fila" key={etiqueta}>
+            <dt className="detalle__ficha-etiqueta">{etiqueta}</dt>
+            <dd className={`detalle__ficha-valor${claseDisponibilidad}`}>{valor}</dd>
+          </div>
+        )
+      })}
     </dl>
   )
 }
@@ -91,6 +96,7 @@ export default function ArticuloDetalle() {
   }
 
   const agotado = estadoStock(articulo.stock) === 'agotado'
+  const estado = estadoStock(articulo.stock)
 
   function etiquetaBoton() {
     if (agregando) return 'Agregando…'
@@ -129,7 +135,7 @@ export default function ArticuloDetalle() {
         <h1 className="detalle__titulo">{articulo.titulo}</h1>
         <p className="detalle__descripcion">{articulo.descripcion}</p>
         <p className="detalle__precio">{formatoPrecio(articulo.precio)}</p>
-        <p className="detalle__detalles">
+        <p className={`detalle__detalles detalle__detalles--${estado}`}>
           {textoStock(articulo.stock)} · Garantía: {articulo.garantia}
         </p>
         <motion.div

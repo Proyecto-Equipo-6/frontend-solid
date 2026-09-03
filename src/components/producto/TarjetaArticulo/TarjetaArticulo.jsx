@@ -30,7 +30,7 @@ export default function TarjetaArticulo({ articulo }) {
         <p className="tarjeta__descripcion">{descripcion}</p>
         <div className="tarjeta__precio">
           <span className="tarjeta__precio-valor">{formatoPrecio(precio)}</span>
-          <span className="tarjeta__precio-stock">{textoStock(stock)}</span>
+          <span className={`tarjeta__precio-stock tarjeta__precio-stock--${estado}`}>{textoStock(stock)}</span>
         </div>
         <span className="tarjeta__garantia">Garantía: {garantia}</span>
         <span className="tarjeta__boton">

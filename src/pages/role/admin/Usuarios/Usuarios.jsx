@@ -328,6 +328,9 @@ export default function Usuarios() {
                 className="crud__campo-input"
                 value={form.numero_documento}
                 onChange={(e) => cambiarCampo('numero_documento', e.target.value)}
+                placeholder="Máximo 10 dígitos"
+                inputMode="numeric"
+                maxLength={10}
                 required
               />
             </div>
@@ -353,6 +356,8 @@ export default function Usuarios() {
                 value={form.telefono}
                 onChange={(e) => cambiarCampo('telefono', e.target.value)}
                 placeholder="10 dígitos, ej: 6012345678"
+                inputMode="numeric"
+                maxLength={10}
                 required
               />
             </div>

@@ -39,6 +39,8 @@ function validar(form) {
     errores.numero_documento = 'El número de documento es obligatorio.'
   } else if (!REGEX_SOLO_NUMEROS.test(form.numero_documento)) {
     errores.numero_documento = 'El número de documento debe ser numérico.'
+  } else if (form.numero_documento.length > 10) {
+    errores.numero_documento = 'El número de documento debe tener máximo 10 dígitos.'
   }
 
   if (!esEmailValido(form.email)) {
@@ -162,6 +164,7 @@ export default function Registro() {
             onChange={handleChange}
             placeholder="Ej: 1010123456"
             inputMode="numeric"
+            maxLength={10}
             requerido
             error={errores.numero_documento}
           />

@@ -16,6 +16,7 @@ import {
 } from '@/services/admin'
 import { formatoPrecio } from '@/utils/formato'
 import { generarSku } from '@/utils/sku'
+import { CATALOGO } from '@/config/aplicacion'
 
 const FORM_VACIO = {
   sku: '',
@@ -200,11 +201,16 @@ function cambiarCampo(campo, valor) {
     {
       clave: 'stock',
       etiqueta: 'Stock',
-      render: (p) => (
-        <span className={Number(p.stock) <= 0 ? 'crud__texto-secundario' : ''}>
-          {Number(p.stock)}
-        </span>
-      ),
+      render: (p) => {
+        const stock = Number(p.stock)
+        const claseStock =
+          stock <= 0
+            ? 'crud__texto-stock--agotado'
+            : stock <= CATALOGO.stockBajo
+              ? 'crud__texto-stock--pocas'
+              : ''
+        return <span className={claseStock}>{stock}</span>
+      },
     },
     {
       clave: 'estado',

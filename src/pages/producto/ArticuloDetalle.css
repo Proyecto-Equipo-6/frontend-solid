@@ -131,6 +131,16 @@
   color: var(--text-suave);
 }
 
+.detalle__detalles--pocas {
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+.detalle__detalles--agotado {
+  color: #ef4444;
+  font-weight: 600;
+}
+
 .detalle__ficha-bloque {
   margin-top: 20px;
   padding: 16px;
@@ -174,6 +184,16 @@
   font-weight: 500;
   text-align: right;
   color: var(--text-h);
+}
+
+.detalle__ficha-valor--pocas {
+  color: #f59e0b;
+  font-weight: 700;
+}
+
+.detalle__ficha-valor--agotado {
+  color: #ef4444;
+  font-weight: 700;
 }
 
 @media (max-width: 768px) {

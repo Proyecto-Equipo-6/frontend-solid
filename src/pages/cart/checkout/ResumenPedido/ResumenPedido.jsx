@@ -1,7 +1,7 @@
 import { formatoPrecio } from '@/utils/formato'
 import './ResumenPedido.css'
 
-export default function ResumenPedido({ items, subtotal, envio, total, onEnvio }) {
+export default function ResumenPedido({ items, subtotal, envio, total }) {
   const cantidadItems = items.reduce((suma, item) => suma + item.cantidad, 0)
 
   return (
@@ -31,34 +31,8 @@ export default function ResumenPedido({ items, subtotal, envio, total, onEnvio }
       </div>
 
       <div className="resumen-pedido__envio">
-        <label htmlFor="envio">Envío:</label>
-        <div className="resumen-pedido__select">
-          <select
-            id="envio"
-            value={envio.id}
-            onChange={(evento) => onEnvio(evento.target.value)}
-            aria-label="Método de envío"
-          >
-            <option value="estandar">Estándar</option>
-            <option value="express">Exprés (+{formatoPrecio(12000)})</option>
-          </select>
-          <svg
-            className="resumen-pedido__select-flecha"
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M3.5 5.25 7 8.75l3.5-3.5"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
+        <span>Envío:</span>
+        <span className="resumen-pedido__envio-valor">{envio.nombre}</span>
       </div>
 
       <div className="resumen-pedido__detalle-fila">

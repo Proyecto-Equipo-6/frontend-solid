@@ -90,15 +90,23 @@ const ConfirmacionEnvio = forwardRef(function ConfirmacionEnvio(_props, ref) {
     setErrores(erroresCampos)
     if (Object.keys(erroresCampos).length > 0) return
 
+    const cambios = CAMPOS.reduce((acc, campo) => {
+      if (form[campo.nombre] !== perfil[campo.nombre]) {
+        acc[campo.nombre] = form[campo.nombre]
+      }
+      return acc
+    }, {})
+
+    if (haySesion && Object.keys(cambios).length > 0 && !password.trim()) {
+      setErrores((prev) => ({
+        ...prev,
+        password: 'La contraseña es obligatoria para actualizar la dirección.',
+      }))
+      return
+    }
+
     setGuardando(true)
     try {
-      const cambios = CAMPOS.reduce((acc, campo) => {
-        if (form[campo.nombre] !== perfil[campo.nombre]) {
-          acc[campo.nombre] = form[campo.nombre]
-        }
-        return acc
-      }, {})
-
       if (password.trim()) cambios.password = password
 
       if (Object.keys(cambios).length > 0) {
@@ -154,12 +162,12 @@ const ConfirmacionEnvio = forwardRef(function ConfirmacionEnvio(_props, ref) {
                 name="password"
                 value={password}
                 onChange={(evento) => setPassword(evento.target.value)}
-                placeholder="Obligatoria si cambias el nombre o el teléfono"
+                placeholder="Obligatoria para guardar los cambios"
                 autoComplete="current-password"
+                error={errores.password}
               />
               <p className="conf-envio__nota">
-                Para actualizar la dirección no es necesaria la contraseña; solo se pide
-                si cambias el nombre o el teléfono.
+                Para actualizar la dirección es necesaria la contraseña.
               </p>
             </>
           )}

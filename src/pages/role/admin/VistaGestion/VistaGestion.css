@@ -65,7 +65,8 @@
   .gestion__cabecera .crud__filtro,
   .gestion__cabecera .crud__buscar,
   .gestion__cabecera .crud__acciones-cabecera,
-  .gestion__cabecera .crud__boton--nuevo {
+  .gestion__cabecera .crud__boton--nuevo,
+  .gestion__cabecera .crud__buscar {
     width: 100%;
     justify-content: center;
   }

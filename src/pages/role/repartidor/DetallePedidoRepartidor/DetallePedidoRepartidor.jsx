@@ -6,7 +6,6 @@ import {
   actualizarEstadoPedidoRepartidor,
 } from '@/services/repartidor'
 import { ESTADOS_REPARTIDOR, DIAGRAMA_SEGUIMIENTO } from '@/config/repartidor'
-import { formatoPrecio } from '@/utils/formato'
 import './DetallePedidoRepartidor.css'
 
 const TAMANO_MAXIMO = 3 * 1024 * 1024
@@ -194,29 +193,6 @@ export default function DetallePedidoRepartidor({ pedidoId, puedeActualizar, onV
             <dd>{detalle.caracteristicasLogistica || 'Ninguna'}</dd>
           </div>
         </dl>
-      </div>
-
-      <div className="rep-det__tarjeta">
-        <details className="rep-det__productos-detalle">
-          <summary className="rep-det__productos-resumen">
-            <span>Productos del pedido</span>
-            <span className="rep-det__productos-conteo">{detalle.productos?.length ?? 0} producto(s)</span>
-          </summary>
-          <div className="rep-det__productos-lista">
-            {!detalle.productos || detalle.productos.length === 0 ? (
-              <p className="rep-det__sin-productos">Sin productos.</p>
-            ) : (
-              detalle.productos.map((producto) => (
-                <div className="rep-det__producto" key={producto.id_producto}>
-                  <span className="rep-det__producto-nombre">
-                    {producto.nombre} × {producto.cantidad}
-                  </span>
-                  <span>{formatoPrecio(Number(producto.subtotal))}</span>
-                </div>
-              ))
-            )}
-          </div>
-        </details>
       </div>
 
       <div className="rep-det__tarjeta">
