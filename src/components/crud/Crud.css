@@ -394,37 +394,6 @@
   border-color: var(--dash-azul);
 }
 
-.crud__buscar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 220px;
-  padding: 0 12px;
-  color: var(--dash-texto-tenue);
-  background: var(--dash-tarjeta-alta);
-  border: 1px solid var(--dash-border);
-  border-radius: 8px;
-}
-
-.crud__buscar:focus-within {
-  border-color: var(--dash-azul);
-}
-
-.crud__buscar-input {
-  width: 100%;
-  padding: 9px 0;
-  font-family: inherit;
-  font-size: 14px;
-  color: var(--dash-texto);
-  background: transparent;
-  border: none;
-  outline: none;
-}
-
-.crud__buscar-input::placeholder {
-  color: var(--dash-texto-tenue);
-}
-
 .crud__campo-textarea {
   resize: vertical;
   min-height: 76px;
