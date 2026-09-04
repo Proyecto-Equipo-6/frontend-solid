@@ -61,6 +61,8 @@ export default function IniciarSesion() {
     <AuthLayout ancho="grande" titulo="Iniciar sesión" subtitulo={`Bienvenido de nuevo a ${MARCA.nombre}`}>
       {errorServidor && <Alerta variante="error">{errorServidor}</Alerta>}
 
+      <Link to="/" className="login__volver">← Volver</Link>
+
       <form className="login__form" onSubmit={handleSubmit} noValidate>
         <Campo
           etiqueta="Correo electrónico"
