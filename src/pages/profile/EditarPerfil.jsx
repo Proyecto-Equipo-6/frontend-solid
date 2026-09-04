@@ -158,7 +158,7 @@ export default function EditarPerfil() {
               value={form.email}
               onChange={handleChange}
               placeholder="ejemplo@correo.com"
-              autoComplete="email"
+              autoComplete="off"
               requerido
               error={errores.email}
             />
@@ -211,7 +211,7 @@ export default function EditarPerfil() {
               value={form.password}
               onChange={handleChange}
               placeholder="Ingresa tu contraseña para confirmar"
-              autoComplete="current-password"
+              autoComplete="new-password"
               requerido
               error={errores.password}
             />
