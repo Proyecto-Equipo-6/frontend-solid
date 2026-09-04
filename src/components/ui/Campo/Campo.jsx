@@ -3,6 +3,7 @@ import './Campo.css'
 export default function Campo({
   etiqueta,
   error,
+  ayuda,
   requerido,
   completo,
   as: Etiqueta = 'input',
@@ -26,7 +27,11 @@ export default function Campo({
       >
         {children}
       </Etiqueta>
-      {error && <p className="campo__ayuda" role="alert">{error}</p>}
+      {error ? (
+        <p className="campo__ayuda" role="alert">{error}</p>
+      ) : ayuda ? (
+        <p className="campo__ayuda campo__ayuda--neutro">{ayuda}</p>
+      ) : null}
     </div>
   )
 }
