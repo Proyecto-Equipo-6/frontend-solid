@@ -163,7 +163,7 @@ const ConfirmacionEnvio = forwardRef(function ConfirmacionEnvio(_props, ref) {
                 value={password}
                 onChange={(evento) => setPassword(evento.target.value)}
                 placeholder="Obligatoria para guardar los cambios"
-                autoComplete="current-password"
+                autoComplete="new-password"
                 error={errores.password}
               />
               <p className="conf-envio__nota">
