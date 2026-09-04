@@ -193,7 +193,7 @@ export default function VistaPerfil({ sesion, onVolver }) {
                   value={form.password}
                   onChange={handleChange}
                   placeholder="Ingresa tu contraseña para confirmar"
-                  autoComplete="current-password"
+                  autoComplete="new-password"
                   required
                 />
                 {errores.password && <span className="vista-perfil__error">{errores.password}</span>}
