@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Alerta from '@/components/ui/Alerta/Alerta'
 import Boton from '@/components/ui/Boton/Boton'
@@ -7,6 +7,7 @@ import { IconoActivo, IconoAtras } from '@/components/ui/Iconos/Iconos'
 import { getProductoPublico } from '@/services/productos'
 import { formatoPrecio, estadoStock, textoStock } from '@/utils/formato'
 import { agregarAlCarrito } from '@/services/carrito'
+import { obtenerSesion } from '@/services/sesion'
 import NoEncontrado from '@/pages/NoEncontrado/NoEncontrado'
 import './ArticuloDetalle.css'
 
@@ -40,6 +41,7 @@ function FichaTecnica({ articulo }) {
 
 export default function ArticuloDetalle() {
   const { id } = useParams()
+  const navigate = useNavigate()
   const [articulo, setArticulo] = useState(null)
   const [cargando, setCargando] = useState(true)
   const [agregando, setAgregando] = useState(false)
@@ -72,12 +74,20 @@ export default function ArticuloDetalle() {
 
   async function handleAgregar() {
     setAviso(null)
+    if (!obtenerSesion()) {
+      navigate('/login')
+      return
+    }
     setAgregando(true)
     try {
       await agregarAlCarrito(articulo)
       setExito(true)
       setAviso({ variante: 'exito', texto: 'Producto agregado al carrito.' })
-    } catch {
+    } catch (error) {
+      if (error.status === 401) {
+        navigate('/login')
+        return
+      }
       setAviso({
         variante: 'error',
         texto: 'No se pudo agregar el producto. Inténtalo de nuevo.',
