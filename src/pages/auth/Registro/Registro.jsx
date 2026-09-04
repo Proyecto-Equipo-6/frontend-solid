@@ -112,6 +112,8 @@ export default function Registro() {
       {errorServidor && <Alerta variante="error">{errorServidor}</Alerta>}
       {exito && <Alerta variante="exito">{exito}</Alerta>}
 
+      <Link to="/login" className="registro__volver">← Volver a iniciar sesión</Link>
+
       <form className="registro__form" onSubmit={handleSubmit} noValidate>
         <div className="registro__grid">
           <Campo

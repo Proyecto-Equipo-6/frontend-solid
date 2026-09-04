@@ -4,6 +4,21 @@
   gap: 10px;
 }
 
+.registro__volver {
+  align-self: flex-start;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: var(--text-h);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.registro__volver:hover {
+  color: var(--accent);
+}
+
 .registro__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
