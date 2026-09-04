@@ -167,6 +167,7 @@ export default function Registro() {
             maxLength={10}
             requerido
             error={errores.numero_documento}
+            ayuda="El número de documento es obligatorio."
           />
 
           <Campo
@@ -180,6 +181,7 @@ export default function Registro() {
             maxLength={10}
             requerido
             error={errores.telefono}
+            ayuda="El teléfono es obligatorio."
           />
 
           <Campo
@@ -191,6 +193,7 @@ export default function Registro() {
             placeholder="Ej: Calle 10 # 5-20, Medellín"
             requerido
             error={errores.direccion}
+            ayuda="La dirección es obligatoria."
           />
 
           <Campo
@@ -205,6 +208,7 @@ export default function Registro() {
             autoComplete="new-password"
             requerido
             error={errores.password}
+            ayuda="La contraseña debe tener entre 8 y 20 caracteres, con mayúscula, minúscula y número."
           />
         </div>
 
