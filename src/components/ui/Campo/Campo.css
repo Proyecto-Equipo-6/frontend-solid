@@ -47,6 +47,10 @@
   color: var(--error);
 }
 
+.campo__ayuda--neutro {
+  color: var(--text-suave);
+}
+
 @media (max-width: 480px) {
   .campo--completo {
     grid-column: auto;
