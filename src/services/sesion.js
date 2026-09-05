@@ -12,6 +12,23 @@ export function obtenerSesion() {
   }
 }
 
+export function guardarToken(token) {
+  const sesion = obtenerSesion() || {}
+  localStorage.setItem(CLAVE_SESION, JSON.stringify({ ...sesion, token }))
+}
+
+export function obtenerToken() {
+  return obtenerSesion()?.token || null
+}
+
+export function limpiarToken() {
+  const sesion = obtenerSesion()
+  if (sesion) {
+    delete sesion.token
+    localStorage.setItem(CLAVE_SESION, JSON.stringify(sesion))
+  }
+}
+
 export function limpiarSesion() {
   localStorage.removeItem(CLAVE_SESION)
 }

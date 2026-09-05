@@ -1,4 +1,4 @@
-import { obtenerSesion, guardarSesion } from './sesion'
+import { obtenerSesion, guardarSesion, obtenerToken, limpiarSesion } from './sesion'
 
 const BASE_URL = import.meta.env.VITE_API_URL || '/api'
 const USAR_MOCK = import.meta.env.VITE_USAR_MOCK !== 'false'
@@ -23,6 +23,11 @@ export async function request(path, { metodo = 'GET', datos, encabezados } = {})
     credentials: 'include',
   }
 
+  const token = obtenerToken()
+  if (token) {
+    encabezados = { ...encabezados, Authorization: `Bearer ${token}` }
+  }
+
   if (datos !== undefined) {
     opciones.body = JSON.stringify(datos)
     encabezados = { 'Content-Type': 'application/json', ...encabezados }
@@ -32,6 +37,10 @@ export async function request(path, { metodo = 'GET', datos, encabezados } = {})
 
   const res = await fetch(`${BASE_URL}${path}`, opciones)
   const cuerpo = await res.json().catch(() => null)
+
+  if (res.status === 401) {
+    limpiarSesion()
+  }
 
   if (!res.ok) {
     const error = new Error(mensajeError(cuerpo?.error, res.status))

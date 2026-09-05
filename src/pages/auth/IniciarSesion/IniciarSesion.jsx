@@ -5,7 +5,7 @@ import Alerta from '@/components/ui/Alerta/Alerta'
 import Boton from '@/components/ui/Boton/Boton'
 import Campo from '@/components/ui/Campo/Campo'
 import { iniciarSesion } from '@/services/api'
-import { guardarSesion } from '@/services/sesion'
+import { guardarSesion, guardarToken } from '@/services/sesion'
 import { esEmailValido, esPasswordValida } from '@/utils/validacion'
 import { MARCA, ROLES } from '@/config/aplicacion'
 import './IniciarSesion.css'
@@ -48,6 +48,7 @@ export default function IniciarSesion() {
     try {
       const respuesta = await iniciarSesion({ email, password })
       guardarSesion(respuesta.usuario)
+      guardarToken(respuesta.token)
       const rol = ROLES[respuesta.usuario.id_rol]
       navigate(rol?.panel ?? '/')
     } catch (error) {
