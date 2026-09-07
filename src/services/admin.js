@@ -1,4 +1,4 @@
-import { request } from './api'
+import { request, manejarSesionExpirada } from './api'
 
 const BASE_URL = import.meta.env.VITE_API_URL || '/api'
 
@@ -16,6 +16,9 @@ function requestFormData(path, { metodo = 'POST', datos } = {}) {
     body: cuerpo,
   }).then(async (res) => {
     const data = await res.json().catch(() => null)
+    if (res.status === 401 || res.status === 403) {
+      manejarSesionExpirada()
+    }
     if (!res.ok) {
       const error = new Error(data?.error || 'Ocurrió un error en el servidor.')
       error.status = res.status

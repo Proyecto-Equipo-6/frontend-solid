@@ -25,16 +25,6 @@ export default function PiePagina() {
               </Link>
             ))}
           </div>
-
-          <div className="pie__columna">
-            <h3 className="pie__titulo">¿Necesitas ayuda?</h3>
-            <p className="pie__texto">
-              Cuéntanos tus dudas, quejas o reclamos y te responderemos lo antes posible.
-            </p>
-            <Link to="/ayuda" className="pie__boton">
-              Ayuda / PQRS
-            </Link>
-          </div>
         </div>
         <p className="pie__copyright">
           © {new Date().getFullYear()} {MARCA.nombre}. Todos los derechos reservados.

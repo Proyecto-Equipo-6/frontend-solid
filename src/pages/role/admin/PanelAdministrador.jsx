@@ -30,7 +30,7 @@ const VISTAS_GESTION = {
 }
 
 export default function PanelAdministrador() {
-  const { sesion, autorizado, cerrando, handleCerrarSesion } = usePanelRol(1, { accesoLibre: true })
+  const { sesion, autorizado, cerrando, handleCerrarSesion } = usePanelRol(1)
 
   const [resumen, setResumen] = useState(null)
   const [error, setError] = useState('')
