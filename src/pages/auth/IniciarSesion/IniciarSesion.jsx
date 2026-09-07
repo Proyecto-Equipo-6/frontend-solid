@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import AuthLayout from '@/components/layout/AuthLayout/AuthLayout'
 import Alerta from '@/components/ui/Alerta/Alerta'
 import Boton from '@/components/ui/Boton/Boton'
@@ -12,6 +12,8 @@ import './IniciarSesion.css'
 
 export default function IniciarSesion() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const sesionExpirada = searchParams.get('sesion') === 'expirada'
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errores, setErrores] = useState({})
@@ -60,6 +62,7 @@ export default function IniciarSesion() {
 
   return (
     <AuthLayout ancho="grande" titulo="Iniciar sesión" subtitulo={`Bienvenido de nuevo a ${MARCA.nombre}`}>
+      {sesionExpirada && <Alerta variante="error">Tu sesión expiró. Inicia sesión nuevamente.</Alerta>}
       {errorServidor && <Alerta variante="error">{errorServidor}</Alerta>}
 
       <Link to="/" className="login__volver">← Volver</Link>

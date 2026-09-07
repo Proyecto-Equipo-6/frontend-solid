@@ -17,6 +17,11 @@ export const ENDPOINTS = {
   perfil: '/v1/users/perfil',
 }
 
+export function manejarSesionExpirada() {
+  limpiarSesion()
+  window.location.assign('/login?sesion=expirada')
+}
+
 export async function request(path, { metodo = 'GET', datos, encabezados } = {}) {
   const opciones = {
     method: metodo,
@@ -38,8 +43,8 @@ export async function request(path, { metodo = 'GET', datos, encabezados } = {})
   const res = await fetch(`${BASE_URL}${path}`, opciones)
   const cuerpo = await res.json().catch(() => null)
 
-  if (res.status === 401) {
-    limpiarSesion()
+  if ((res.status === 401 || res.status === 403) && token) {
+    manejarSesionExpirada()
   }
 
   if (!res.ok) {
