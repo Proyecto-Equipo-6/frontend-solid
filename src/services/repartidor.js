@@ -1,4 +1,5 @@
 import { request, manejarSesionExpirada } from './api'
+import { obtenerToken } from './sesion'
 
 const BASE_URL = import.meta.env.VITE_API_URL || '/api'
 
@@ -10,13 +11,15 @@ function requestFormData(path, { metodo = 'PATCH', campos = {} } = {}) {
     }
   })
 
+  const token = obtenerToken()
   return fetch(`${BASE_URL}${path}`, {
     method: metodo,
     credentials: 'include',
+    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
     body: cuerpo,
   }).then(async (res) => {
     const data = await res.json().catch(() => null)
-    if (res.status === 401 || res.status === 403) {
+    if ((res.status === 401 || res.status === 403) && token) {
       manejarSesionExpirada()
     }
     if (!res.ok) {
