@@ -62,7 +62,7 @@ export default function AppMovil() {
             Toda tu tienda y tu panel de administración, en la palma de la mano.
           </p>
           <div className="appm__acciones">
-            <BotonDescargarApp href="https://expo.dev/artifacts/eas/4hEWa6AHm4EXblU7yIIO1cwDlSaLmEahnmaxd30i9Tw.apk" />
+            <BotonDescargarApp href="https://expo.dev/artifacts/eas/Z46T81USgM1UM4JLAsNBbL72c0zNc7QriRr_QnH9Ejc.apk" />
           </div>
         </div>
 
@@ -110,7 +110,7 @@ export default function AppMovil() {
         <p className="appm__cta-texto">
           Descarga Nexbit Mobile y administra tu tienda desde cualquier lugar.
         </p>
-        <BotonDescargarApp href="https://expo.dev/artifacts/eas/4hEWa6AHm4EXblU7yIIO1cwDlSaLmEahnmaxd30i9Tw.apk" />
+        <BotonDescargarApp href="https://expo.dev/artifacts/eas/Z46T81USgM1UM4JLAsNBbL72c0zNc7QriRr_QnH9Ejc.apk" />
       </div>
     </section>
   )
