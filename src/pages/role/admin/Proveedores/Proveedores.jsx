@@ -47,8 +47,17 @@ export default function Proveedores() {
 
   useEffect(cargarTodo, [])
 
+  function siguienteNit() {
+    const sufijos = proveedores
+      .map((p) => String(p.nit_proveedor || '').match(/^900123456-(\d+)$/)?.[1])
+      .filter(Boolean)
+      .map(Number)
+    const maximo = sufijos.length ? Math.max(...sufijos) : 6
+    return `900123456-${maximo + 1}`
+  }
+
   function abrirNuevo() {
-    setForm(FORM_VACIO)
+    setForm({ ...FORM_VACIO, nit_proveedor: siguienteNit() })
     setEditandoId(null)
     setModal(true)
   }
@@ -258,8 +267,11 @@ export default function Proveedores() {
               <input
                 id="proveedor-telefono"
                 className="crud__campo-input"
+                type="tel"
+                inputMode="numeric"
+                maxLength={10}
                 value={form.telefono}
-                onChange={(e) => cambiarCampo('telefono', e.target.value)}
+                onChange={(e) => cambiarCampo('telefono', e.target.value.replace(/\D/g, '').slice(0, 10))}
                 placeholder="6012345678"
                 required
               />

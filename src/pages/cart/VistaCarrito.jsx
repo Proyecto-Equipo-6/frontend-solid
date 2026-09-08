@@ -179,11 +179,6 @@ export default function VistaCarrito() {
             <span className="carrito__resumen-subtotal">{formatoPrecio(subtotal)}</span>
           </div>
 
-          <div className="carrito__resumen-fila carrito__resumen-descuento">
-            <span>Descuento</span>
-            <span className="carrito__resumen-subtotal">{formatoPrecio(0)}</span>
-          </div>
-
           <div className="carrito__resumen-total">
             <span>Total:</span>
             <strong>{formatoPrecio(total)}</strong>

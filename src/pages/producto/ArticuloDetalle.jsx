@@ -20,7 +20,6 @@ function FichaTecnica({ articulo }) {
     ['Categoría', articulo.categoria],
     ['Proveedor', articulo.proveedor],
     ['Disponibilidad', textoStock(articulo.stock)],
-    ['Garantía', articulo.garantia],
   ]
 
   return (
@@ -156,7 +155,7 @@ export default function ArticuloDetalle() {
         <p className="detalle__descripcion">{articulo.descripcion}</p>
         <p className="detalle__precio">{formatoPrecio(articulo.precio)}</p>
         <p className={`detalle__detalles detalle__detalles--${estado}`}>
-          {textoStock(articulo.stock)} · Garantía: {articulo.garantia}
+          {textoStock(articulo.stock)}
         </p>
 
         <div className="detalle__cantidad">

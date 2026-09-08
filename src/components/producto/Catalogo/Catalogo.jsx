@@ -141,7 +141,7 @@ export default function Catalogo({ articulos, categorias, cargando }) {
       <div className="catalogo__cabecera">
         <h2 className="catalogo__titulo">Nuestro catálogo</h2>
         <p className="catalogo__sub">
-          Productos disponibles con stock real y garantía incluida.
+          Productos disponibles con stock real.
         </p>
       </div>
 

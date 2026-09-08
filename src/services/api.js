@@ -22,6 +22,11 @@ export function manejarSesionExpirada() {
   window.location.assign('/login?sesion=expirada')
 }
 
+function esSesionExpirada(mensaje) {
+  const texto = (mensaje || '').toLowerCase()
+  return texto.includes('sesión') && texto.includes('expirad')
+}
+
 export async function request(path, { metodo = 'GET', datos, encabezados } = {}) {
   const opciones = {
     method: metodo,
@@ -44,7 +49,9 @@ export async function request(path, { metodo = 'GET', datos, encabezados } = {})
   const cuerpo = await res.json().catch(() => null)
 
   if ((res.status === 401 || res.status === 403) && token) {
-    manejarSesionExpirada()
+    if (res.status === 403 || esSesionExpirada(cuerpo?.error)) {
+      manejarSesionExpirada()
+    }
   }
 
   if (!res.ok) {
