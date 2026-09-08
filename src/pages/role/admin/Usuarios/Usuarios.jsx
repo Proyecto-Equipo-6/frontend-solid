@@ -19,6 +19,14 @@ import {
   IconoAgregar,
 } from '@/components/ui/Iconos/Iconos'
 import { obtenerSesion } from '@/services/sesion'
+import {
+  REGEX_SOLO_NUMEROS,
+  esDireccionValida,
+  esEmailValido,
+  esNombreValido,
+  esPasswordValida,
+  esTelefonoValido,
+} from '@/utils/validacion'
 
 const TIPOS_DOCUMENTO = ['CC', 'CE', 'Pasaporte', 'Otro']
 
@@ -33,6 +41,59 @@ const FORM_VACIO = {
   direccion: '',
 }
 
+function validarUsuario(form, editando) {
+  const errores = {}
+  const nombre = form.nombre_apellido.trim()
+
+  if (!form.id_rol) {
+    errores.id_rol = 'Selecciona un rol.'
+  }
+
+  if (!nombre) {
+    errores.nombre_apellido = 'El nombre es obligatorio.'
+  } else if (editando) {
+    if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñÜü ]{3,80}$/.test(nombre)) {
+      errores.nombre_apellido = 'El nombre solo puede contener letras y espacios.'
+    }
+  } else if (!esNombreValido(nombre)) {
+    errores.nombre_apellido = 'Ingresa nombre y apellido (solo letras).'
+  }
+
+  if (!form.numero_documento.trim()) {
+    errores.numero_documento = 'El número de documento es obligatorio.'
+  } else if (!REGEX_SOLO_NUMEROS.test(form.numero_documento)) {
+    errores.numero_documento = 'Debe ser numérico.'
+  } else if (form.numero_documento.length > 10) {
+    errores.numero_documento = 'Máximo 10 dígitos.'
+  }
+
+  if (!esEmailValido(form.email)) {
+    errores.email = 'Ingresa un correo electrónico válido.'
+  }
+
+  if (!form.telefono.trim()) {
+    errores.telefono = 'El teléfono es obligatorio.'
+  } else if (!esTelefonoValido(form.telefono)) {
+    errores.telefono = 'El teléfono debe tener exactamente 10 dígitos.'
+  }
+
+  if (!form.direccion.trim()) {
+    errores.direccion = 'La dirección es obligatoria.'
+  } else if (!esDireccionValida(form.direccion)) {
+    errores.direccion = 'Ingresa una dirección válida (ej: Calle 10 # 5-20, Medellín).'
+  }
+
+  if (!editando) {
+    if (!form.password) {
+      errores.password = 'La contraseña es obligatoria.'
+    } else if (!esPasswordValida(form.password)) {
+      errores.password = 'Entre 8 y 20 caracteres, con mayúscula, minúscula y número.'
+    }
+  }
+
+  return errores
+}
+
 export default function Usuarios() {
   const [usuarios, setUsuarios] = useState([])
   const [roles, setRoles] = useState([])
@@ -43,6 +104,7 @@ export default function Usuarios() {
   const [modal, setModal] = useState(false)
   const [editandoId, setEditandoId] = useState(null)
   const [form, setForm] = useState(FORM_VACIO)
+  const [errores, setErrores] = useState({})
   const [guardando, setGuardando] = useState(false)
 
   const [aEliminar, setAEliminar] = useState(null)
@@ -75,6 +137,7 @@ export default function Usuarios() {
     setAlerta('')
     setErrorEliminar('')
     setForm(FORM_VACIO)
+    setErrores({})
     setEditandoId(null)
     setModal(true)
   }
@@ -92,18 +155,25 @@ export default function Usuarios() {
       telefono: usuario.telefono || '',
       direccion: usuario.direccion || '',
     })
+    setErrores({})
     setEditandoId(usuario.id_usuario)
     setModal(true)
   }
 
   function cambiarCampo(campo, valor) {
     setForm((prev) => ({ ...prev, [campo]: valor }))
+    setErrores((prev) => ({ ...prev, [campo]: undefined }))
   }
 
   async function guardarUsuario(evento) {
     evento.preventDefault()
-    setGuardando(true)
     setAlerta('')
+
+    const erroresCampos = validarUsuario(form, Boolean(editandoId))
+    setErrores(erroresCampos)
+    if (Object.keys(erroresCampos).length > 0) return
+
+    setGuardando(true)
     try {
       const datos = {
         id_rol: Number(form.id_rol),
@@ -280,7 +350,7 @@ export default function Usuarios() {
             <label className="crud__campo-label" htmlFor="usuario-rol">Rol</label>
             <select
               id="usuario-rol"
-              className="crud__campo-input"
+              className={`crud__campo-input${errores.id_rol ? ' crud__campo-input--error' : ''}`}
               value={form.id_rol}
               onChange={(e) => cambiarCampo('id_rol', e.target.value)}
               required
@@ -292,17 +362,19 @@ export default function Usuarios() {
                 </option>
               ))}
             </select>
+            {errores.id_rol && <span className="crud__campo-error">{errores.id_rol}</span>}
           </div>
 
           <div className="crud__campo">
             <label className="crud__campo-label" htmlFor="usuario-nombre">Nombre completo</label>
             <input
               id="usuario-nombre"
-              className="crud__campo-input"
+              className={`crud__campo-input${errores.nombre_apellido ? ' crud__campo-input--error' : ''}`}
               value={form.nombre_apellido}
               onChange={(e) => cambiarCampo('nombre_apellido', e.target.value)}
               required
             />
+            {errores.nombre_apellido && <span className="crud__campo-error">{errores.nombre_apellido}</span>}
           </div>
 
           <div className="crud__fila">
@@ -325,7 +397,7 @@ export default function Usuarios() {
               <label className="crud__campo-label" htmlFor="usuario-numero-documento">N° de documento</label>
               <input
                 id="usuario-numero-documento"
-                className="crud__campo-input"
+                className={`crud__campo-input${errores.numero_documento ? ' crud__campo-input--error' : ''}`}
                 value={form.numero_documento}
                 onChange={(e) => cambiarCampo('numero_documento', e.target.value)}
                 placeholder="Máximo 10 dígitos"
@@ -333,6 +405,7 @@ export default function Usuarios() {
                 maxLength={10}
                 required
               />
+              {errores.numero_documento && <span className="crud__campo-error">{errores.numero_documento}</span>}
             </div>
           </div>
 
@@ -341,18 +414,19 @@ export default function Usuarios() {
               <label className="crud__campo-label" htmlFor="usuario-email">Email</label>
               <input
                 id="usuario-email"
-                className="crud__campo-input"
+                className={`crud__campo-input${errores.email ? ' crud__campo-input--error' : ''}`}
                 type="email"
                 value={form.email}
                 onChange={(e) => cambiarCampo('email', e.target.value)}
                 required
               />
+              {errores.email && <span className="crud__campo-error">{errores.email}</span>}
             </div>
             <div className="crud__campo">
               <label className="crud__campo-label" htmlFor="usuario-telefono">Teléfono</label>
               <input
                 id="usuario-telefono"
-                className="crud__campo-input"
+                className={`crud__campo-input${errores.telefono ? ' crud__campo-input--error' : ''}`}
                 value={form.telefono}
                 onChange={(e) => cambiarCampo('telefono', e.target.value)}
                 placeholder="10 dígitos, ej: 6012345678"
@@ -360,6 +434,7 @@ export default function Usuarios() {
                 maxLength={10}
                 required
               />
+              {errores.telefono && <span className="crud__campo-error">{errores.telefono}</span>}
             </div>
           </div>
 
@@ -367,11 +442,13 @@ export default function Usuarios() {
             <label className="crud__campo-label" htmlFor="usuario-direccion">Dirección</label>
             <input
               id="usuario-direccion"
-              className="crud__campo-input"
+              className={`crud__campo-input${errores.direccion ? ' crud__campo-input--error' : ''}`}
               value={form.direccion}
               onChange={(e) => cambiarCampo('direccion', e.target.value)}
+              placeholder="Ej: Calle 10 # 5-20, Medellín"
               required
             />
+            {errores.direccion && <span className="crud__campo-error">{errores.direccion}</span>}
           </div>
 
           {!editandoId && (
@@ -379,13 +456,14 @@ export default function Usuarios() {
               <label className="crud__campo-label" htmlFor="usuario-password">Contraseña</label>
               <input
                 id="usuario-password"
-                className="crud__campo-input"
+                className={`crud__campo-input${errores.password ? ' crud__campo-input--error' : ''}`}
                 type="password"
                 value={form.password}
                 onChange={(e) => cambiarCampo('password', e.target.value)}
                 placeholder="Entre 8 y 20 caracteres"
                 required
               />
+              {errores.password && <span className="crud__campo-error">{errores.password}</span>}
             </div>
           )}
 

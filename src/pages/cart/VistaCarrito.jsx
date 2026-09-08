@@ -17,6 +17,7 @@ function lineasProducto(item) {
 export default function VistaCarrito() {
   const navigate = useNavigate()
   const [items, setItems] = useState([])
+  const [borradores, setBorradores] = useState({})
 
   useEffect(() => {
     obtenerCarrito()
@@ -25,8 +26,25 @@ export default function VistaCarrito() {
   }, [])
 
   async function cambiarCantidad(item, cantidad) {
-    const items = await actualizarCantidad(item.id, cantidad)
-    setItems(items)
+    const lista = await actualizarCantidad(item.id, cantidad)
+    setItems(lista)
+    setBorradores((prev) => ({ ...prev, [item.id]: String(cantidad) }))
+  }
+
+  function escribirCantidad(item, valor) {
+    setBorradores((prev) => ({ ...prev, [item.id]: valor }))
+  }
+
+  async function confirmarCantidad(item) {
+    const texto = borradores[item.id]
+    if (texto === undefined) return
+    const numero = Number(texto)
+    if (!Number.isInteger(numero) || numero < 1) {
+      setBorradores((prev) => ({ ...prev, [item.id]: String(item.cantidad) }))
+      return
+    }
+    const limitado = Math.min(numero, item.stock)
+    await cambiarCantidad(item, limitado)
   }
 
   async function quitarProducto(item) {
@@ -41,6 +59,7 @@ export default function VistaCarrito() {
   const subtotal = items.reduce((suma, item) => suma + item.precio * item.cantidad, 0)
   const total = subtotal
   const carritoVacio = items.length === 0
+  const totalUnidades = items.reduce((suma, item) => suma + item.cantidad, 0)
 
   return (
     <section className="carrito">
@@ -51,6 +70,11 @@ export default function VistaCarrito() {
       <div className="carrito__contenido">
         <div className="carrito__principal">
           <h1 className="carrito__titulo">Carrito de compras</h1>
+          {!carritoVacio && (
+            <p className="carrito__resumen-conteo">
+              {totalUnidades} {totalUnidades === 1 ? 'producto' : 'productos'} en tu carrito
+            </p>
+          )}
 
           {carritoVacio ? (
             <div className="carrito__vacio">
@@ -115,11 +139,17 @@ export default function VistaCarrito() {
                       <input
                         className="carrito__cantidad-input"
                         type="number"
-                        min="1" max={item.stock} value={item.cantidad} onChange={(evento) => {
-                        const valor = evento.target.value
-                        if (valor === '') return
-                        cambiarCantidad(item, Math.min(Number(valor), item.stock))
-                      }} />
+                        min="1" max={item.stock}
+                        value={borradores[item.id] ?? item.cantidad}
+                        onChange={(evento) => escribirCantidad(item, evento.target.value)}
+                        onBlur={() => confirmarCantidad(item)}
+                        onKeyDown={(evento) => {
+                          if (evento.key === 'Enter') {
+                            evento.preventDefault()
+                            evento.target.blur()
+                          }
+                        }}
+                      />
                       <button
                         type="button"
                         className="carrito__cantidad-boton"

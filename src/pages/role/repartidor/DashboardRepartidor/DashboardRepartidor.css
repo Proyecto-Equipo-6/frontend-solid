@@ -225,3 +225,13 @@
   color: #0e7490;
   background: #cffafe;
 }
+.rep-dash__aviso {
+  margin: 0 0 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--dash-texto);
+  background: var(--dash-rojo-bg, #fde8e8);
+  border: 1px solid var(--dash-rojo, #e5484d);
+  border-radius: 8px;
+}

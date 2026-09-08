@@ -2,7 +2,7 @@ import { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
 import Alerta from '@/components/ui/Alerta/Alerta'
 import Boton from '@/components/ui/Boton/Boton'
 import Campo from '@/components/ui/Campo/Campo'
-import { esTelefonoValido } from '@/utils/validacion'
+import { esDireccionValida, esTelefonoValido } from '@/utils/validacion'
 import { obtenerSesion, guardarSesion } from '@/services/sesion'
 import { actualizarPerfil } from '@/services/api'
 import './ConfirmacionEnvio.css'
@@ -34,6 +34,8 @@ function validarDireccion(datos) {
 
   if (!datos.direccion.trim()) {
     errores.direccion = 'La dirección es obligatoria.'
+  } else if (!esDireccionValida(datos.direccion)) {
+    errores.direccion = 'Ingresa una dirección válida (ej: Calle 10 # 5-20, Medellín).'
   }
 
   return errores

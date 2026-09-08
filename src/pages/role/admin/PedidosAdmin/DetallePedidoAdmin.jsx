@@ -449,7 +449,7 @@ export default function DetallePedidoAdmin({ pedidoId, onVolver, onActualizado }
                     {detalle.productos.map((producto) => (
                       <div className="det-pedido__producto" key={producto.id_producto}>
                         <span className="det-pedido__producto-nombre">
-                          Producto #{producto.id_producto} × {producto.cantidad}
+                          {producto.nombre || `Producto #${producto.id_producto}`} × {producto.cantidad}
                         </span>
                         <span>{formatoPrecio(Number(producto.subtotal))}</span>
                       </div>

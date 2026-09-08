@@ -332,3 +332,13 @@
   color: #0e7490;
   background: #cffafe;
 }
+.rep-det__aviso {
+  margin: 0 0 12px;
+  padding: 10px 14px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--dash-texto);
+  background: var(--dash-rojo-bg, #fde8e8);
+  border: 1px solid var(--dash-rojo, #e5484d);
+  border-radius: 8px;
+}

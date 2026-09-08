@@ -4,19 +4,28 @@ import Marca from '@/components/ui/Marca/Marca'
 import BotonTema from '@/components/ui/BotonTema/BotonTema'
 import { IconoCarrito, IconoCategorias, IconoPedido, IconoUsuario } from '@/components/ui/Iconos/Iconos'
 import { obtenerSesion } from '@/services/sesion'
+import { contarUnidadesCarrito } from '@/services/carrito'
 import { NAVEGACION_PRINCIPAL } from '@/config/aplicacion'
 import './BarraNavegacion.css'
 
 export default function BarraNavegacion() {
   const [menuAbierto, setMenuAbierto] = useState(false)
   const [carritoMovido, setCarritoMovido] = useState(false)
+  const [unidades, setUnidades] = useState(0)
   const sesion = obtenerSesion()
   const esCliente = Boolean(sesion && Number(sesion.id_rol) === 2)
 
   useEffect(() => {
-    function manejarCarrito() {
+    setUnidades(contarUnidadesCarrito())
+
+    function manejarCarrito(evento) {
       setCarritoMovido(true)
       window.setTimeout(() => setCarritoMovido(false), 700)
+      if (typeof evento?.detail?.unidades === 'number') {
+        setUnidades(evento.detail.unidades)
+      } else {
+        setUnidades(contarUnidadesCarrito())
+      }
     }
     window.addEventListener('nexbit:carrito', manejarCarrito)
     return () => window.removeEventListener('nexbit:carrito', manejarCarrito)
@@ -61,6 +70,7 @@ export default function BarraNavegacion() {
                 <span className="barra__carrito-icono" aria-hidden="true">
                   <IconoCarrito tamano={18} />
                 </span>{' '}Carrito
+                {unidades > 0 && <span className="barra__carrito-contador">{unidades}</span>}
               </Link>
               <Link to="/perfil" className="barra__boton barra__boton--relleno">
                 Mi perfil
@@ -104,6 +114,7 @@ export default function BarraNavegacion() {
                 <span className="barra__carrito-icono" aria-hidden="true">
                   <IconoCarrito tamano={18} />
                 </span>
+                {unidades > 0 && <span className="barra__carrito-contador barra__carrito-contador--icono">{unidades}</span>}
               </Link>
               <Link to="/perfil" className="barra__icono" aria-label="Mi perfil" title="Mi perfil">
                 <IconoUsuario tamano={18} />

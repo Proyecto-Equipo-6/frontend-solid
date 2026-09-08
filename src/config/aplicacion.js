@@ -7,8 +7,6 @@ export const MARCA = {
 
 export const NAVEGACION_PRINCIPAL = [{ nombre: 'Catálogo', destino: '/#catalogo' }]
 
-export const PROVEEDORES_SOCIALES = ['Google', 'Facebook']
-
 export const TIPOS_DOCUMENTO = ['CC', 'Pasaporte', 'CE', 'Otro']
 
 export const OPCIONES_ENVIO = [

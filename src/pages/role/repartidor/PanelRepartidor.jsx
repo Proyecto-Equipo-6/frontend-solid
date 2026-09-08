@@ -15,6 +15,7 @@ export default function PanelRepartidor() {
   const [seccion, setSeccion] = useState('inicio')
   const [detalleId, setDetalleId] = useState(null)
   const [puedeActualizar, setPuedeActualizar] = useState(false)
+  const [hayEntregaEnCurso, setHayEntregaEnCurso] = useState(false)
   const [claveDashboard, setClaveDashboard] = useState(0)
 
   if (!autorizado) return null
@@ -24,9 +25,10 @@ export default function PanelRepartidor() {
     setDetalleId(null)
   }
 
-  function verDetalle(pedido, activo) {
+  function verDetalle(pedido, activo, enCurso = false) {
     setDetalleId(pedido.id_pedido)
     setPuedeActualizar(activo)
+    setHayEntregaEnCurso(enCurso)
   }
 
   function volverAlDashboard() {
@@ -41,6 +43,7 @@ export default function PanelRepartidor() {
         <DetallePedidoRepartidor
           pedidoId={detalleId}
           puedeActualizar={puedeActualizar}
+          hayEntregaEnCurso={hayEntregaEnCurso}
           onVolver={() => setDetalleId(null)}
           onActualizado={volverAlDashboard}
         />

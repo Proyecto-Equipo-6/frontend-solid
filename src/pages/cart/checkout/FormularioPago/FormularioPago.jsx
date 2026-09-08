@@ -1,5 +1,4 @@
 import { forwardRef, useImperativeHandle, useState } from 'react'
-import Alerta from '@/components/ui/Alerta/Alerta'
 import { METODOS_PAGO } from '@/config/aplicacion'
 import './FormularioPago.css'
 
@@ -45,7 +44,6 @@ const FormularioPago = forwardRef(function FormularioPago(_props, ref) {
       <div className="form-pago__detalle">
         <p className="form-pago__detalle-titulo">Instrucciones</p>
         <p className="form-pago__detalle-texto">{seleccionada.descripcion}</p>
-        <Alerta variante="exito">Pagas en efectivo cuando recibas tu pedido.</Alerta>
       </div>
     </div>
   )

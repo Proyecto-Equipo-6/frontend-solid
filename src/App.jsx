@@ -16,7 +16,6 @@ const VistaCliente = lazy(() => import('@/pages/role/cliente/VistaCliente'))
 const VistaCarrito = lazy(() => import('@/pages/cart/VistaCarrito'))
 const PanelRepartidor = lazy(() => import('@/pages/role/repartidor/PanelRepartidor'))
 const Perfil = lazy(() => import('@/pages/profile/Perfil'))
-const EditarPerfil = lazy(() => import('@/pages/profile/EditarPerfil'))
 const Checkout = lazy(() => import('@/pages/cart/checkout/Checkout'))
 const MisPedidos = lazy(() => import('@/pages/role/cliente/MisPedidos/MisPedidos'))
 const AppMovil = lazy(() => import('@/pages/AppMovil/AppMovil'))
@@ -67,7 +66,6 @@ function App() {
                 <Route path="/" element={<Inicio />} />
                 <Route path="/articulo/:id" element={<ArticuloDetalle />} />
                 <Route path="/perfil" element={<Perfil />} />
-                <Route path="/perfil/editar" element={<EditarPerfil />} />
                 <Route path="/cliente" element={<VistaCliente />} />
                 <Route path="/carrito" element={<VistaCarrito />} />
                 <Route path="/checkout" element={<Checkout />} />

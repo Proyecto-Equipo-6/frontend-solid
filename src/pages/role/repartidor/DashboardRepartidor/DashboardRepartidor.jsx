@@ -16,7 +16,14 @@ function metodoPago(id) {
   return METODO_PAGO_REPARTIDOR[id] || 'Por definir'
 }
 
-function PedidoTarjeta({ pedido, activo, onVerDetalle }) {
+function hayEntregaEnCurso(dashboard, pedido) {
+  const todos = [dashboard.pedidoActivo, ...(dashboard.pedidosEnCola || [])].filter(Boolean)
+  return todos.some(
+    (p) => p.id_pedido !== pedido.id_pedido && p.estado === 'EN_CAMINO',
+  )
+}
+
+function PedidoTarjeta({ pedido, activo, enCurso, onVerDetalle }) {
   return (
     <article className={`rep-dash__pedido ${activo ? 'rep-dash__pedido--activo' : ''}`}>
       <div className="rep-dash__pedido-cabecera">
@@ -37,10 +44,15 @@ function PedidoTarjeta({ pedido, activo, onVerDetalle }) {
           <dd>{formatoPrecio(Number(pedido.total))}</dd>
         </div>
       </dl>
+      {enCurso && (
+        <p className="rep-dash__aviso">
+          Tienes otro pedido pendiente, finalízalo para poder iniciar esta entrega.
+        </p>
+      )}
       <button
         type="button"
         className="rep-dash__detalle-boton"
-        onClick={() => onVerDetalle(pedido, activo)}
+        onClick={() => onVerDetalle(pedido, activo, enCurso)}
       >
         Ver detalles
       </button>
@@ -96,7 +108,12 @@ export default function DashboardRepartidor({ onVerDetalle }) {
           {dashboard.pedidoActivo ? (
             <div className="rep-dash__activo">
               <h2 className="rep-dash__seccion-titulo">Pedido activo</h2>
-              <PedidoTarjeta pedido={dashboard.pedidoActivo} activo onVerDetalle={onVerDetalle} />
+              <PedidoTarjeta
+                pedido={dashboard.pedidoActivo}
+                activo
+                enCurso={false}
+                onVerDetalle={onVerDetalle}
+              />
             </div>
           ) : (
             <div className="rep-dash__vacio">
@@ -110,7 +127,13 @@ export default function DashboardRepartidor({ onVerDetalle }) {
               <h2 className="rep-dash__seccion-titulo">Pedidos en cola</h2>
               <div className="rep-dash__cola-lista">
                 {dashboard.pedidosEnCola.map((pedido) => (
-                  <PedidoTarjeta key={pedido.id_pedido} pedido={pedido} activo={false} onVerDetalle={onVerDetalle} />
+                  <PedidoTarjeta
+                    key={pedido.id_pedido}
+                    pedido={pedido}
+                    activo={false}
+                    enCurso={hayEntregaEnCurso(dashboard, pedido)}
+                    onVerDetalle={onVerDetalle}
+                  />
                 ))}
               </div>
             </div>
