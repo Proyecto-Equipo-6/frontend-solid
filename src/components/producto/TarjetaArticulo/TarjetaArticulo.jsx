@@ -31,7 +31,17 @@ export default function TarjetaArticulo({ articulo }) {
   }
 
   function cambiarCantidad(valor) {
-    setCantidad(Math.max(1, Math.min(Number(valor) || 1, stock)))
+    if (valor === '') {
+      setCantidad('')
+      return
+    }
+    const numero = Number(valor)
+    if (Number.isNaN(numero)) return
+    setCantidad(Math.min(numero, stock))
+  }
+
+  function unidadesActuales() {
+    return Math.max(1, Math.min(Number(cantidad) || 1, stock))
   }
 
   async function confirmarAgregar(evento) {
@@ -40,7 +50,7 @@ export default function TarjetaArticulo({ articulo }) {
     if (agotado) return
     setAgregando(true)
     try {
-      await agregarAlCarrito(articulo, cantidad)
+      await agregarAlCarrito(articulo, unidadesActuales())
       setExito(true)
       setMostrarCantidad(false)
       window.setTimeout(() => setExito(false), 1800)
@@ -106,8 +116,8 @@ export default function TarjetaArticulo({ articulo }) {
             type="button"
             className="tarjeta__cantidad-boton"
             aria-label="Disminuir cantidad"
-            disabled={cantidad <= 1}
-            onClick={() => cambiarCantidad(cantidad - 1)}
+            disabled={unidadesActuales() <= 1}
+            onClick={() => cambiarCantidad(unidadesActuales() - 1)}
           >
             −
           </button>
@@ -118,13 +128,16 @@ export default function TarjetaArticulo({ articulo }) {
             max={stock}
             value={cantidad}
             onChange={(evento) => cambiarCantidad(evento.target.value)}
+            onBlur={() => {
+              if (cantidad === '' || Number(cantidad) < 1) setCantidad(1)
+            }}
           />
           <button
             type="button"
             className="tarjeta__cantidad-boton"
             aria-label="Aumentar cantidad"
-            disabled={cantidad >= stock}
-            onClick={() => cambiarCantidad(cantidad + 1)}
+            disabled={unidadesActuales() >= stock}
+            onClick={() => cambiarCantidad(unidadesActuales() + 1)}
           >
             +
           </button>
