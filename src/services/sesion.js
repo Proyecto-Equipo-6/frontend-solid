@@ -1,7 +1,8 @@
 const CLAVE_SESION = 'nexbit_sesion'
 
 export function guardarSesion(usuario) {
-  localStorage.setItem(CLAVE_SESION, JSON.stringify(usuario))
+  const token = obtenerSesion()?.token
+  localStorage.setItem(CLAVE_SESION, JSON.stringify(token ? { ...usuario, token } : usuario))
 }
 
 export function obtenerSesion() {
