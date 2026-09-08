@@ -78,7 +78,18 @@ export default function ArticuloDetalle() {
 
   function cambiarCantidad(valor) {
     const maximo = articulo?.stock ?? 1
-    setCantidad(Math.max(1, Math.min(Number(valor) || 1, maximo)))
+    if (valor === '') {
+      setCantidad('')
+      return
+    }
+    const numero = Number(valor)
+    if (Number.isNaN(numero)) return
+    setCantidad(Math.min(numero, maximo))
+  }
+
+  function unidadesActuales() {
+    const maximo = articulo?.stock ?? 1
+    return Math.max(1, Math.min(Number(cantidad) || 1, maximo))
   }
 
   async function handleAgregar() {
@@ -89,7 +100,7 @@ export default function ArticuloDetalle() {
     }
     setAgregando(true)
     try {
-      await agregarAlCarrito(articulo, cantidad)
+      await agregarAlCarrito(articulo, unidadesActuales())
       setExito(true)
       setAviso({ variante: 'exito', texto: 'Producto agregado al carrito.' })
     } catch (error) {
@@ -165,8 +176,8 @@ export default function ArticuloDetalle() {
               type="button"
               className="detalle__cantidad-boton"
               aria-label="Disminuir cantidad"
-              disabled={agotado || cantidad <= 1}
-              onClick={() => cambiarCantidad(cantidad - 1)}
+              disabled={agotado || unidadesActuales() <= 1}
+              onClick={() => cambiarCantidad(unidadesActuales() - 1)}
             >
               −
             </button>
@@ -178,13 +189,16 @@ export default function ArticuloDetalle() {
               value={cantidad}
               disabled={agotado}
               onChange={(evento) => cambiarCantidad(evento.target.value)}
+              onBlur={() => {
+                if (cantidad === '' || Number(cantidad) < 1) setCantidad(1)
+              }}
             />
             <button
               type="button"
               className="detalle__cantidad-boton"
               aria-label="Aumentar cantidad"
-              disabled={agotado || cantidad >= articulo.stock}
-              onClick={() => cambiarCantidad(cantidad + 1)}
+              disabled={agotado || unidadesActuales() >= articulo.stock}
+              onClick={() => cambiarCantidad(unidadesActuales() + 1)}
             >
               +
             </button>
