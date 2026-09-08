@@ -5,10 +5,13 @@ import Alerta from '@/components/ui/Alerta/Alerta'
 import Boton from '@/components/ui/Boton/Boton'
 import Campo from '@/components/ui/Campo/Campo'
 import { registrarUsuario } from '@/services/api'
-import { MARCA, TIPOS_DOCUMENTO } from '@/config/aplicacion'
+import { obtenerSesion } from '@/services/sesion'
+import { MARCA, ROLES, TIPOS_DOCUMENTO } from '@/config/aplicacion'
 import {
   REGEX_SOLO_NUMEROS,
+  esDireccionValida,
   esEmailValido,
+  esNombreValido,
   esPasswordValida,
   esTelefonoValido,
 } from '@/utils/validacion'
@@ -29,6 +32,8 @@ function validar(form) {
 
   if (!form.nombre_apellido.trim()) {
     errores.nombre_apellido = 'El nombre es obligatorio.'
+  } else if (!esNombreValido(form.nombre_apellido)) {
+    errores.nombre_apellido = 'Ingresa tu nombre y apellido (solo letras).'
   }
 
   if (!form.tipo_documento) {
@@ -59,6 +64,8 @@ function validar(form) {
 
   if (!form.direccion.trim()) {
     errores.direccion = 'La dirección es obligatoria.'
+  } else if (!esDireccionValida(form.direccion)) {
+    errores.direccion = 'Ingresa una dirección válida (ej: Calle 10 # 5-20, Medellín).'
   }
 
   return errores
@@ -74,6 +81,14 @@ export default function Registro() {
   const temporizador = useRef(null)
 
   useEffect(() => () => clearTimeout(temporizador.current), [])
+
+  useEffect(() => {
+    const sesion = obtenerSesion()
+    if (sesion?.id_rol) {
+      const destino = ROLES[sesion.id_rol]?.panel ?? '/'
+      navigate(destino, { replace: true })
+    }
+  }, [navigate])
 
   function handleChange(event) {
     const { name, value } = event.target
@@ -107,7 +122,6 @@ export default function Registro() {
       titulo="Crear cuenta"
       subtitulo={`Únete a ${MARCA.nombre} y comienza a realizar pedidos`}
       ancho="grande"
-      accionRedes="Registrarse con"
     >
       {errorServidor && <Alerta variante="error">{errorServidor}</Alerta>}
       {exito && <Alerta variante="exito">{exito}</Alerta>}

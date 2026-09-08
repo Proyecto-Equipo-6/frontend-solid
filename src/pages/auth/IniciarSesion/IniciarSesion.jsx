@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import AuthLayout from '@/components/layout/AuthLayout/AuthLayout'
 import Alerta from '@/components/ui/Alerta/Alerta'
 import Boton from '@/components/ui/Boton/Boton'
 import Campo from '@/components/ui/Campo/Campo'
 import { iniciarSesion } from '@/services/api'
-import { guardarSesion, guardarToken } from '@/services/sesion'
+import { obtenerSesion, guardarSesion, guardarToken } from '@/services/sesion'
 import { esEmailValido, esPasswordValida } from '@/utils/validacion'
 import { MARCA, ROLES } from '@/config/aplicacion'
 import './IniciarSesion.css'
@@ -19,6 +19,14 @@ export default function IniciarSesion() {
   const [errores, setErrores] = useState({})
   const [errorServidor, setErrorServidor] = useState('')
   const [enviando, setEnviando] = useState(false)
+
+  useEffect(() => {
+    const sesion = obtenerSesion()
+    if (sesion?.id_rol) {
+      const destino = ROLES[sesion.id_rol]?.panel ?? '/'
+      navigate(destino, { replace: true })
+    }
+  }, [navigate])
 
   function limpiarError(campo) {
     setErrores((prev) => ({ ...prev, [campo]: undefined }))

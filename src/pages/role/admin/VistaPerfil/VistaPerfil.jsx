@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { obtenerPerfil, actualizarPerfil } from '@/services/api'
 import { guardarSesion } from '@/services/sesion'
 import { ROLES } from '@/config/aplicacion'
-import { esEmailValido, esTelefonoValido } from '@/utils/validacion'
+import { esDireccionValida, esEmailValido, esNombreValido, esTelefonoValido } from '@/utils/validacion'
 import './VistaPerfil.css'
 
 const CAMPOS_PERFIL = [
@@ -28,6 +28,8 @@ function validar(form) {
 
   if (!form.nombre_apellido.trim()) {
     errores.nombre_apellido = 'El nombre es obligatorio.'
+  } else if (!esNombreValido(form.nombre_apellido)) {
+    errores.nombre_apellido = 'Ingresa tu nombre y apellido (solo letras).'
   }
 
   if (!esEmailValido(form.email)) {
@@ -42,6 +44,8 @@ function validar(form) {
 
   if (!form.direccion.trim()) {
     errores.direccion = 'La dirección es obligatoria.'
+  } else if (!esDireccionValida(form.direccion)) {
+    errores.direccion = 'Ingresa una dirección válida (ej: Calle 10 # 5-20, Medellín).'
   }
 
   if (!form.password) {

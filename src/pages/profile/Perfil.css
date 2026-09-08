@@ -80,6 +80,19 @@
   gap: 10px;
 }
 
+.perfil__form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.perfil__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
 .perfil__nota {
   margin: 12px 0 0;
   font-size: 13px;

@@ -7,7 +7,6 @@ import {
   IconoPaquete,
   IconoPedido,
   IconoRepartidor,
-  IconoTicket,
 } from '@/components/ui/Iconos/Iconos'
 import './AppMovil.css'
 
@@ -36,11 +35,6 @@ const CARACTERISTICAS = [
     icono: IconoCampana,
     titulo: 'Notificaciones',
     texto: 'Entérate al momento de cada cambio de estado de tus pedidos.',
-  },
-  {
-    icono: IconoTicket,
-    titulo: 'Tickets y soporte',
-    texto: 'Descarga comprobantes y resuelve dudas sin estar frente a una computadora.',
   },
 ]
 

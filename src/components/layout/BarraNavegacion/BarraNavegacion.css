@@ -194,6 +194,31 @@
   animation: barra-carrito-mueve 0.7s ease;
 }
 
+.barra__carrito-contador {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--sobre-accent, #fff);
+  background: var(--accent);
+  border-radius: 999px;
+}
+
+.barra__icono {
+  position: relative;
+}
+
+.barra__carrito-contador--icono {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+}
+
 @keyframes barra-carrito-mueve {
   0% {
     transform: translateX(0);

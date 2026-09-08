@@ -43,7 +43,7 @@ function DiagramaSeguimiento({ estadoActual }) {
   )
 }
 
-export default function DetallePedidoRepartidor({ pedidoId, puedeActualizar, onVolver, onActualizado }) {
+export default function DetallePedidoRepartidor({ pedidoId, puedeActualizar, hayEntregaEnCurso = false, onVolver, onActualizado }) {
   const [detalle, setDetalle] = useState(null)
   const [cargando, setCargando] = useState(true)
   const [aviso, setAviso] = useState('')
@@ -205,16 +205,24 @@ export default function DetallePedidoRepartidor({ pedidoId, puedeActualizar, onV
           <h2 className="rep-det__seccion-titulo">Actualizar estado</h2>
 
           {detalle.estado === 'ASIGNADO' && (
-            <button
-              type="button"
-              className="rep-det__boton rep-det__boton--avanzar"
-              onClick={() => {
-                setAviso('')
-                setAccion({ estado: 'EN_CAMINO' })
-              }}
-            >
-              Marcar en camino
-            </button>
+            <>
+              {hayEntregaEnCurso && (
+                <p className="rep-det__aviso">
+                  Tienes otro pedido pendiente, finalízalo para poder iniciar otra entrega.
+                </p>
+              )}
+              <button
+                type="button"
+                className="rep-det__boton rep-det__boton--avanzar"
+                disabled={hayEntregaEnCurso}
+                onClick={() => {
+                  setAviso('')
+                  setAccion({ estado: 'EN_CAMINO' })
+                }}
+              >
+                Marcar en camino
+              </button>
+            </>
           )}
 
           {detalle.estado === 'EN_CAMINO' && (

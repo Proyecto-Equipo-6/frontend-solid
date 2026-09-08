@@ -4,44 +4,32 @@ import Marca from '@/components/ui/Marca/Marca'
 import BotonTema from '@/components/ui/BotonTema/BotonTema'
 import { IconoCarrito, IconoCategorias, IconoPedido, IconoUsuario } from '@/components/ui/Iconos/Iconos'
 import { obtenerSesion } from '@/services/sesion'
-import { obtenerCarrito } from '@/services/carrito'
+import { contarUnidadesCarrito } from '@/services/carrito'
 import { NAVEGACION_PRINCIPAL } from '@/config/aplicacion'
 import './BarraNavegacion.css'
 
 export default function BarraNavegacion() {
   const [menuAbierto, setMenuAbierto] = useState(false)
   const [carritoMovido, setCarritoMovido] = useState(false)
-  const [contador, setContador] = useState(0)
+  const [unidades, setUnidades] = useState(0)
   const sesion = obtenerSesion()
   const esCliente = Boolean(sesion && Number(sesion.id_rol) === 2)
 
   useEffect(() => {
-    let activo = true
-    async function cargarContador() {
-      if (!obtenerSesion()) {
-        if (activo) setContador(0)
-        return
-      }
-      try {
-        const items = await obtenerCarrito()
-        if (!activo) return
-        setContador(items.reduce((suma, item) => suma + Number(item.cantidad || 0), 0))
-      } catch {
-        if (activo) setContador(0)
-      }
-    }
-    cargarContador()
-    function manejarCarrito() {
+    setUnidades(contarUnidadesCarrito())
+
+    function manejarCarrito(evento) {
       setCarritoMovido(true)
       window.setTimeout(() => setCarritoMovido(false), 700)
-      cargarContador()
+      if (typeof evento?.detail?.unidades === 'number') {
+        setUnidades(evento.detail.unidades)
+      } else {
+        setUnidades(contarUnidadesCarrito())
+      }
     }
     window.addEventListener('nexbit:carrito', manejarCarrito)
-    return () => {
-      activo = false
-      window.removeEventListener('nexbit:carrito', manejarCarrito)
-    }
-  }, [sesion?.token])
+    return () => window.removeEventListener('nexbit:carrito', manejarCarrito)
+  }, [])
 
   const claseCarrito = `barra__boton barra__boton--borde barra__boton--carrito${
     carritoMovido ? ' barra__boton--carrito-activo' : ''
@@ -81,8 +69,8 @@ export default function BarraNavegacion() {
               >
                 <span className="barra__carrito-icono" aria-hidden="true">
                   <IconoCarrito tamano={18} />
-                  {contador > 0 && <span className="barra__carrito-contador">{contador}</span>}
                 </span>{' '}Carrito
+                {unidades > 0 && <span className="barra__carrito-contador">{unidades}</span>}
               </Link>
               <Link to="/perfil" className="barra__boton barra__boton--relleno">
                 Mi perfil
@@ -125,8 +113,8 @@ export default function BarraNavegacion() {
               <Link to="/carrito" className={claseCarritoIcono} aria-label="Carrito" title="Carrito">
                 <span className="barra__carrito-icono" aria-hidden="true">
                   <IconoCarrito tamano={18} />
-                  {contador > 0 && <span className="barra__carrito-contador">{contador}</span>}
                 </span>
+                {unidades > 0 && <span className="barra__carrito-contador barra__carrito-contador--icono">{unidades}</span>}
               </Link>
               <Link to="/perfil" className="barra__icono" aria-label="Mi perfil" title="Mi perfil">
                 <IconoUsuario tamano={18} />

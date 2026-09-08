@@ -106,6 +106,7 @@ function cambiarCampo(campo, valor) {
     setGuardando(true)
     setAlerta('')
     try {
+      const stock = Number(form.stock)
       const datos = {
         sku: form.sku,
         id_categoria: Number(form.id_categoria),
@@ -113,8 +114,8 @@ function cambiarCampo(campo, valor) {
         nombre: form.nombre,
         descripcion: form.descripcion,
         precio: Number(form.precio),
-        stock: Number(form.stock),
-        estado: Number(form.estado),
+        stock,
+        estado: stock === 0 ? 0 : Number(form.estado),
       }
       if (form.imagen) {
         datos.imagen = form.imagen
@@ -274,6 +275,10 @@ function cambiarCampo(campo, valor) {
 
   async function reactivarProducto(producto) {
     setAlerta('')
+    if (Number(producto.stock) <= 0) {
+      setAlerta('No puedes activar un producto sin stock. Ajusta el stock primero.')
+      return
+    }
     try {
       await editarProducto(producto.id_producto, {
         sku: producto.sku,

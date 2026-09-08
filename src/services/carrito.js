@@ -17,7 +17,16 @@ function guardarCarrito(items) {
 }
 
 function notificarCarrito() {
-  window.dispatchEvent(new CustomEvent('nexbit:carrito'))
+  const unidades = contarUnidades(leerCarrito())
+  window.dispatchEvent(new CustomEvent('nexbit:carrito', { detail: { unidades } }))
+}
+
+function contarUnidades(items) {
+  return items.reduce((suma, item) => suma + Number(item.cantidad || 0), 0)
+}
+
+export function contarUnidadesCarrito() {
+  return contarUnidades(leerCarrito())
 }
 
 function normalizarItems(items) {
