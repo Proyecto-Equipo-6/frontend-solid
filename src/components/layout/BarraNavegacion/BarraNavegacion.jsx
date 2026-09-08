@@ -4,23 +4,44 @@ import Marca from '@/components/ui/Marca/Marca'
 import BotonTema from '@/components/ui/BotonTema/BotonTema'
 import { IconoCarrito, IconoCategorias, IconoPedido, IconoUsuario } from '@/components/ui/Iconos/Iconos'
 import { obtenerSesion } from '@/services/sesion'
+import { obtenerCarrito } from '@/services/carrito'
 import { NAVEGACION_PRINCIPAL } from '@/config/aplicacion'
 import './BarraNavegacion.css'
 
 export default function BarraNavegacion() {
   const [menuAbierto, setMenuAbierto] = useState(false)
   const [carritoMovido, setCarritoMovido] = useState(false)
+  const [contador, setContador] = useState(0)
   const sesion = obtenerSesion()
   const esCliente = Boolean(sesion && Number(sesion.id_rol) === 2)
 
   useEffect(() => {
+    let activo = true
+    async function cargarContador() {
+      if (!obtenerSesion()) {
+        if (activo) setContador(0)
+        return
+      }
+      try {
+        const items = await obtenerCarrito()
+        if (!activo) return
+        setContador(items.reduce((suma, item) => suma + Number(item.cantidad || 0), 0))
+      } catch {
+        if (activo) setContador(0)
+      }
+    }
+    cargarContador()
     function manejarCarrito() {
       setCarritoMovido(true)
       window.setTimeout(() => setCarritoMovido(false), 700)
+      cargarContador()
     }
     window.addEventListener('nexbit:carrito', manejarCarrito)
-    return () => window.removeEventListener('nexbit:carrito', manejarCarrito)
-  }, [])
+    return () => {
+      activo = false
+      window.removeEventListener('nexbit:carrito', manejarCarrito)
+    }
+  }, [sesion?.token])
 
   const claseCarrito = `barra__boton barra__boton--borde barra__boton--carrito${
     carritoMovido ? ' barra__boton--carrito-activo' : ''
@@ -60,6 +81,7 @@ export default function BarraNavegacion() {
               >
                 <span className="barra__carrito-icono" aria-hidden="true">
                   <IconoCarrito tamano={18} />
+                  {contador > 0 && <span className="barra__carrito-contador">{contador}</span>}
                 </span>{' '}Carrito
               </Link>
               <Link to="/perfil" className="barra__boton barra__boton--relleno">
@@ -103,6 +125,7 @@ export default function BarraNavegacion() {
               <Link to="/carrito" className={claseCarritoIcono} aria-label="Carrito" title="Carrito">
                 <span className="barra__carrito-icono" aria-hidden="true">
                   <IconoCarrito tamano={18} />
+                  {contador > 0 && <span className="barra__carrito-contador">{contador}</span>}
                 </span>
               </Link>
               <Link to="/perfil" className="barra__icono" aria-label="Mi perfil" title="Mi perfil">

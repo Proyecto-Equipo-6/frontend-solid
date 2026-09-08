@@ -141,6 +141,78 @@
   font-weight: 600;
 }
 
+.detalle__cantidad {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.detalle__cantidad-etiqueta {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.detalle__cantidad-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.detalle__cantidad-boton {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--text-h);
+  background: var(--bg);
+  border: none;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.detalle__cantidad-boton:hover:not(:disabled) {
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.detalle__cantidad-boton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.detalle__cantidad-input {
+  width: 60px;
+  height: 38px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-h);
+  background: var(--bg);
+  border: none;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  -moz-appearance: textfield;
+}
+
+.detalle__cantidad-input::-webkit-outer-spin-button,
+.detalle__cantidad-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.detalle__cantidad-input:disabled {
+  opacity: 0.5;
+}
+
 .detalle__ficha-bloque {
   margin-top: 20px;
   padding: 16px;

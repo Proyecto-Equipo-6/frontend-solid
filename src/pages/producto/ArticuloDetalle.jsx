@@ -47,6 +47,7 @@ export default function ArticuloDetalle() {
   const [agregando, setAgregando] = useState(false)
   const [exito, setExito] = useState(false)
   const [aviso, setAviso] = useState(null)
+  const [cantidad, setCantidad] = useState(1)
 
   useEffect(() => {
     let activo = true
@@ -72,6 +73,15 @@ export default function ArticuloDetalle() {
     return () => clearTimeout(temporizador)
   }, [exito])
 
+  useEffect(() => {
+    setCantidad(1)
+  }, [articulo?.id])
+
+  function cambiarCantidad(valor) {
+    const maximo = articulo?.stock ?? 1
+    setCantidad(Math.max(1, Math.min(Number(valor) || 1, maximo)))
+  }
+
   async function handleAgregar() {
     setAviso(null)
     if (!obtenerSesion()) {
@@ -80,7 +90,7 @@ export default function ArticuloDetalle() {
     }
     setAgregando(true)
     try {
-      await agregarAlCarrito(articulo)
+      await agregarAlCarrito(articulo, cantidad)
       setExito(true)
       setAviso({ variante: 'exito', texto: 'Producto agregado al carrito.' })
     } catch (error) {
@@ -148,6 +158,40 @@ export default function ArticuloDetalle() {
         <p className={`detalle__detalles detalle__detalles--${estado}`}>
           {textoStock(articulo.stock)} · Garantía: {articulo.garantia}
         </p>
+
+        <div className="detalle__cantidad">
+          <span className="detalle__cantidad-etiqueta">Cantidad</span>
+          <div className="detalle__cantidad-control">
+            <button
+              type="button"
+              className="detalle__cantidad-boton"
+              aria-label="Disminuir cantidad"
+              disabled={agotado || cantidad <= 1}
+              onClick={() => cambiarCantidad(cantidad - 1)}
+            >
+              −
+            </button>
+            <input
+              className="detalle__cantidad-input"
+              type="number"
+              min="1"
+              max={articulo.stock}
+              value={cantidad}
+              disabled={agotado}
+              onChange={(evento) => cambiarCantidad(evento.target.value)}
+            />
+            <button
+              type="button"
+              className="detalle__cantidad-boton"
+              aria-label="Aumentar cantidad"
+              disabled={agotado || cantidad >= articulo.stock}
+              onClick={() => cambiarCantidad(cantidad + 1)}
+            >
+              +
+            </button>
+          </div>
+        </div>
+
         <motion.div
           animate={exito ? { scale: [1, 1.06, 1] } : { scale: 1 }}
           transition={{ duration: 0.45, ease: 'easeOut' }}

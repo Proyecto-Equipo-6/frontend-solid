@@ -1,12 +1,38 @@
-import { Link } from 'react-router-dom'
-import { IconoFlecha } from '@/components/ui/Iconos/Iconos'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { IconoFlecha, IconoCarrito, IconoActivo } from '@/components/ui/Iconos/Iconos'
+import { agregarAlCarrito } from '@/services/carrito'
+import { obtenerSesion } from '@/services/sesion'
 import { formatoPrecio, estadoStock, textoStock } from '@/utils/formato'
 import './TarjetaArticulo.css'
 
 export default function TarjetaArticulo({ articulo }) {
   const { id, titulo, imagen, descripcion, categoria, precio, stock, garantia } = articulo
+  const navigate = useNavigate()
+  const [agregando, setAgregando] = useState(false)
+  const [agregado, setAgregado] = useState(false)
 
   const estado = estadoStock(stock)
+
+  async function handleAgregar(evento) {
+    evento.preventDefault()
+    evento.stopPropagation()
+    if (!obtenerSesion()) {
+      navigate('/login')
+      return
+    }
+    if (estado === 'agotado') return
+    setAgregando(true)
+    try {
+      await agregarAlCarrito(articulo, 1)
+      setAgregado(true)
+      setTimeout(() => setAgregado(false), 1200)
+    } catch {
+      // Sin feedback extra: el badge del carrito no se actualiza si falla.
+    } finally {
+      setAgregando(false)
+    }
+  }
 
   return (
     <Link
@@ -23,6 +49,20 @@ export default function TarjetaArticulo({ articulo }) {
         <span className="tarjeta__categoria">{categoria}</span>
         {estado === 'agotado' && (
           <span className="tarjeta__sello tarjeta__sello--agotado">No disponible</span>
+        )}
+        {estado !== 'agotado' && (
+          <button
+            type="button"
+            className="tarjeta__carrito"
+            aria-label={`Agregar ${titulo} al carrito`}
+            title="Agregar al carrito"
+            disabled={agregando}
+            onClick={handleAgregar}
+          >
+            <span className="tarjeta__carrito-icono">
+              {agregado ? <IconoActivo tamano={16} /> : <IconoCarrito tamano={16} />}
+            </span>
+          </button>
         )}
       </div>
       <div className="tarjeta__cuerpo">
