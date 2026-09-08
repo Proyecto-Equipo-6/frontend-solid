@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 function Loader({ oculto = false }) {
   return (
-    <StyledOverlay oculto={oculto} role="status" aria-label="Cargando el sitio">
+    <StyledOverlay $oculto={oculto} role="status" aria-label="Cargando el sitio">
       <StyledWrapper>
       <div className="loader">
         <div className="box box0">
@@ -45,12 +45,12 @@ const StyledOverlay = styled.div`
   display: grid;
   place-items: center;
   background: var(--bg-suave, #f5f5f6);
-  opacity: ${({ oculto }) => (oculto ? 0 : 1)};
-  visibility: ${({ oculto }) => (oculto ? 'hidden' : 'visible')};
+  opacity: ${({ $oculto }) => ($oculto ? 0 : 1)};
+  visibility: ${({ $oculto }) => ($oculto ? 'hidden' : 'visible')};
   transition:
     opacity 0.45s ease,
     visibility 0.45s ease;
-  pointer-events: ${({ oculto }) => (oculto ? 'none' : 'auto')};
+  pointer-events: ${({ $oculto }) => ($oculto ? 'none' : 'auto')};
 `
 
 const StyledWrapper = styled.div`

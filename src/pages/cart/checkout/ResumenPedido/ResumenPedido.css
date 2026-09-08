@@ -70,17 +70,6 @@
   color: var(--text);
 }
 
-.resumen-pedido__envio {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.resumen-pedido__envio-valor {
-  font-size: 14px;
-  color: var(--text-h);
-}
-
 .resumen-pedido__total-fila {
   display: flex;
   align-items: baseline;

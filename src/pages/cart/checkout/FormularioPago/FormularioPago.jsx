@@ -36,14 +36,8 @@ const FormularioPago = forwardRef(function FormularioPago(_props, ref) {
               {opcion.id === metodo ? '✓' : ''}
             </span>
             <span className="form-pago__metodo-nombre">{opcion.nombre}</span>
-            <span className="form-pago__metodo-descripcion">{opcion.descripcion}</span>
           </button>
         ))}
-      </div>
-
-      <div className="form-pago__detalle">
-        <p className="form-pago__detalle-titulo">Instrucciones</p>
-        <p className="form-pago__detalle-texto">{seleccionada.descripcion}</p>
       </div>
     </div>
   )

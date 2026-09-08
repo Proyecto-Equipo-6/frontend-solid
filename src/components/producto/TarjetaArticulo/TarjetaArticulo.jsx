@@ -1,37 +1,48 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { IconoActivo, IconoFlecha } from '@/components/ui/Iconos/Iconos'
-import Boton from '@/components/ui/Boton/Boton'
+import { IconoActivo, IconoFlecha, IconoCarrito } from '@/components/ui/Iconos/Iconos'
 import { formatoPrecio, estadoStock, textoStock } from '@/utils/formato'
 import { agregarAlCarrito } from '@/services/carrito'
 import { obtenerSesion } from '@/services/sesion'
 import './TarjetaArticulo.css'
 
 export default function TarjetaArticulo({ articulo }) {
-  const { id, titulo, imagen, descripcion, categoria, precio, stock, garantia, estado } = articulo
+  const { id, titulo, imagen, descripcion, categoria, precio, stock, estado } = articulo
   const navigate = useNavigate()
   const [agregando, setAgregando] = useState(false)
   const [exito, setExito] = useState(false)
+  const [mostrarCantidad, setMostrarCantidad] = useState(false)
+  const [cantidad, setCantidad] = useState(1)
 
   const estadoStockArticulo = estadoStock(stock)
   const inactivo = Number(estado) === 0
   const agotado = inactivo || estadoStockArticulo === 'agotado'
 
-  async function manejarAgregar(evento) {
+  function abrirSelector(evento) {
     evento.preventDefault()
     evento.stopPropagation()
     if (agotado) return
-
     if (!obtenerSesion()) {
       navigate('/login')
       return
     }
+    setCantidad(1)
+    setMostrarCantidad((valor) => !valor)
+  }
 
+  function cambiarCantidad(valor) {
+    setCantidad(Math.max(1, Math.min(Number(valor) || 1, stock)))
+  }
+
+  async function confirmarAgregar(evento) {
+    evento.preventDefault()
+    evento.stopPropagation()
+    if (agotado) return
     setAgregando(true)
     try {
-      await agregarAlCarrito(articulo)
+      await agregarAlCarrito(articulo, cantidad)
       setExito(true)
+      setMostrarCantidad(false)
       window.setTimeout(() => setExito(false), 1800)
     } catch {
       setExito(false)
@@ -39,14 +50,6 @@ export default function TarjetaArticulo({ articulo }) {
       setAgregando(false)
     }
   }
-
-  const etiquetaBoton = agotado
-    ? 'No disponible'
-    : exito
-      ? '¡Agregado!'
-      : agregando
-        ? 'Agregando…'
-        : 'Añadir al carrito'
 
   return (
     <article className="tarjeta">
@@ -65,6 +68,19 @@ export default function TarjetaArticulo({ articulo }) {
           {agotado && (
             <span className="tarjeta__sello tarjeta__sello--agotado">No disponible</span>
           )}
+          {!agotado && (
+            <button
+              type="button"
+              className="tarjeta__carrito"
+              aria-label={`Agregar ${titulo} al carrito`}
+              title="Agregar al carrito"
+              onClick={abrirSelector}
+            >
+              <span className="tarjeta__carrito-icono">
+                {exito ? <IconoActivo tamano={16} /> : <IconoCarrito tamano={16} />}
+              </span>
+            </button>
+          )}
         </div>
         <div className="tarjeta__cuerpo">
           <h3 className="tarjeta__titulo">{titulo}</h3>
@@ -75,7 +91,6 @@ export default function TarjetaArticulo({ articulo }) {
               {textoStock(stock)}
             </span>
           </div>
-          <span className="tarjeta__garantia">Garantía: {garantia}</span>
           <span className="tarjeta__boton">
             {'Ver producto '}
             <span className="tarjeta__boton-flecha" aria-hidden="true">
@@ -85,32 +100,44 @@ export default function TarjetaArticulo({ articulo }) {
         </div>
       </Link>
 
-      <motion.div
-        className="tarjeta__accion"
-        animate={exito ? { scale: [1, 1.04, 1] } : { scale: 1 }}
-        transition={{ duration: 0.45, ease: 'easeOut' }}
-      >
-        <Boton
-          variante="carrito"
-          completo
-          disabled={agotado}
-          cargando={agregando}
-          className={exito ? 'boton--exito' : ''}
-          onClick={manejarAgregar}
-        >
-          {exito && (
-            <motion.span
-              className="boton__check"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: 'spring', stiffness: 500, damping: 18 }}
-            >
-              <IconoActivo tamano={16} />
-            </motion.span>
-          )}
-          {etiquetaBoton}
-        </Boton>
-      </motion.div>
+      {mostrarCantidad && (
+        <div className="tarjeta__cantidad">
+          <button
+            type="button"
+            className="tarjeta__cantidad-boton"
+            aria-label="Disminuir cantidad"
+            disabled={cantidad <= 1}
+            onClick={() => cambiarCantidad(cantidad - 1)}
+          >
+            −
+          </button>
+          <input
+            className="tarjeta__cantidad-input"
+            type="number"
+            min="1"
+            max={stock}
+            value={cantidad}
+            onChange={(evento) => cambiarCantidad(evento.target.value)}
+          />
+          <button
+            type="button"
+            className="tarjeta__cantidad-boton"
+            aria-label="Aumentar cantidad"
+            disabled={cantidad >= stock}
+            onClick={() => cambiarCantidad(cantidad + 1)}
+          >
+            +
+          </button>
+          <button
+            type="button"
+            className="tarjeta__cantidad-agregar"
+            disabled={agregando}
+            onClick={confirmarAgregar}
+          >
+            {agregando ? 'Añadiendo…' : 'Añadir'}
+          </button>
+        </div>
+      )}
     </article>
   )
 }

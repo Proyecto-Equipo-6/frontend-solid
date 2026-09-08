@@ -75,36 +75,6 @@
   color: var(--text-h);
 }
 
-.form-pago__metodo-descripcion {
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--text-suave);
-}
-
-.form-pago__detalle {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 18px;
-  background: var(--bg-suave);
-  border: 1px solid var(--border);
-  border-radius: var(--radio);
-}
-
-.form-pago__detalle-titulo {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text-h);
-}
-
-.form-pago__detalle-texto {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--text);
-}
-
 @media (max-width: 640px) {
   .form-pago__panel {
     grid-template-columns: 1fr;

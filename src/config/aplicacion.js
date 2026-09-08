@@ -29,7 +29,6 @@ export const METODOS_PAGO = [
   {
     id: 'contraentrega',
     nombre: 'Contra entrega',
-    descripcion: 'Pagas en efectivo cuando recibes tu pedido.',
     requiereComprobante: false,
   },
 ]

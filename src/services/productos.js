@@ -21,12 +21,14 @@ export function normalizarProducto(producto) {
   }
 }
 
+const LIMITE_CATALOGO = 1000
+
 export function getProductosPublicos() {
   if (USAR_MOCK) return Promise.resolve(PRODUCTOS_MOCK)
 
-  return request(ENDPOINTS.productosPublicos).then((respuesta) =>
-  (respuesta.items || []).map(normalizarProducto),
-  ) 
+  return request(`${ENDPOINTS.productosPublicos}?limite=${LIMITE_CATALOGO}`).then((respuesta) =>
+    (respuesta.items || []).map(normalizarProducto),
+  )
 }
 
 export function getProductoPublico(id) {

@@ -93,6 +93,7 @@ export async function actualizarCantidad(productoId, cantidad) {
         items[indice].cantidad = cantidad
       }
       guardarCarrito(items)
+      notificarCarrito()
     }
 
     return leerCarrito()
@@ -106,6 +107,7 @@ export async function actualizarCantidad(productoId, cantidad) {
     metodo: 'PUT',
     datos: { cantidad },
   })
+  notificarCarrito()
   return normalizarItems(resultado.carrito.items)
 }
 
@@ -113,14 +115,17 @@ export async function eliminarDelCarrito(productoId) {
   if (USAR_MOCK) {
     const items = leerCarrito().filter((item) => String(item.id) !== String(productoId))
     guardarCarrito(items)
+    notificarCarrito()
     return leerCarrito()
   }
 
   const resultado = await request(`/v1/carrito/${productoId}`, { metodo: 'DELETE' })
+  notificarCarrito()
   return normalizarItems(resultado.carrito.items)
 }
 
 export function limpiarCarrito() {
   guardarCarrito([])
+  notificarCarrito()
   return []
 }

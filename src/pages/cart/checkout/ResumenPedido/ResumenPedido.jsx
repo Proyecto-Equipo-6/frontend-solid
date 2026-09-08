@@ -30,11 +30,6 @@ export default function ResumenPedido({ items, subtotal, envio, total }) {
         <span>{cantidadItems}</span>
       </div>
 
-      <div className="resumen-pedido__envio">
-        <span>Envío:</span>
-        <span className="resumen-pedido__envio-valor">{envio.nombre}</span>
-      </div>
-
       <div className="resumen-pedido__detalle-fila">
         <span>Subtotal</span>
         <span>{formatoPrecio(subtotal)}</span>
