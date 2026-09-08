@@ -5,6 +5,9 @@ export const MARCA = {
     'Tu tienda en línea con productos verificados, precios justos y entrega segura en todo el país.',
 }
 
+export const APK_URL =
+  'https://expo.dev/artifacts/eas/EphL8f4PHTtfucV7q060-BE50hTVPiBKqRSPOFb8owM.apk'
+
 export const NAVEGACION_PRINCIPAL = [{ nombre: 'Catálogo', destino: '/#catalogo' }]
 
 export const TIPOS_DOCUMENTO = ['CC', 'Pasaporte', 'CE', 'Otro']
